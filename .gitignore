@@ -16,6 +16,9 @@
 # next.js
 /.next/
 /out/
+.swc
+.turbopack/
+.turbo/
 
 # production
 /build
@@ -32,6 +35,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +43,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# logs
+*.log
+
+# OS
+Thumbs.db
+Desktop.ini
