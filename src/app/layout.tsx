@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
+import { AuthProvider } from '@/contexts/AuthContext';
 
 export const metadata: Metadata = {
   title: 'GramSeva - গ্রামের হাতে ডিজিটাল বাংলাদেশ',
@@ -16,11 +17,14 @@ export default function RootLayout({
   return (
      <html lang="bn">
       <body className="flex flex-col min-h-screen">
+        <AuthProvider>
+
         <Header />
         <main className="flex-grow container mx-auto px-4 py-8">
           {children}
         </main>
         <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

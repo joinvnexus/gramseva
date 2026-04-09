@@ -1,0 +1,116 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+  engineType = "binary"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ইউজার মডেল
+model User {
+  id           String    @id @default(cuid())
+  phone        String    @unique
+  name         String
+  village      String
+  ward         Int
+  role         UserRole  @default(USER)
+  verified     Boolean   @default(false)
+  rating       Float     @default(0)
+  otp          String?
+  otpExpiresAt DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  services     Service[]
+  reports      Report[]
+
+  reportUpvotes ReportUpvote[]
+  reviews       Review[]
+}
+
+// সার্ভিস মডেল
+model Service {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category    Category
+  description String      @db.Text
+  hourlyRate  Float
+  rating      Float       @default(0)
+  isAvailable Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  
+  reviews     Review[]
+}
+
+// রিপোর্ট মডেল
+model Report {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  problemType ProblemType
+  description String      @db.Text
+  imageUrl    String?
+  lat         Float?
+  lng         Float?
+  status      Status      @default(PENDING)
+  upVotes     Int         @default(0)
+  createdAt   DateTime    @default(now())
+  
+  upvotes     ReportUpvote[]
+}
+
+// রিপোর্ট আপভোট মডেল
+model ReportUpvote {
+  id        String   @id @default(cuid())
+  reportId  String
+  report    Report   @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([reportId, userId])
+}
+
+// রিভিউ মডেল
+model Review {
+  id        String   @id @default(cuid())
+  serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rating    Int
+  comment   String?  @db.Text
+  createdAt DateTime @default(now())
+}
+
+// এনাম টাইপ
+enum UserRole {
+  USER
+  PROVIDER
+  ADMIN
+}
+
+enum Category {
+  ELECTRICIAN
+  PLUMBER
+  MECHANIC
+  DOCTOR
+  TUTOR
+  OTHER
+}
+
+enum ProblemType {
+  ROAD
+  WATER
+  ELECTRICITY
+  OTHER
+}
+
+enum Status {
+  PENDING
+  PROCESSING
+  RESOLVED
+}
