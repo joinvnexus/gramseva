@@ -1,16 +1,16 @@
-# 📋 প্রোজেক্ট সেটআপ গাইড
+# 📋 Project Setup Guide (প্রোজেক্ট সেটআপ গাইড)
 
-## পূর্বশর্ত
+## Prerequisites (পূর্বশর্ত)
 
-| টুল | ন্যূনতম ভার্সন |
-|-----|--------------|
+| Tool | Minimum Version |
+|-----|-----------------|
 | Node.js | 18.x |
 | npm | 9.x+ |
 | PostgreSQL | 14.x+ |
 
 ---
 
-## ধাপ ১: রেপোজিটরি ক্লোন
+## Step 1: Clone Repository (রেপো ক্লোন)
 
 ```bash
 git clone https://github.com/yourusername/gramseva.git
@@ -19,7 +19,7 @@ cd gramseva
 
 ---
 
-## ধাপ ২: ডিপেন্ডেন্সি ইনস্টল
+## Step 2: Install Dependencies (ডিপেন্ডেন্সি ইনস্টল)
 
 ```bash
 npm install
@@ -27,21 +27,21 @@ npm install
 
 ---
 
-## ধাপ ৩: এনভায়রনমেন্ট কনফিগারেশন
+## Step 3: Environment Configuration (এনভায়রনমেন্ট সেটআপ)
 
-`.env` ফাইল তৈরি করুন প্রজেক্ট রুটে:
+`.env` ফাইল তৈরি করুন project root এ:
 
 ```env
-# ডাটাবেজ কানেকশন
+# Database Connection
 DATABASE_URL="postgresql://username:password@localhost:5432/gramseva"
 
-# JWT সিক্রেট কী
+# JWT Secret Key
 JWT_SECRET="your-super-secret-key-change-in-production"
 
 # API URL
 NEXT_PUBLIC_API_URL="http://localhost:3000"
 
-# ক্লাউডিনারি (অপশনাল)
+# Cloudinary (Optional)
 NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="your-cloud-name"
 CLOUDINARY_API_KEY="your-api-key"
 CLOUDINARY_API_SECRET="your-api-secret"
@@ -49,43 +49,43 @@ CLOUDINARY_API_SECRET="your-api-secret"
 
 ---
 
-## ধাপ ৪: ডাটাবেজ সেটআপ
+## Step 4: Database Setup (ডাটাবেজ সেটআপ)
 
 ```bash
-# প্রথম মাইগ্রেশন তৈরি
+# First migration তৈরি করুন
 npx prisma migrate dev --name init
 
-# অথবা শুধুমাত্র প্রিসমা ক্লায়েন্ট জেনারেট
+# অথবা শুধু prisma client generate করুন
 npx prisma generate
 ```
 
 ---
 
-## ধাপ ৫: ডেভেলপমেন্ট সার্ভার চালান
+## Step 5: Run Development Server
 
 ```bash
 npm run dev
 ```
 
-ব্রাউজারে ওপেন করুন: **http://localhost:3000**
+Browser এ open করুন: **http://localhost:3000**
 
 ---
 
-## প্রোডাকশন বিল্ড
+## Production Build (প্রোডাকশন বিল্ড)
 
 ```bash
-# বিল্ড তৈরি
+# Build তৈরি করুন
 npm run build
 
-# প্রোডাকশন সার্ভার চালান
+# Production এ চালান
 npm start
 ```
 
 ---
 
-## সাধারণ সমস্যা সমাধান
+## Common Issues (সাধারণ সমস্যা)
 
-### ❌ "Cannot find module" এরর
+### ❌ "Cannot find module" error
 
 ```bash
 npm install
@@ -93,12 +93,12 @@ rm -rf .next
 npm run dev
 ```
 
-### ❌ ডাটাবেজ কানেকশন এরর
+### ❌ Database Connection Error
 
-- PostgreSQL সার্ভার চলছে কিনা চেক করুন
-- `.env` ফাইলে DATABASE_URL সঠিক কিনা দেখুন
+- PostgreSQL server চলছে কিনা চেক করুন
+- `.env` এ DATABASE_URL সঠিক কিনা দেখুন
 
-### ❌ Prisma এরর
+### ❌ Prisma Error
 
 ```bash
 npx prisma studio
@@ -106,26 +106,26 @@ npx prisma studio
 
 ---
 
-## উপকারী কমান্ড
+## Useful Commands (উপকারী কমান্ড)
 
 ```bash
-# Prisma Studio (ডাটাবেজ ভিজুয়ালাইজার)
+# Prisma Studio (database visualizer)
 npx prisma studio
 
-# প্রিসমা রিসেট
+# Prisma Reset
 npx prisma migrate reset
 
-# টাইপ চেক
+# Type Check
 npx tsc --noEmit
 
-# লিন্টিং
+# Linting
 npm run lint
 ```
 
 ---
 
-## পরবর্তী পদক্ষেপ
+## Next Steps (পরবর্তী পদক্ষেপ)
 
-- [ ] Vercel অ্যাকাউন্ট তৈরি
-- [ ] PostgreSQL ডাটাবেজ হোস্ট করুন (Railway / Supabase / Neon)
-- [ ] ডেপ্লয় করুন
+- [ ] Vercel account বানান
+- [ ] PostgreSQL host করুন (Railway / Supabase / Neon)
+- [ ] Deploy করুন

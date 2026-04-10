@@ -1,6 +1,6 @@
 # 🌾 GramSevá - গ্রামসেবা
 
-একটি সম্পূর্ণ ফুল-স্ট্যাক কৃষি সেবা প্ল্যাটফর্ম
+এটা একটা সম্পূর্ণ ফুল-স্ট্যাক কৃষি সেবা প্ল্যাটফর্ম। এখানে farmersরা সহজে service নিতে পারবে, market price চেক করতে পারবে আর booking করতে পারবে।
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org)
@@ -8,142 +8,150 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38BDF8)](https://tailwindcss.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 
-## 🚀 প্রজেক্ট সেটআপ
+## 🚀 Project Setup (প্রোজেক্ট সেটআপ)
 
-### পূর্বশর্ত
+### Prerequisites (পূর্বশর্ত)
 
 - Node.js (v18+)
-- PostgreSQL ডাটাবেজ
+- PostgreSQL database
 - npm / yarn / pnpm
 
-### ইনস্টলেশন
+### Installation (ইনস্টলেশন)
 
 ```bash
-# রেপোজিটরি ক্লোন করুন
+# Clone করুন
 git clone https://github.com/yourusername/gramseva.git
 cd gramseva
 
-# ডিপেন্ডেন্সি ইনস্টল করুন
+# Dependencies ইনস্টল করুন
 npm install
 
-# .env ফাইল কনফিগার করুন
+# .env ফাইল বানান
 cp .env.example .env
-# নিচের ভেরিয়েবলগুলো সেট করুন:
+# এগুলো সেট করুন:
 # DATABASE_URL="postgresql://user:password@localhost:5432/gramseva"
 # JWT_SECRET="your-secret-key"
 # NEXT_PUBLIC_API_URL="http://localhost:3000"
 
-# প্রিসমা মাইগ্রেশন রান করুন
+# Prisma migration চালান
 npx prisma migrate deploy
-# অথবা মাইগ্রেশন তৈরি করতে:
+# অথবা:
 # npx prisma migrate dev --name init
 
-# ডেভেলপমেন্ট সার্ভার চালান
+# Dev server চালান
 npm run dev
 ```
 
-ওয়েবসাইট ওপেন করুন: [http://localhost:3000](http://localhost:3000)
+Open করুন: [http://localhost:3000](http://localhost:3000)
 
-### বিল্ড ও ডেপ্লয়
+### Build & Deploy
 
 ```bash
-# প্রোডাকশন বিল্ড
+# Production build
 npm run build
 
-# প্রোডাকশন মোডে চালান
+# Production mode তে চালান
 npm start
 
-# Vercel-এ ডেপ্লয়
+# Vercel এ deploy করুন
 vercel deploy
 ```
 
 ---
 
-## 💻 প্রযুক্তি স্ট্যাক
+## 💻 Tech Stack (প্রযুক্তি স্ট্যাক)
 
-| ক্যাটাগরি | প্রযুক্তি |
-|------------|----------|
-| ফ্রেমওয়ার্ক | Next.js 14 App Router |
-| ভাষা | TypeScript |
-| ডাটাবেজ | PostgreSQL |
+| Category | Technology |
+|----------|------------|
+| Framework | Next.js 14 App Router |
+| Language | TypeScript |
+| Database | PostgreSQL |
 | ORM | Prisma |
-| অথেনটিকেশন | JWT |
-| স্টাইলিং | Tailwind CSS |
-| স্টেট ম্যানেজমেন্ট | React Context |
+| Auth | JWT |
+| Styling | Tailwind CSS |
+| State | React Context |
 | API | RESTful API |
 
 ---
 
-## 📚 শেখা বিষয়সমূহ
+## 📚 এই প্রোজেক্ট থেকে যা শিখলাম
 
-> এই প্রোজেক্ট বানাতে গিয়ে আমি শিখে থাকি:
+এই প্রোজেক্ট বানাতে গিয়ে আমি শিখে থাকি:
 
-### 🎯 কোর কনসেপ্ট
+### 🎯 Core Concepts
 
-- **Next.js 14 App Router** - রাউটিং, পেজ স্ট্রাকচার, Layouts
-- **TypeScript টাইপ সেফটি** - Interfaces, Types, Generics
-- **Prisma ORM** - মডেল ডিজাইন, মাইগ্রেশন, CRUD অপারেশন
-- **PostgreSQL ডাটাবেজ ডিজাইন** - রিলেশনাল ডাটাবেজ, রিলেশনস
-- **JWT অথেনটিকেশন** - টোকেন ভিত্তিক লগইন সিস্টেম
-- **RESTful API ডিজাইন** - API রাউট, রিকোয়েস্ট/রেসপন্স
+- **Next.js 14 App Router** - routing, page structure, layouts
+- **TypeScript** - interfaces, types, generics
+- **Prisma ORM** - model design, migration, CRUD operations
+- **PostgreSQL** - relational database design, relations
+- **JWT Authentication** - token based login system
+- **RESTful API** - API routes, request/response
 
-### 🎨 ফ্রন্টএন্ড
+### 🎨 Frontend
 
-- **Tailwind CSS** - রেসপন্সিভ ডিজাইন
-- **PWA** - Service Worker, Manifest, অফলাইন সাপোর্ট
-- **Web Speech API** - ভয়েস রিকগনিশন
+- **Tailwind CSS** - responsive design
+- **PWA** - Service Worker, Manifest, offline support
+- **Web Speech API** - voice recognition
 
-### 🛠 টুলস
+### 🛠 Tools
 
-- **Git & GitHub** - ভার্সন কন্ট্রোল
-- **Vercel ডেপ্লয়��েন্ট** - প্রোডাকশন ডেপ্লয়
-
----
-
-## 🏆 প্রজেক্টের বৈশিষ্ট্য
-
-- 📱 **মোবাইল-ফ্রেন্ডলি** - রেসপন্সিভ ডিজাইন
-- 🔒 **সিকিউর** - JWT অথেনটিকেশন
-- 🚀 **ফাস্ট** - SSR + ক্যাশিং
-- 🌐 **অফলাইন-সাপোর্টেড** - PWA ফিচার
-- 🎤 **ভয়েস-কন্ট্রোলড** - ভয়েস সার্চ
-- 💰 **মার্কেট প্রাইস ট্র্যাকার** - কৃষি পণ্যের দাম
-- 📊 **ড্যাশবোর্ড** - স্ট্যাটিস, রিপোর্ট
-- 🛒 **বুকিং সিস্টেম** - সার্ভিস বুকিং
+- **Git & GitHub** - version control
+- **Vercel** - production deployment
 
 ---
 
-## 📂 প্রজেক্ট স্ট্রাকচার
+## 🏆 Features (বৈশিষ্ট্য)
+
+- 📱 **Mobile Friendly** - responsive design
+- 🔒 **Secure** - JWT authentication
+- 🚀 **Fast** - SSR + caching
+- 🌐 **Offline Support** - PWA feature
+- 🎤 **Voice Controlled** - voice search
+- 💰 **Market Price Tracker** - agricultural product prices
+- 📊 **Dashboard** - stats, reports
+- 🛒 **Booking System** - service booking
+
+---
+
+## 📂 Project Structure
 
 ```
 gramseva/
 ├── prisma/
-│   ├── schema.prisma      # ডাটাবেজ মডেল
-│   └── migrations/       # মাইগ্রেশন ফাইল
+│   ├── schema.prisma      # Database models
+│   └── migrations/       # Migration files
 ├── public/
-│   ├── manifest.json    # PWA ম্যানিফেস্ট
-│   └── sw.js          # Service Worker
+│   ├── manifest.json    # PWA manifest
+│   └── sw.js           # Service Worker
 └── src/
     ├── app/            # Next.js App Router
-    │   ├── (dashboard)/ # ড্যাশবোর্ড পেজ
-    │   └── api/         # API রাউট
-    ├── components/     # React কম্পোনেন্ট
+    │   ├── (dashboard)/ # Dashboard pages
+    │   └── api/         # API routes
+    ├── components/     # React components
     ├── contexts/       # Context API
     ├── hooks/          # Custom hooks
-    ├── lib/            # লাইব্রেরি
-    └── utils/          # ইউটিলিটি ফাংশন
+    ├── lib/            # Libraries
+    └── utils/          # Utility functions
 ```
 
 ---
 
-## 📜 লাইসেন্স
+## 📜 License
 
-MIT License - দেখুন [LICENSE](LICENSE) ফাইল
+MIT License - দেখুন [LICENSE](LICENSE) file
 
 ---
 
-## 🙌 অবদান
+## 🙌 Contributing
 
-যদি আপনি এই প্রজেক্টে অবদান রাখতে চান, তাহলে PR পাঠান অথবা ইস্যু খুলু!
+এখানে contribute করতে চাইলে PR পাঠান অথবা issue খুলু!
 
-⭐ যদি প্রজেক্টটি ভালো লাগে, একটি স্টার দিন!
+⭐ যদি প্রজেক্টটি ভালো লাগে, star দিন!
+
+---
+
+### 💪 আমার কৃতিত্ব
+
+এই প্রোজেক্ট বানিয়ে আমি একটি পূর্ণাঙ্গ ফুল-স্ট্যাক ওয়েব অ্যাপ্লিকেশন তৈরি করেছি যা:
+
+📱 মোবাইল-ফ্রেন্ডলি | 🔒 সিকিউর | 🚀 ফাস্ট | 🌐 অফলাইন-সাপোর্টেড | 🎤 ভয়েস-কন্ট্রোলড | 🏆 প্রোডাকশন-রেডি
