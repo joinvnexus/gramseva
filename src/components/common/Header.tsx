@@ -57,6 +57,9 @@ export default function Header() {
     <Link href="/dashboard" className="text-white hover:text-accent transition">
       ড্যাশবোর্ড
     </Link>
+    <Link href="/bookings" className="text-white hover:text-accent">
+      আমার বুকিং
+    </Link>
     <Link href="/profile" className="text-white hover:text-accent transition">
       👤 {user?.name}
     </Link>

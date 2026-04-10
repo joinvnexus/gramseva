@@ -1,4 +1,3 @@
-// src/compomemts/services/ServiceBooking.tsx
 'use client';
 
 import { useState } from 'react';
@@ -34,12 +33,25 @@ export default function ServiceBooking({
       return;
     }
 
+    if (!date || !time || !address) {
+      setError('সব তথ্য পূরণ করুন');
+      return;
+    }
+
     setLoading(true);
     setError('');
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/bookings', {
+      const dateTime = new Date(`${date}T${time}`);
+      
+      if (dateTime < new Date()) {
+        setError('অনুগ্রহ করে ভবিষ্যতের তারিখ নির্বাচন করুন');
+        setLoading(false);
+        return;
+      }
+
+      const response = await fetch('/api/bookings', {  // ✅ এন্ডপয়েন্ট ঠিক করা হয়েছে
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,37 +59,47 @@ export default function ServiceBooking({
         },
         body: JSON.stringify({
           serviceId,
-          date: `${date}T${time}`,
+          date: dateTime.toISOString(),
           address,
         }),
       });
 
       const data = await response.json();
+      
       if (data.success) {
+        alert(data.message || 'বুকিং সফল হয়েছে!');
         onSuccess();
       } else {
         setError(data.error || 'বুকিং করতে সমস্যা হয়েছে');
       }
     } catch (error) {
-      setError('বুকিং করতে সমস্যা হয়েছে');
+      console.error('Booking error:', error);
+      setError('বুকিং করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।');
     } finally {
       setLoading(false);
     }
   };
+
+  // আজকের তারিখ থেকে শুরু
+  const minDate = new Date().toISOString().split('T')[0];
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
         <div className="p-4 border-b flex justify-between items-center">
           <h2 className="text-xl font-bold text-primary">বুকিং করুন</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <button 
+            onClick={onClose} 
+            className="text-gray-500 hover:text-gray-700 text-2xl"
+            disabled={loading}
+          >
             ✕
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-4 space-y-4">
           <div>
-            <label className="block text-gray-700 mb-1">সার্ভিস</label>
+            <label className="block text-gray-700 mb-1 font-medium">সার্ভিস</label>
             <input
               type="text"
               value={serviceName}
@@ -87,7 +109,7 @@ export default function ServiceBooking({
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-1">মূল্য</label>
+            <label className="block text-gray-700 mb-1 font-medium">মূল্য</label>
             <input
               type="text"
               value={`৳${hourlyRate}/ঘন্টা`}
@@ -97,52 +119,69 @@ export default function ServiceBooking({
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-1">তারিখ</label>
+            <label className="block text-gray-700 mb-1 font-medium">
+              তারিখ <span className="text-red-500">*</span>
+            </label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full px-3 py-2 border rounded-lg focus:ring-primary focus:border-primary"
+              min={minDate}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-1">সময়</label>
+            <label className="block text-gray-700 mb-1 font-medium">
+              সময় <span className="text-red-500">*</span>
+            </label>
             <input
               type="time"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              className="w-full px-3 py-2 border rounded-lg focus:ring-primary focus:border-primary"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-700 mb-1">ঠিকানা</label>
+            <label className="block text-gray-700 mb-1 font-medium">
+              ঠিকানা <span className="text-red-500">*</span>
+            </label>
             <textarea
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               rows={3}
-              className="w-full px-3 py-2 border rounded-lg focus:ring-primary focus:border-primary"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="আপনার সম্পূর্ণ ঠিকানা দিন"
               required
             />
           </div>
 
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded">
+            <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded-lg text-sm">
               {error}
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-primary text-white py-2 rounded-lg font-semibold hover:bg-primary-dark disabled:opacity-50"
-          >
-            {loading ? 'বুকিং হচ্ছে...' : 'বুকিং কনফার্ম করুন'}
-          </button>
+          <div className="flex gap-3 pt-2">
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex-1 px-4 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition"
+              disabled={loading}
+            >
+              বাতিল
+            </button>
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex-1 bg-primary text-white py-2 rounded-lg font-semibold hover:bg-primary-dark disabled:opacity-50 transition"
+            >
+              {loading ? 'বুকিং হচ্ছে...' : 'বুকিং কনফার্ম করুন'}
+            </button>
+          </div>
         </form>
       </div>
     </div>

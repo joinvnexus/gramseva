@@ -31,6 +31,8 @@ model User {
 
   notifications Notification[]
   fcmTokens     FCMToken[]
+
+  bookings Booking[] 
 }
 
 // সার্ভিস মডেল
@@ -46,6 +48,9 @@ model Service {
   createdAt   DateTime @default(now())
 
   reviews Review[]
+
+  bookings Booking[]  
+
 }
 
 // রিপোর্ট মডেল
@@ -171,4 +176,23 @@ enum Status {
   PENDING
   PROCESSING
   RESOLVED
+}
+// Booking মডেল (যদি না থাকে)
+model Booking {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  date      DateTime
+  address   String   @db.Text
+  status    BookingStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
 }
