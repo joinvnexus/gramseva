@@ -3,10 +3,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import VoiceSearch from '@/components/common/VoiceSearch';
+import VoiceButton from '@/components/common/VoiceButton';
+import Loader from '@/components/common/Loader';
 export default function Home() {
   const router = useRouter();
   const [isListening, setIsListening] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleVoiceResult = (text: string) => {
     // ভয়েস কমান্ড পার্স করুন
     const lowerText = text.toLowerCase();
@@ -58,11 +60,8 @@ export default function Home() {
             
             {/* ভয়েস বাটন */}
             <div className="mt-4">
-              <div className="relative">
-                <VoiceSearch 
-                  onResult={handleVoiceResult}
-                  onListening={setIsListening}
-                />
+              <div className="relative inline-block">
+                <VoiceButton onResult={handleVoiceResult} onListening={setIsListening} />
                 {isListening && (
                   <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 bg-black/80 text-white px-4 py-2 rounded-full text-sm whitespace-nowrap">
                     🎤 বলুন "মিস্ত্রি", "ডাক্তার", "রিপোর্ট"...
@@ -91,7 +90,12 @@ export default function Home() {
         <h2 className="text-2xl md:text-3xl font-bold text-center text-primary mb-8">
           আমাদের সার্ভিসসমূহ
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {
+          loading ? (
+              <Loader />
+
+          ) :(
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature, index) => (
             <div key={index} className="card p-6 text-center hover:-translate-y-1 transition-transform">
               <div className="text-4xl mb-3">{feature.icon}</div>
@@ -99,7 +103,11 @@ export default function Home() {
               <p className="text-gray-600 text-sm">{feature.description}</p>
             </div>
           ))}
+
+       
         </div>
+          )
+        }
       </section>
 
       {/* স্ট্যাটস সেকশন */}

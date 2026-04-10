@@ -1,6 +1,7 @@
 // src/app/api/reports/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { uploadImage } from '@/lib/cloudinary';
 
 // সব রিপোর্ট পাওয়া
 export async function GET(request: NextRequest) {
@@ -36,9 +37,10 @@ export async function GET(request: NextRequest) {
     });
 
     // প্রতিটি রিপোর্টের জন্য ভোট কাউন্ট যোগ করুন
-    const reportsWithCount = reports.map(report => ({
+    const reportsWithCount = reports.map(({ upvotes, ...report }) => ({
       ...report,
-      upvoteCount: report.upvotes.length,
+      upVotes: upvotes.length,
+      upvoteCount: upvotes.length,
     }));
 
     return NextResponse.json({ success: true, data: reportsWithCount });
@@ -79,14 +81,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    let imageUrl = null;
+    let imageUrl: string | null = null;
 
     // ছবি আপলোড (যদি থাকে)
     if (image) {
       // TODO: Cloudinary বা অন্য স্টোরেজ সেটআপ করুন
       // অস্থায়ীভাবে লোকাল স্টোরেজ ব্যবহার করছি
-      const bytes = await image.arrayBuffer();
-      const buffer = Buffer.from(bytes);
+      imageUrl = await uploadImage(image, { folder: 'gramseva/reports' });
       // এখানে ইমেজ আপলোড লজিক যোগ করুন
     }
 

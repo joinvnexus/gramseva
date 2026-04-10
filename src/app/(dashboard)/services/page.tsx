@@ -5,7 +5,8 @@ import { Service } from "@/types";
 import ServiceCard from "@/components/services/ServiceCard";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
-import VoiceSearch from "@/components/common/VoiceSearch";
+import Loader from '@/components/common/Loader';
+import ServiceFilter from '@/components/services/ServiceFilter';
 
 const categories = [
   { value: "ALL", label: "সব", icon: "📋" },
@@ -68,54 +69,21 @@ export default function ServicesPage() {
       </div>
 
       {/* সার্চ ও ফিল্টার */}
-      <div className="bg-white rounded-lg shadow p-4">
-        <div className="flex flex-col md:flex-row gap-4">
-          {/* সার্চ বার */}
-          <div className="flex-1">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="সার্ভিস বা নাম দিয়ে খুঁজুন..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-              <span className="absolute right-3 top-2 text-gray-400">🔍</span>
-            </div>
-            <VoiceSearch
-              onResult={(text) => {
-                setSearchTerm(text);
-                // অটো সার্চ
-                fetchServices();
-              }}
-            />
-          </div>
+      <ServiceFilter
+      selectedCategory={selectedCategory}
+      onCategoryChange={setSelectedCategory}
+      searchTerm={searchTerm}
+      onSearchChange={setSearchTerm}
+    />
 
-          {/* ক্যাটাগরি ফিল্টার */}
-          <div className="flex gap-2 overflow-x-auto pb-2">
-            {categories.map((cat) => (
-              <button
-                key={cat.value}
-                onClick={() => setSelectedCategory(cat.value)}
-                className={`px-4 py-2 rounded-lg whitespace-nowrap transition ${
-                  selectedCategory === cat.value
-                    ? "bg-primary text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                }`}
-              >
-                <span className="mr-1">{cat.icon}</span>
-                {cat.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+      {/* <VoiceSearch />
+        {/* ভয়েস সার্চ সেন্টার */}
+        {/* <VoiceButton /> */} 
 
       {/* সার্ভিস লিস্ট */}
       {loading ? (
-        <div className="flex justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-        </div>
+          <Loader />
+
       ) : services.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-lg">
           <div className="text-6xl mb-4">🔍</div>

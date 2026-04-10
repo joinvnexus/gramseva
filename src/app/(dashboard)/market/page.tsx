@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import Loader from '@/components/common/Loader';
 
 interface Market {
   id: string;
@@ -129,9 +130,7 @@ export default function MarketPage() {
       <div>
         <h2 className="text-xl font-bold text-primary mb-4">সাপ্তাহিক হাট সমূহ</h2>
         {loading ? (
-          <div className="flex justify-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-          </div>
+          <Loader />
         ) : markets.length === 0 ? (
           <div className="text-center py-12 bg-white rounded-lg">
             <div className="text-6xl mb-4">🏪</div>

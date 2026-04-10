@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Report } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
+import Loader from '@/components/common/Loader';
+import ReportCard from '@/components/reports/ReportCard';
 
 const statusColors = {
   PENDING: 'bg-yellow-100 text-yellow-800',
@@ -108,9 +110,7 @@ export default function ReportsPage() {
 
       {/* রিপোর্ট লিস্ট */}
       {loading ? (
-        <div className="flex justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-        </div>
+        <Loader />
       ) : reports.length === 0 ? (
         <div className="text-center py-12 bg-white rounded-lg">
           <div className="text-6xl mb-4">📭</div>
@@ -120,55 +120,11 @@ export default function ReportsPage() {
       ) : (
         <div className="space-y-4">
           {reports.map((report) => (
-            <div key={report.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition">
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  {/* হেডার */}
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">{problemTypeIcons[report.problemType]}</span>
-                    <span className={`px-2 py-1 rounded text-xs font-semibold ${statusColors[report.status]}`}>
-                      {statusText[report.status]}
-                    </span>
-                    <span className="text-xs text-gray-500">
-                      {new Date(report.createdAt).toLocaleDateString('bn-BD')}
-                    </span>
-                  </div>
-
-                  {/* বিবরণ */}
-                  <p className="text-gray-700 mb-3">{report.description}</p>
-
-                  {/* ইউজার ও লোকেশন */}
-                  <div className="flex items-center gap-4 text-sm text-gray-500">
-                    <span className="flex items-center gap-1">
-                      👤 {report.user?.name}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      📍 {report.user?.village}
-                    </span>
-                  </div>
-
-                  {/* ছবি (যদি থাকে) */}
-                  {report.imageUrl && (
-                    <div className="mt-3">
-                      <img
-                        src={report.imageUrl}
-                        alt="Report"
-                        className="h-32 w-auto rounded object-cover"
-                      />
-                    </div>
-                  )}
-                </div>
-
-                {/* ভোট বাটন */}
-                <button
-                  onClick={() => handleVote(report.id)}
-                  className="flex flex-col items-center p-3 rounded-lg hover:bg-gray-100 transition"
-                >
-                  <span className="text-2xl">👍</span>
-                  <span className="text-sm font-semibold mt-1">{report.upVotes}</span>
-                </button>
-              </div>
-            </div>
+           <ReportCard 
+      key={report.id} 
+      report={report} 
+      onVote={handleVote}
+    />
           ))}
         </div>
       )}

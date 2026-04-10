@@ -1,35 +1,27 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-
-interface Notification {
-  id: string;
-  title: string;
-  message: string;
-  type: string;
-  isRead: boolean;
-  createdAt: string;
-}
+import { useNotification } from '@/hooks/useNotification';
 
 export default function NotificationBell() {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const { isAuthenticated } = useAuth();
+  const { notifications, unreadCount, markAsRead } = useNotification({
+    enabled: isAuthenticated,
+  });
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      fetchNotifications();
-      const interval = setInterval(fetchNotifications, 30000); // প্রতি 30 সেকেন্ড
-      return () => clearInterval(interval);
-    }
+    if (!isAuthenticated) setIsOpen(false);
   }, [isAuthenticated]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -37,38 +29,7 @@ export default function NotificationBell() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const fetchNotifications = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/api/notifications', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await response.json();
-      if (data.success) {
-        setNotifications(data.data);
-        setUnreadCount(data.data.filter((n: Notification) => !n.isRead).length);
-      }
-    } catch (error) {
-      console.error('Error fetching notifications:', error);
-    }
-  };
-
-  const markAsRead = async (id?: string) => {
-    try {
-      const token = localStorage.getItem('token');
-      await fetch('/api/notifications', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(id ? { notificationId: id } : { markAll: true }),
-      });
-      fetchNotifications();
-    } catch (error) {
-      console.error('Error marking as read:', error);
-    }
-  };
+  if (!isAuthenticated) return null;
 
   const getTypeIcon = (type: string) => {
     switch (type) {
@@ -85,8 +46,18 @@ export default function NotificationBell() {
         onClick={() => setIsOpen(!isOpen)}
         className="relative p-2 text-white hover:bg-primary-light rounded-full transition"
       >
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+          />
         </svg>
         {unreadCount > 0 && (
           <span className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
@@ -104,7 +75,7 @@ export default function NotificationBell() {
                 onClick={() => markAsRead()}
                 className="text-xs text-primary hover:underline"
               >
-                সব মার্ক as read
+                সব মার্ক করুন
               </button>
             )}
           </div>
@@ -118,7 +89,9 @@ export default function NotificationBell() {
               notifications.map((notif) => (
                 <div
                   key={notif.id}
-                  className={`p-3 border-b hover:bg-gray-50 cursor-pointer ${!notif.isRead ? 'bg-blue-50' : ''}`}
+                  className={`p-3 border-b hover:bg-gray-50 cursor-pointer ${
+                    !notif.isRead ? 'bg-blue-50' : ''
+                  }`}
                   onClick={() => {
                     markAsRead(notif.id);
                     setIsOpen(false);
@@ -127,8 +100,12 @@ export default function NotificationBell() {
                   <div className="flex items-start gap-3">
                     <span className="text-xl">{getTypeIcon(notif.type)}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-gray-800 text-sm">{notif.title}</p>
-                      <p className="text-gray-600 text-xs mt-1">{notif.message}</p>
+                      <p className="font-semibold text-gray-800 text-sm">
+                        {notif.title}
+                      </p>
+                      <p className="text-gray-600 text-xs mt-1">
+                        {notif.message}
+                      </p>
                       <p className="text-gray-400 text-xs mt-1">
                         {new Date(notif.createdAt).toLocaleString('bn-BD')}
                       </p>
@@ -146,3 +123,4 @@ export default function NotificationBell() {
     </div>
   );
 }
+

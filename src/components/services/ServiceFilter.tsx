@@ -1,5 +1,7 @@
 'use client';
 
+import VoiceButton from '@/components/common/VoiceButton';
+
 interface ServiceFilterProps {
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
@@ -34,7 +36,11 @@ export default function ServiceFilter({
               placeholder="সার্ভিস বা নাম দিয়ে খুঁজুন..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full pl-4 pr-20 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+            />
+            <VoiceButton
+              onResult={(text) => onSearchChange(text)}
+              className="absolute right-10 top-1/2 -translate-y-1/2"
             />
             <span className="absolute right-3 top-2 text-gray-400">🔍</span>
           </div>

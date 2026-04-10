@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { Report } from '@/types';
+import ReportStatus from './ReportStatus';
+import { toBanglaDate } from '@/utils/bengaliHelper';
 
 interface ReportCardProps {
   report: Report;
@@ -44,11 +46,9 @@ export default function ReportCard({ report, onVote }: ReportCardProps) {
           {/* হেডার */}
           <div className="flex items-center gap-2 mb-2 flex-wrap">
             <span className="text-2xl">{problemTypeIcons[report.problemType]}</span>
-            <span className={`px-2 py-1 rounded text-xs font-semibold ${statusColors[report.status]}`}>
-              {statusText[report.status]}
-            </span>
+            <ReportStatus status={report.status} size="sm" />
             <span className="text-xs text-gray-500">
-              {new Date(report.createdAt).toLocaleDateString('bn-BD')}
+              {toBanglaDate(report.createdAt)}
             </span>
           </div>
 
@@ -84,7 +84,9 @@ export default function ReportCard({ report, onVote }: ReportCardProps) {
           className="flex flex-col items-center p-3 rounded-lg hover:bg-gray-100 transition"
         >
           <span className="text-2xl">👍</span>
-          <span className="text-sm font-semibold mt-1">{report.upVotes}</span>
+          <span className="text-sm font-semibold mt-1">
+            {report.upVotes ?? (report as any).upvoteCount ?? 0}
+          </span>
         </button>
       </div>
     </div>

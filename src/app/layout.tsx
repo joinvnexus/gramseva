@@ -4,6 +4,7 @@ import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
 import PWASetup from "@/components/common/PWASetup";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 export const metadata: Metadata = {
   title: "GramSeva - গ্রামের হাতে ডিজিটাল বাংলাদেশ",
@@ -19,14 +20,14 @@ export default function RootLayout({
   return (
     <html lang="bn">
       <body className="flex flex-col min-h-screen">
-        <AuthProvider>
-          <Header />
-          <main className="flex-grow container mx-auto px-4 py-8">
-            {children}
-          </main>
-          <Footer />
-          <PWASetup />
-        </AuthProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <Header />
+            <main className="flex-grow container mx-auto px-4 py-8">{children}</main>
+            <Footer />
+            <PWASetup />
+          </AuthProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

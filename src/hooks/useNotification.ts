@@ -11,12 +11,18 @@ interface Notification {
   createdAt: string;
 }
 
-export function useNotification() {
+interface UseNotificationOptions {
+  enabled?: boolean;
+}
+
+export function useNotification(options: UseNotificationOptions = {}) {
+  const { enabled = true } = options;
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const fetchNotifications = async () => {
+    if (!enabled) return;
     try {
       const token = localStorage.getItem('token');
       const response = await fetch('/api/notifications', {
@@ -35,6 +41,7 @@ export function useNotification() {
   };
 
   const markAsRead = async (id?: string) => {
+    if (!enabled) return;
     try {
       const token = localStorage.getItem('token');
       await fetch('/api/notifications', {
@@ -52,10 +59,17 @@ export function useNotification() {
   };
 
   useEffect(() => {
+    if (!enabled) {
+      setNotifications([]);
+      setUnreadCount(0);
+      setLoading(false);
+      return;
+    }
+
     fetchNotifications();
     const interval = setInterval(fetchNotifications, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [enabled]);
 
   return {
     notifications,

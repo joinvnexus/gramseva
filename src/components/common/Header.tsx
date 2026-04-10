@@ -4,10 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import NotificationBell from './NotificationBell';
+import { useTheme } from '@/contexts/ThemeContext';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout, isAuthenticated } = useAuth();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="bg-primary shadow-md sticky top-0 z-50">
@@ -40,6 +42,14 @@ export default function Header() {
             </Link>
 
             {isAuthenticated && <NotificationBell />}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="p-2 text-white hover:bg-primary-light rounded-full transition"
+              title={theme === 'light' ? 'Dark mode' : 'Light mode'}
+            >
+              {theme === 'light' ? '🌙' : '☀️'}
+            </button>
 
           {/* ড্যাশবোর্ড লিংক যোগ করুন */}
 {isAuthenticated && (
@@ -58,24 +68,34 @@ export default function Header() {
           </nav>
 
           {/* মোবাইল মেনু বাটন */}
-          <button
-            className="md:hidden text-white"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          <div className="md:hidden flex items-center gap-2">
+            <button
+              type="button"
+              onClick={toggleTheme}
+              className="p-2 text-white hover:bg-primary-light rounded-full transition"
+              title={theme === 'light' ? 'Dark mode' : 'Light mode'}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
+              {theme === 'light' ? '🌙' : '☀️'}
+            </button>
+            <button
+              className="text-white"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* মোবাইল মেনু */}

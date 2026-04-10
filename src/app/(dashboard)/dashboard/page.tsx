@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
+import Loader from '@/components/common/Loader';
 
 interface DashboardStats {
   myReports: number;
@@ -55,11 +56,7 @@ export default function DashboardPage() {
   };
 
   if (loading) {
-    return (
-      <div className="flex justify-center py-12">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
-      </div>
-    );
+    return <Loader />;
   }
 
   return (

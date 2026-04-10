@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { Service } from '@/types';
+import { formatCurrency } from '@/utils/bengaliHelper';
 
 interface ServiceCardProps {
   service: Service;
@@ -17,7 +18,7 @@ const categoryIcon = {
 };
 
 const categoryName = {
-  ELECTRICIAN: 'ইলেকট্রিশিয়ান',
+  ELECTRICIAN: 'ইলেকট্রিশিয়ান',
   PLUMBER: 'মিস্ত্রি',
   MECHANIC: 'মেকানিক',
   DOCTOR: 'ডাক্তার',
@@ -32,7 +33,9 @@ export default function ServiceCard({ service }: ServiceCardProps) {
         <div className="p-4">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">{categoryIcon[service.category]}</span>
+              <span className="text-2xl">
+                {categoryIcon[service.category]}
+              </span>
               <h3 className="font-semibold text-lg text-gray-800">
                 {service.user?.name}
               </h3>
@@ -56,10 +59,12 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
               <span className="text-gray-500 text-sm">📍</span>
-              <span className="text-sm text-gray-600">{service.user?.village}</span>
+              <span className="text-sm text-gray-600">
+                {service.user?.village}
+              </span>
             </div>
             <div className="text-primary font-bold">
-              ৳{service.hourlyRate}/ঘন্টা
+              {formatCurrency(service.hourlyRate)}/ঘন্টা
             </div>
           </div>
 
@@ -75,3 +80,4 @@ export default function ServiceCard({ service }: ServiceCardProps) {
     </Link>
   );
 }
+

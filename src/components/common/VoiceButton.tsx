@@ -84,7 +84,7 @@ export default function VoiceButton({ onResult, onListening, className = '' }: V
   return (
     <button
       onClick={isListening ? stopListening : startListening}
-      className={`p-3 rounded-full transition-all ${
+      className={`relative p-3 rounded-full transition-all ${
         isListening
           ? 'bg-red-500 animate-pulse'
           : 'bg-primary hover:bg-primary-dark'
