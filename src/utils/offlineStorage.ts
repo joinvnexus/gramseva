@@ -8,6 +8,15 @@ const STORES = {
   SERVICES: 'services',
 };
 
+interface OfflineReport {
+  id: string;
+  problemType: string;
+  description: string;
+  lat?: number;
+  lng?: number;
+  imageUrl?: string;
+}
+
 let db: IDBDatabase | null = null;
 
 function openDB(): Promise<IDBDatabase> {
@@ -90,8 +99,7 @@ export async function clearOffline(storeName: string): Promise<void> {
 }
 
 export async function syncOfflineData(): Promise<void> {
-  // অফলাইন ডাটা সার্ভারের সাথে সিঙ্ক করুন
-  const offlineReports = await getAllOffline(STORES.REPORTS);
+  const offlineReports = await getAllOffline<OfflineReport>(STORES.REPORTS);
   
   for (const report of offlineReports) {
     try {

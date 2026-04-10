@@ -4,8 +4,9 @@ import { prisma } from '@/lib/prisma';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const token = request.headers.get('authorization')?.split(' ')[1];
     if (!token) {
@@ -22,7 +23,7 @@ export async function POST(
     const existingVote = await prisma.reportUpvote.findUnique({
       where: {
         reportId_userId: {
-          reportId: params.id,
+          reportId: id,
           userId: payload.id,
         },
       },
@@ -33,14 +34,14 @@ export async function POST(
       await prisma.reportUpvote.delete({
         where: {
           reportId_userId: {
-            reportId: params.id,
+            reportId: id,
             userId: payload.id,
           },
         },
       });
 
       await prisma.report.update({
-        where: { id: params.id },
+        where: { id: id },
         data: { upVotes: { decrement: 1 } },
       });
 
@@ -49,13 +50,13 @@ export async function POST(
       // ভোট যোগ করুন
       await prisma.reportUpvote.create({
         data: {
-          reportId: params.id,
+          reportId: id,
           userId: payload.id,
         },
       });
 
       await prisma.report.update({
-        where: { id: params.id },
+        where: { id: id },
         data: { upVotes: { increment: 1 } },
       });
 

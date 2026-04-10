@@ -4,8 +4,9 @@ import { prisma } from '@/lib/prisma';
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const token = request.headers.get('authorization')?.split(' ')[1];
     if (!token) {
@@ -31,7 +32,7 @@ export async function POST(
     // রিভিউ তৈরি
     const review = await prisma.review.create({
       data: {
-        serviceId: params.id,
+        serviceId: id,
         userId: payload.id,
         rating: parseInt(rating),
         comment: comment || null,
@@ -40,12 +41,12 @@ export async function POST(
 
     // সার্ভিসের গড় রেটিং আপডেট
     const reviews = await prisma.review.findMany({
-      where: { serviceId: params.id },
+      where: { serviceId: id },
     });
     const avgRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
 
     await prisma.service.update({
-      where: { id: params.id },
+      where: { id },
       data: { rating: avgRating },
     });
 

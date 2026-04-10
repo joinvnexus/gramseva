@@ -4,11 +4,12 @@ import { prisma } from '@/lib/prisma';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const service = await prisma.service.findUnique({
-      where: { id: params.id },
+      where: { id },
       include: {
         user: {
           select: {
@@ -52,8 +53,9 @@ export async function GET(
 // সার্ভিস আপডেট
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const token = request.headers.get('authorization')?.split(' ')[1];
     if (!token) {
@@ -67,7 +69,7 @@ export async function PUT(
     const payload = verifyToken(token);
 
     const service = await prisma.service.findUnique({
-      where: { id: params.id },
+      where: { id },
     });
 
     if (!service || service.userId !== payload.id) {
@@ -81,7 +83,7 @@ export async function PUT(
     const { description, hourlyRate, isAvailable } = body;
 
     const updated = await prisma.service.update({
-      where: { id: params.id },
+      where: { id },
       data: {
         description: description || undefined,
         hourlyRate: hourlyRate ? parseFloat(hourlyRate) : undefined,

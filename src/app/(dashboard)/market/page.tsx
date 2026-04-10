@@ -19,6 +19,10 @@ interface Price {
   price: number;
   unit: string;
   date: string;
+  market?: {
+    village: string;
+    marketDay: string;
+  };
 }
 
 const weekDays = ['রবিবার', 'সোমবার', 'মঙ্গলবার', 'বুধবার', 'বৃহস্পতিবার', 'শুক্রবার', 'শনিবার'];
