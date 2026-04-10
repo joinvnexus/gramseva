@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import NotificationBell from './NotificationBell';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,6 +38,8 @@ export default function Header() {
             >
               হাট বাজার
             </Link>
+
+            {isAuthenticated && <NotificationBell />}
 
             {isAuthenticated ? (
               <>

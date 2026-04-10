@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>অফলাইন - GramSeva</title>
+  <style>
+    body {
+      font-family: 'Hind Siliguri', system-ui, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #8B5A2B 0%, #6B3E1A 100%);
+      color: white;
+    }
+    .container {
+      text-align: center;
+      padding: 20px;
+    }
+    .icon {
+      font-size: 80px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 16px;
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+    button {
+      background: #FFB347;
+      color: #8B5A2B;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">📡</div>
+    <h1>ইন্টারনেট সংযোগ নেই</h1>
+    <p>অনুগ্রহ করে আপনার ইন্টারনেট সংযোগ চেক করুন<br>এবং আবার চেষ্টা করুন</p>
+    <button onclick="window.location.reload()">রিফ্রেশ করুন</button>
+  </div>
+</body>
+</html>

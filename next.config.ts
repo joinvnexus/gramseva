@@ -1,14 +1,34 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  // Workaround for Windows `spawn EPERM` when Next attempts to execute
-  // `node_modules/.bin/tsc` during `next build`.
-  typescript: {
-    ignoreBuildErrors: true,
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  async headers() {
+    return [
+      {
+        source: '/sw.js',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/javascript',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+        ],
+      },
+      {
+        source: '/manifest.json',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/json',
+          },
+        ],
+      },
+    ];
   },
-  experimental: {
-    workerThreads: true,
+  images: {
+    domains: ['res.cloudinary.com'],
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
