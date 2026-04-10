@@ -41,29 +41,20 @@ export default function Header() {
 
             {isAuthenticated && <NotificationBell />}
 
-            {isAuthenticated ? (
-              <>
-                <Link
-                  href="/profile"
-                  className="text-white hover:text-accent transition"
-                >
-                  👤 {user?.name}
-                </Link>
-                <button
-                  onClick={logout}
-                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
-                >
-                  লগআউট
-                </button>
-              </>
-            ) : (
-              <Link
-                href="/login"
-                className="bg-accent text-primary px-4 py-2 rounded-lg font-semibold hover:bg-accent-dark transition"
-              >
-                লগইন
-              </Link>
-            )}
+          {/* ড্যাশবোর্ড লিংক যোগ করুন */}
+{isAuthenticated && (
+  <>
+    <Link href="/dashboard" className="text-white hover:text-accent transition">
+      ড্যাশবোর্ড
+    </Link>
+    <Link href="/profile" className="text-white hover:text-accent transition">
+      👤 {user?.name}
+    </Link>
+    <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+      লগআউট
+    </button>
+  </>
+)}
           </nav>
 
           {/* মোবাইল মেনু বাটন */}

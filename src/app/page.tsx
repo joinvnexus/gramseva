@@ -1,7 +1,32 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import VoiceSearch from '@/components/common/VoiceSearch';
 export default function Home() {
+  const router = useRouter();
+  const [isListening, setIsListening] = useState(false);
+  const handleVoiceResult = (text: string) => {
+    // ভয়েস কমান্ড পার্স করুন
+    const lowerText = text.toLowerCase();
+    
+    if (lowerText.includes('মিস্ত্রি') || lowerText.includes('ইলেকট্রিশিয়ান')) {
+      router.push('/services?category=ELECTRICIAN');
+    } else if (lowerText.includes('ডাক্তার')) {
+      router.push('/services?category=DOCTOR');
+    } else if (lowerText.includes('টিউটর')) {
+      router.push('/services?category=TUTOR');
+    } else if (lowerText.includes('রিপোর্ট') || lowerText.includes('সমস্যা')) {
+      router.push('/reports/new');
+    } else if (lowerText.includes('হাট') || lowerText.includes('বাজার')) {
+      router.push('/market');
+    } else {
+      // সাধারণ সার্চ
+      router.push(`/services?search=${encodeURIComponent(text)}`);
+    }
+  };
+
   return (
     <div className="space-y-12">
       {/* হিরো সেকশন */}
@@ -13,15 +38,47 @@ export default function Home() {
           <p className="text-lg md:text-xl mb-8 opacity-90">
             মিস্ত্রি, ডাক্তার, রিপোর্টিং, হাট বাজার - সব এক জায়গায়
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/services" className="bg-accent text-primary px-6 py-3 rounded-lg font-semibold hover:bg-accent-dark transition">
-              সার্ভিস খুঁজুন
-            </Link>
-            <Link href="/reports/new" className="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
-              সমস্যা রিপোর্ট করুন
-            </Link>
+          
+         {/* ভয়েস সার্চ সেন্টার */}
+          <div className="flex flex-col items-center gap-4">
+            <div className="flex gap-4 justify-center">
+              <button
+                onClick={() => router.push('/services')}
+                className="bg-accent text-primary px-6 py-3 rounded-lg font-semibold hover:bg-accent-dark transition"
+              >
+                সার্ভিস খুঁজুন
+              </button>
+              <button
+                onClick={() => router.push('/reports/new')}
+                className="bg-white text-primary px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition"
+              >
+                সমস্যা রিপোর্ট করুন
+              </button>
+            </div>
+            
+            {/* ভয়েস বাটন */}
+            <div className="mt-4">
+              <div className="relative">
+                <VoiceSearch 
+                  onResult={handleVoiceResult}
+                  onListening={setIsListening}
+                />
+                {isListening && (
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-4 bg-black/80 text-white px-4 py-2 rounded-full text-sm whitespace-nowrap">
+                    🎤 বলুন "মিস্ত্রি", "ডাক্তার", "রিপোর্ট"...
+                  </div>
+                )}
+              </div>
+              <p className="text-sm opacity-80 mt-4">
+                অথবা ভয়েসে বলুন: "মিস্ত্রি দরকার", "রাস্তা ভাঙা", "হাট বাজার"
+              </p>
+            </div>
           </div>
+
+
         </div>
+
+        
         {/* ডেকোরেটিভ এলিমেন্ট */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-64 h-64 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
