@@ -1,16 +1,28 @@
 'use client';
 
+import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+
+const providerTypes = [
+  { value: 'ELECTRICIAN', label: 'ইলেকট্রিশিয়ান', icon: '⚡', description: 'বৈদ্যুতিক কাজ, ওয়্যারিং, ফ্যান রিপেয়ার' },
+  { value: 'PLUMBER', label: 'মিস্ত্রি', icon: '🔧', description: 'পাইপ লাইন, ট্যাপ, টয়লেট রিপেয়ার' },
+  { value: 'MECHANIC', label: 'মেকানিক', icon: '🔨', description: 'মোটরসাইকেল, ইঞ্জিন, যন্ত্রপাতি মেরামত' },
+  { value: 'DOCTOR', label: 'ডাক্তার', icon: '👨‍⚕️', description: 'স্বাস্থ্য সেবা, চিকিৎসা পরামর্শ' },
+  { value: 'TUTOR', label: 'টিউটর', icon: '📚', description: 'পড়াশোনা, ক্লাস, প্রাইভেট টিউটর' },
+  { value: 'OTHER', label: 'অন্যান্য', icon: '📦', description: 'অন্যান্য সার্ভিস' },
+];
 
 export default function ProfilePage() {
   const { user, logout } = useAuth();
   const router = useRouter();
   const [upgrading, setUpgrading] = useState(false);
+  const [selectedType, setSelectedType] = useState('');
+  const [showTypeSelection, setShowTypeSelection] = useState(false);
 
   const upgradeToProvider = async () => {
-    if (!confirm('আপনি কি সার্ভিস প্রোভাইডার হতে চান? তারপর আপনি সার্ভিস দিতে পারবেন।')) {
+    if (!selectedType) {
+      alert('দয়া করে একটি সার্ভিসের ধরন নির্বাচন করুন');
       return;
     }
 
@@ -20,13 +32,15 @@ export default function ProfilePage() {
       const response = await fetch('/api/user/upgrade', {
         method: 'POST',
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
+        body: JSON.stringify({ providerType: selectedType }),
       });
 
       const data = await response.json();
       if (data.success) {
-        alert('恭喜! আপনি এখন সার্ভিস প্রোভাইডার। এখন নতুন সার্ভিস যোগ করতে পারবেন।');
+        alert(data.message);
         window.location.reload();
       } else {
         alert(data.error || 'আপগ্রেড করতে সমস্যা হয়েছে');
@@ -35,6 +49,7 @@ export default function ProfilePage() {
       alert('আপগ্রেড করতে সমস্যা হয়েছে');
     } finally {
       setUpgrading(false);
+      setShowTypeSelection(false);
     }
   };
 
@@ -46,14 +61,13 @@ export default function ProfilePage() {
   return (
     <div className="max-w-3xl mx-auto">
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-        {/* কভার ফটো */}
+        {/* প্রোফাইল হেডার */}
         <div className="h-32 bg-gradient-to-r from-primary to-primary-dark"></div>
         
-        {/* প্রোফাইল ইনফো */}
         <div className="px-6 pb-6">
           <div className="flex flex-col items-center -mt-12 mb-4">
             <div className="bg-white rounded-full p-2 shadow-lg">
-              <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center text-4xl">
+              <div className="w-24 h-24 bg-primary rounded-full flex items-center justify-center text-4xl text-white">
                 {user.name?.charAt(0) || '👤'}
               </div>
             </div>
@@ -63,9 +77,11 @@ export default function ProfilePage() {
             {/* রোল ব্যাজ */}
             <div className="mt-2">
               {user.role === 'PROVIDER' ? (
-                <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
-                  🌟 সার্ভিস প্রোভাইডার
-                </span>
+                <div className="text-center">
+                  <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold inline-flex items-center gap-1">
+                    🌟 {user.providerType} সার্ভিস প্রোভাইডার
+                  </span>
+                </div>
               ) : user.role === 'ADMIN' ? (
                 <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-semibold">
                   👑 অ্যাডমিন
@@ -92,24 +108,63 @@ export default function ProfilePage() {
               <span className="text-gray-600">⭐ রেটিং</span>
               <span className="font-medium">{user.rating?.toFixed(1) || '0'} / 5</span>
             </div>
-            <div className="flex justify-between py-2">
-              <span className="text-gray-600">✅ ভেরিফিকেশন</span>
-              <span className={user.verified ? 'text-green-600' : 'text-yellow-600'}>
-                {user.verified ? 'ভেরিফাইড ✓' : 'ভেরিফাইড নয়'}
-              </span>
-            </div>
           </div>
 
           {/* অ্যাকশন বাটন */}
           <div className="mt-6 space-y-3">
-            {user.role === 'USER' && (
+            {user.role === 'USER' && !showTypeSelection && (
               <button
-                onClick={upgradeToProvider}
-                disabled={upgrading}
-                className="w-full bg-secondary text-white py-3 rounded-lg font-semibold hover:bg-secondary-dark transition disabled:opacity-50"
+                onClick={() => setShowTypeSelection(true)}
+                className="w-full bg-secondary text-white py-3 rounded-lg font-semibold hover:bg-secondary-dark transition"
               >
-                {upgrading ? 'আপগ্রেড করা হচ্ছে...' : '🚀 সার্ভিস প্রোভাইডার হন'}
+                🚀 সার্ভিস প্রোভাইডার হন
               </button>
+            )}
+
+            {/* প্রোভাইডার টাইপ সিলেক্ট মডাল */}
+            {showTypeSelection && (
+              <div className="border rounded-lg p-4 space-y-4">
+                <h3 className="font-bold text-lg">আপনি কোন ধরনের সার্ভিস দিতে চান?</h3>
+                <p className="text-sm text-gray-500">(শুধু একটি ধরন নির্বাচন করতে পারবেন)</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {providerTypes.map((type) => (
+                    <button
+                      key={type.value}
+                      onClick={() => setSelectedType(type.value)}
+                      className={`p-3 rounded-lg text-left transition-all ${
+                        selectedType === type.value
+                          ? 'bg-primary/10 border-2 border-primary'
+                          : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-2xl">{type.icon}</span>
+                        <div>
+                          <div className="font-semibold">{type.label}</div>
+                          <div className="text-xs text-gray-500">{type.description}</div>
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex gap-3 pt-2">
+                  <button
+                    onClick={() => setShowTypeSelection(false)}
+                    className="flex-1 px-4 py-2 bg-gray-200 rounded-lg"
+                  >
+                    বাতিল
+                  </button>
+                  <button
+                    onClick={upgradeToProvider}
+                    disabled={upgrading || !selectedType}
+                    className="flex-1 bg-primary text-white py-2 rounded-lg disabled:opacity-50"
+                  >
+                    {upgrading ? 'আপগ্রেড হচ্ছে...' : 'নিশ্চিত করুন'}
+                  </button>
+                </div>
+              </div>
             )}
 
             {user.role === 'PROVIDER' && (
@@ -117,7 +172,7 @@ export default function ProfilePage() {
                 onClick={() => router.push('/services/new')}
                 className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-dark transition"
               >
-                ➕ নতুন সার্ভিস যোগ করুন
+                ➕ আমার সার্ভিস আপডেট করুন
               </button>
             )}
 
@@ -133,73 +188,6 @@ export default function ProfilePage() {
           </div>
         </div>
       </div>
-
-      {/* যদি প্রোভাইডার হয়, তাহলে তার সার্ভিস লিস্ট দেখানো */}
-      {user.role === 'PROVIDER' && (
-        <div className="mt-6 bg-white rounded-lg shadow p-6">
-          <h3 className="font-bold text-lg mb-4">আমার সার্ভিস সমূহ</h3>
-          <MyServicesList />
-        </div>
-      )}
     </div>
   );
-}
-
-// আমার সার্ভিস লিস্ট কম্পোনেন্ট
-function MyServicesList() {
-  const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetchMyServices();
-  }, []);
-
-  const fetchMyServices = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/api/services/my', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const data = await response.json();
-      if (data.success) {
-        setServices(data.data);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) return <div className="text-center py-4">লোডিং...</div>;
-  if (services.length === 0) return <div className="text-center py-4 text-gray-500">কোন সার্ভিস যোগ করেননি</div>;
-
-  return (
-    <div className="space-y-3">
-      {services.map((service: any) => (
-        <div key={service.id} className="border rounded-lg p-3 flex justify-between items-center">
-          <div>
-            <p className="font-medium">{service.category}</p>
-            <p className="text-sm text-gray-600">{service.description.substring(0, 50)}...</p>
-            <p className="text-sm text-primary">৳{service.hourlyRate}/ঘন্টা</p>
-          </div>
-          <div className="flex gap-2">
-            <button
-              onClick={() => toggleAvailability(service.id, !service.isAvailable)}
-              className={`px-3 py-1 rounded text-sm ${
-                service.isAvailable ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-              }`}
-            >
-              {service.isAvailable ? 'চালু' : 'বন্ধ'}
-            </button>
-            <button className="text-blue-500">✏️</button>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function toggleAvailability(id: string, isAvailable: boolean) {
-  // এপি কল করে স্ট্যাটাস আপডেট
 }

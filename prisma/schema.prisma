@@ -16,6 +16,7 @@ model User {
   village      String
   ward         Int
   role         UserRole  @default(USER)
+  providerType Category? // ✅ Category enum ব্যবহার করছে
   verified     Boolean   @default(false)
   rating       Float     @default(0)
   otp          String?
@@ -23,16 +24,13 @@ model User {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
-  services Service[]
-  reports  Report[]
-
+  services      Service[]
+  reports       Report[]
   reportUpvotes ReportUpvote[]
   reviews       Review[]
-
   notifications Notification[]
   fcmTokens     FCMToken[]
-
-  bookings Booking[] 
+  bookings      Booking[]
 }
 
 // সার্ভিস মডেল
@@ -47,10 +45,10 @@ model Service {
   isAvailable Boolean  @default(true)
   createdAt   DateTime @default(now())
 
-  reviews Review[]
+  reviews  Review[]
+  bookings Booking[]
 
-  bookings Booking[]  
-
+  @@unique([userId]) // ✅ একজন প্রোভাইডার শুধু ১টি সার্ভিস
 }
 
 // রিপোর্ট মডেল
@@ -98,7 +96,7 @@ model Review {
 model Market {
   id         String   @id @default(cuid())
   village    String
-  marketDay  String // সোমবার, মঙ্গলবার, বুধবার etc
+  marketDay  String   // সোমবার, মঙ্গলবার, বুধবার etc
   marketTime String
   location   String?
   isActive   Boolean  @default(true)
@@ -115,7 +113,7 @@ model Price {
   market    Market   @relation(fields: [marketId], references: [id], onDelete: Cascade)
   product   String
   price     Float
-  unit      String   @default("কেজি") // কেজি, পিস, মন etc
+  unit      String   @default("কেজি")
   date      DateTime @default(now())
   createdAt DateTime @default(now())
 }
@@ -129,18 +127,11 @@ model Notification {
   message   String
   type      NotificationType @default(GENERAL)
   isRead    Boolean          @default(false)
-  data      Json? // অতিরিক্ত ডাটা
+  data      Json?
   createdAt DateTime         @default(now())
 }
 
-enum NotificationType {
-  GENERAL
-  MARKET
-  REPORT
-  SERVICE
-}
-
-// FCM টোকেন মডেল (পুশ নোটিফিকেশনের জন্য)
+// FCM টোকেন মডেল
 model FCMToken {
   id        String   @id @default(cuid())
   userId    String
@@ -149,7 +140,21 @@ model FCMToken {
   createdAt DateTime @default(now())
 }
 
-// এনাম টাইপ
+// বুকিং মডেল
+model Booking {
+  id        String       @id @default(cuid())
+  userId    String
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  serviceId String
+  service   Service      @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  date      DateTime
+  address   String       @db.Text
+  status    BookingStatus @default(PENDING)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+}
+
+// ✅ এনাম টাইপ (সব এক জায়গায়)
 enum UserRole {
   USER
   PROVIDER
@@ -177,22 +182,17 @@ enum Status {
   PROCESSING
   RESOLVED
 }
-// Booking মডেল (যদি না থাকে)
-model Booking {
-  id        String   @id @default(cuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  serviceId String
-  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-  date      DateTime
-  address   String   @db.Text
-  status    BookingStatus @default(PENDING)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+
+enum NotificationType {
+  GENERAL
+  MARKET
+  REPORT
+  SERVICE
 }
 
 enum BookingStatus {
   PENDING
   CONFIRMED
   COMPLETED
+  CANCELLED  // ✅ CANCELLED যোগ করা হয়েছে
 }

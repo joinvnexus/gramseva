@@ -54,11 +54,14 @@ export async function GET(request: NextRequest) {
       orderBy: { rating: 'desc' },
     });
 
+    console.log('Services query result:', services.length);
+    
     return NextResponse.json({ success: true, data: services });
   } catch (error) {
     console.error('Get Services Error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { success: false, error: 'সার্ভিস লোড করতে সমস্যা হয়েছে' },
+      { success: false, error: 'সার্ভিস লোড করতে সমস্যা হয়েছে', details: errorMessage },
       { status: 500 }
     );
   }
@@ -90,7 +93,9 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { category, description, hourlyRate } = body;
+    const { category: requestedCategory, description, hourlyRate } = body;
+
+    const category = requestedCategory || user.providerType;
 
     if (!category || !description || !hourlyRate) {
       return NextResponse.json(
@@ -111,8 +116,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, data: service }, { status: 201 });
   } catch (error) {
     console.error('Create Service Error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      { success: false, error: 'সার্ভিস তৈরি করতে সমস্যা হয়েছে' },
+      { success: false, error: 'সার্ভিস তৈরি করতে সমস্যা হয়েছে', details: errorMessage },
       { status: 500 }
     );
   }
