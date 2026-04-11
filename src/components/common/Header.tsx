@@ -1,15 +1,21 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
+import Link from 'next/link';
+import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 import NotificationBell from './NotificationBell';
-import { useTheme } from '@/contexts/ThemeContext';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout, isAuthenticated } = useAuth();
-  const { theme, toggleTheme } = useTheme();
+
+  // Role based dashboard link
+  const getDashboardLink = () => {
+    if (!user) return '/dashboard';
+    if (user.role === 'ADMIN') return '/admin/dashboard';
+    if (user.role === 'PROVIDER') return '/provider/dashboard';
+    return '/user/dashboard';
+  };
 
   return (
     <header className="bg-primary shadow-md sticky top-0 z-50">
@@ -22,113 +28,72 @@ export default function Header() {
 
           {/* ডেস্কটপ মেনু */}
           <nav className="hidden md:flex items-center gap-6">
-            <Link
-              href="/services"
-              className="text-white hover:text-accent transition"
-            >
+            <Link href="/services" className="text-white hover:text-accent transition">
               সার্ভিসেস
             </Link>
-            <Link
-              href="/reports"
-              className="text-white hover:text-accent transition"
-            >
+            <Link href="/reports" className="text-white hover:text-accent transition">
               রিপোর্ট
             </Link>
-            <Link
-              href="/market"
-              className="text-white hover:text-accent transition"
-            >
+            <Link href="/market" className="text-white hover:text-accent transition">
               হাট বাজার
             </Link>
-
-            {isAuthenticated && <NotificationBell />}
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="p-2 text-white hover:bg-primary-light rounded-full transition"
-              title={theme === 'light' ? 'Dark mode' : 'Light mode'}
-            >
-              {theme === 'light' ? '🌙' : '☀️'}
-            </button>
-
-          {/* ড্যাশবোর্ড লিংক যোগ করুন */}
-{isAuthenticated && (
-  <>
-    <Link href="/dashboard" className="text-white hover:text-accent transition">
-      ড্যাশবোর্ড
-    </Link>
-    <Link href="/bookings" className="text-white hover:text-accent">
-      আমার বুকিং
-    </Link>
-    <Link href="/profile" className="text-white hover:text-accent transition">
-      👤 {user?.name}
-    </Link>
-    <button onClick={logout} className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
-      লগআউট
-    </button>
-  </>
-)}
+            
+            {isAuthenticated ? (
+              <>
+                <Link href={getDashboardLink()} className="text-white hover:text-accent transition">
+                  ড্যাশবোর্ড
+                </Link>
+                <Link href="/profile" className="text-white hover:text-accent transition">
+                  👤 {user?.name}
+                </Link>
+                <NotificationBell />
+                <button
+                  onClick={logout}
+                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition"
+                >
+                  লগআউট
+                </button>
+              </>
+            ) : (
+              <Link
+                href="/login"
+                className="bg-accent text-primary px-4 py-2 rounded-lg font-semibold hover:bg-accent-dark transition"
+              >
+                লগইন
+              </Link>
+            )}
           </nav>
 
           {/* মোবাইল মেনু বাটন */}
-          <div className="md:hidden flex items-center gap-2">
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="p-2 text-white hover:bg-primary-light rounded-full transition"
-              title={theme === 'light' ? 'Dark mode' : 'Light mode'}
-            >
-              {theme === 'light' ? '🌙' : '☀️'}
-            </button>
-            <button
-              className="text-white"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
-          </div>
+          <button 
+            className="md:hidden text-white"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
 
         {/* মোবাইল মেনু */}
         {isMenuOpen && (
           <div className="md:hidden mt-4 pt-4 border-t border-primary-light">
             <nav className="flex flex-col gap-3">
-              <Link
-                href="/services"
-                className="text-white hover:text-accent transition py-2"
-              >
+              <Link href="/services" className="text-white hover:text-accent transition py-2">
                 সার্ভিসেস
               </Link>
-              <Link
-                href="/reports"
-                className="text-white hover:text-accent transition py-2"
-              >
+              <Link href="/reports" className="text-white hover:text-accent transition py-2">
                 রিপোর্ট
               </Link>
-              <Link
-                href="/market"
-                className="text-white hover:text-accent transition py-2"
-              >
+              <Link href="/market" className="text-white hover:text-accent transition py-2">
                 হাট বাজার
               </Link>
               {isAuthenticated ? (
                 <>
-                  <Link
-                    href="/profile"
-                    className="text-white hover:text-accent transition py-2"
-                  >
+                  <Link href={getDashboardLink()} className="text-white hover:text-accent transition py-2">
+                    ড্যাশবোর্ড
+                  </Link>
+                  <Link href="/profile" className="text-white hover:text-accent transition py-2">
                     প্রোফাইল
                   </Link>
                   <button
