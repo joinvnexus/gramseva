@@ -4,35 +4,231 @@
 @layer base {
   :root {
     --primary: 139 90 43;
-    --primary-dark: 107 62 26;
-    --secondary: 74 124 89;
-    --accent: 255 179 71;
+    --primary-dark: 93 58 26;
+    --primary-light: 168 123 74;
+    --secondary: 46 125 50;
+    --secondary-dark: 27 94 32;
+    --secondary-light: 76 175 80;
+    --accent: 255 167 38;
+    --accent-dark: 245 124 0;
+    
+    --success: 76 175 80;
+    --warning: 255 193 7;
+    --error: 244 67 54;
+    --info: 33 150 243;
+    
+    --gray-50: 250 250 250;
+    --gray-100: 245 245 245;
+    --gray-200: 238 238 238;
+    --gray-300: 224 224 224;
+    --gray-400: 189 189 189;
+    --gray-500: 158 158 158;
+    --gray-600: 117 117 117;
+    --gray-700: 97 97 97;
+    --gray-800: 66 66 66;
+    --gray-900: 33 33 33;
+    
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+  }
+  
+  .dark {
+    --gray-50: 18 18 18;
+    --gray-100: 30 30 30;
+    --gray-200: 45 45 45;
+    --gray-300: 60 60 60;
+    --gray-400: 80 80 80;
+    --gray-500: 100 100 100;
+    --gray-600: 120 120 120;
+    --gray-700: 140 140 140;
+    --gray-800: 180 180 180;
+    --gray-900: 230 230 230;
   }
 
   body {
-    @apply bg-[#FFF8E7] text-gray-800;
-    font-family: 'Hind Siliguri', system-ui, -apple-system, sans-serif;
+    @apply bg-[#FFF8E7] text-gray-800 antialiased;
+    font-family: 'Hind Siliguri', 'SolaimanLipi', 'Nikosh', system-ui, -apple-system, sans-serif;
+  }
+
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  * {
+    @apply border-gray-200;
+  }
+
+  .dark * {
+    @apply border-gray-700;
   }
 }
 
 @layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 font-semibold transition-all duration-200;
+    @apply focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+    @apply active:scale-[0.96];
+  }
+  
+  .btn-sm {
+    @apply h-9 px-4 text-sm rounded-md;
+  }
+  
+  .btn-md {
+    @apply h-11 px-6 text-base rounded-lg;
+  }
+  
+  .btn-lg {
+    @apply h-13 px-8 text-lg rounded-lg;
+  }
+  
   .btn-primary {
-    @apply bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-dark transition-all duration-200 font-medium;
+    @apply bg-primary text-white hover:bg-primary-dark;
   }
   
   .btn-secondary {
-    @apply bg-secondary text-white px-6 py-2 rounded-lg hover:bg-secondary-dark transition-all duration-200 font-medium;
+    @apply bg-secondary text-white hover:bg-secondary-dark;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-primary text-primary hover:bg-primary hover:text-white;
+  }
+  
+  .btn-ghost {
+    @apply text-primary hover:bg-primary/10;
+  }
+  
+  .btn-danger {
+    @apply bg-error text-white hover:bg-error/90;
+  }
+  
+  .btn-accent {
+    @apply bg-accent text-primary hover:bg-accent-dark;
   }
   
   .card {
-    @apply bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow;
+    @apply bg-white rounded-xl shadow-card overflow-hidden;
+    @apply transition-all duration-200;
+    @apply hover:shadow-card-hover hover:-translate-y-0.5;
   }
   
-  .input-field {
-    @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
+  .dark .card {
+    @apply bg-gray-800 border border-gray-700;
+  }
+  
+  .card-flat {
+    @apply bg-white rounded-xl border border-gray-100;
+  }
+  
+  .dark .card-flat {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .input {
+    @apply w-full h-12 px-4 text-base;
+    @apply border border-gray-300 rounded-lg;
+    @apply bg-white text-gray-800;
+    @apply placeholder:text-gray-400;
+    @apply focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30;
+    @apply transition-all duration-200;
+  }
+  
+  .dark .input {
+    @apply bg-gray-800 border-gray-600 text-gray-100;
+    @apply placeholder:text-gray-500;
+  }
+  
+  .input-error {
+    @apply border-error focus:border-error focus:ring-error/30;
+  }
+  
+  .label {
+    @apply block text-sm font-semibold text-gray-700 mb-1.5;
+  }
+  
+  .dark .label {
+    @apply text-gray-300;
+  }
+  
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 text-xs font-medium rounded-full;
+  }
+  
+  .badge-primary {
+    @apply bg-primary/10 text-primary;
+  }
+  
+  .badge-secondary {
+    @apply bg-secondary/10 text-secondary;
+  }
+  
+  .badge-success {
+    @apply bg-success/10 text-success;
+  }
+  
+  .badge-warning {
+    @apply bg-warning/10 text-warning;
+  }
+  
+  .badge-error {
+    @apply bg-error/10 text-error;
+  }
+  
+  .badge-info {
+    @apply bg-info/10 text-info;
+  }
+  
+  .skeleton {
+    @apply animate-pulse-soft bg-gray-200 rounded;
+  }
+  
+  .dark .skeleton {
+    @apply bg-gray-700;
+  }
+  
+  .glass {
+    @apply bg-white/80 backdrop-blur-md;
+  }
+  
+  .dark .glass {
+    @apply bg-gray-900/80;
+  }
+  
+  .divider {
+    @apply h-px bg-gray-200 my-4;
+  }
+  
+  .dark .divider {
+    @apply bg-gray-700;
   }
 }
-/* অ্যানিমেশন */
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .touch-target {
+    @apply min-h-11 min-w-11;
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+}
+
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -44,59 +240,80 @@
   }
 }
 
-.animate-slideDown {
-  animation: slideDown 0.2s ease-out;
-}
-
-/* স্ক্রলবার কাস্টমাইজ */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #8B5A2B;
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #6B3E1A;
-}
-
-/* মোবাইলে বটম নেভিগেশনের জন্য প্যাডিং */
-body {
-  padding-bottom: 60px;
-}
-
-@media (min-width: 1024px) {
-  body {
-    padding-bottom: 0;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* হোভার এফেক্ট */
-.hover-lift {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-/* স্মুথ স্ক্রল */
+.animate-slideDown {
+  animation: slideDown 0.25s ease-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-out;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.4) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.gray.400') transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: theme('colors.gray.300');
+  border-radius: 3px;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: theme('colors.gray.600');
+}
+
 html {
   scroll-behavior: smooth;
 }
 
-/* ফোকাস রিং */
+* {
+  @apply border-gray-200;
+}
+
 *:focus {
-  outline: none;
-  ring: 2px solid #8B5A2B;
-  ring-offset: 2px;
+  @apply outline-none ring-2 ring-primary ring-offset-2;
+}
+
+.dark * {
+  @apply border-gray-700;
 }

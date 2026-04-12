@@ -100,8 +100,8 @@ export default function Header() {
     <header className={`sticky top-0 z-50 transition-all duration-300 ${
       scrolled ? 'bg-primary/95 backdrop-blur-md shadow-lg' : 'bg-primary shadow-md'
     }`}>
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      <div className="container mx-auto px-3 sm:px-4">
+        <div className="flex items-center justify-between h-14 md:h-16">
           
           {/* লোগো */}
           <Link href="/" className="flex items-center gap-2 group">
@@ -333,9 +333,9 @@ export default function Header() {
 
         {/* মোবাইল মেনু */}
         {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-white/20 animate-slideDown">
+          <div className="lg:hidden py-3 border-t border-white/20 animate-slideDown -mx-3 sm:mx-0 px-3 sm:px-0">
             {/* মোবাইল সার্চ */}
-            <div className="mb-4">
+            <div className="mb-3">
               <form onSubmit={handleSearch} className="flex gap-2">
                 <input
                   type="text"
