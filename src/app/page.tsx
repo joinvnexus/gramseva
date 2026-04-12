@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import VoiceButton from '@/components/common/VoiceButton';
 import Card, { CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
-import { Search, Wrench, Stethoscope, GraduationCap, Hammer, Truck, Plane, FileText, Store, Mic, ArrowRight, Star, Clock, Users, Award } from 'lucide-react';
+import { Search, Wrench, Stethoscope, GraduationCap, Hammer, Truck, FileText, Store, Mic, ArrowRight, Users, Award, Zap } from 'lucide-react';
 
 export default function Home() {
   const router = useRouter();
@@ -29,12 +29,12 @@ export default function Home() {
   };
 
   const categories = [
-    { name: 'ইলেকট্রিশিয়ান', icon: LightningIcon, color: 'bg-yellow-100 text-yellow-600', category: 'ELECTRICIAN' },
-    { name: 'প্লাম্বার', icon: Hammer, color: 'bg-blue-100 text-blue-600', category: 'PLUMBER' },
-    { name: 'ডাক্তার', icon: Stethoscope, color: 'bg-red-100 text-red-600', category: 'DOCTOR' },
-    { name: 'টিউটর', icon: GraduationCap, color: 'bg-purple-100 text-purple-600', category: 'TUTOR' },
-    { name: 'মেকানিক', icon: Truck, color: 'bg-orange-100 text-orange-600', category: 'MECHANIC' },
-    { name: 'গাড়ি চালক', icon: CarIcon, color: 'bg-green-100 text-green-600', category: 'DRIVER' },
+    { name: 'ইলেকট্রিশিয়ান', icon: Zap, color: 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 dark:text-yellow-400', category: 'ELECTRICIAN' },
+    { name: 'প্লাম্বার', icon: Hammer, color: 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400', category: 'PLUMBER' },
+    { name: 'ডাক্তার', icon: Stethoscope, color: 'bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400', category: 'DOCTOR' },
+    { name: 'টিউটর', icon: GraduationCap, color: 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400', category: 'TUTOR' },
+    { name: 'মেকানিক', icon: Truck, color: 'bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400', category: 'MECHANIC' },
+    { name: 'গাড়ি চালক', icon: Truck, color: 'bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400', category: 'DRIVER' },
   ];
 
   const features = [
@@ -150,23 +150,5 @@ export default function Home() {
         </div>
       </section>
     </div>
-  );
-}
-
-function LightningIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-    </svg>
-  );
-}
-
-function CarIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L18 10l-2-4H8L6 10l-2.5 1.1C2.7 11.3 2 12.1 2 13v3c0 .6.4 1 1 1h2" />
-      <circle cx="7" cy="17" r="2" />
-      <circle cx="17" cy="17" r="2" />
-    </svg>
   );
 }

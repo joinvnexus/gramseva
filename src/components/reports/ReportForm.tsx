@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { MapPin, Droplets, Zap, FileText, ImagePlus, Navigation, Loader2, CheckCircle } from 'lucide-react';
 
 interface ReportFormProps {
   onSubmit: (data: FormData) => Promise<void>;
@@ -8,10 +9,10 @@ interface ReportFormProps {
 }
 
 const problemTypes = [
-  { value: 'ROAD', label: 'রাস্তা', icon: '🛣️' },
-  { value: 'WATER', label: 'পানি', icon: '💧' },
-  { value: 'ELECTRICITY', label: 'বিদ্যুৎ', icon: '⚡' },
-  { value: 'OTHER', label: 'অন্যান্য', icon: '📝' },
+  { value: 'ROAD', label: 'রাস্তা', icon: MapPin },
+  { value: 'WATER', label: 'পানি', icon: Droplets },
+  { value: 'ELECTRICITY', label: 'বিদ্যুৎ', icon: Zap },
+  { value: 'OTHER', label: 'অন্যান্য', icon: FileText },
 ];
 
 export default function ReportForm({ onSubmit, loading = false }: ReportFormProps) {
@@ -78,7 +79,7 @@ export default function ReportForm({ onSubmit, loading = false }: ReportFormProp
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* প্রবলেম টাইপ */}
       <div>
-        <label className="block text-gray-700 font-semibold mb-3">
+        <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-3">
           সমস্যার ধরন <span className="text-red-500">*</span>
         </label>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
@@ -89,12 +90,12 @@ export default function ReportForm({ onSubmit, loading = false }: ReportFormProp
               onClick={() => setProblemType(type.value)}
               className={`p-4 rounded-lg text-center transition ${
                 problemType === type.value
-                  ? 'bg-primary/10 border-2 border-primary'
-                  : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
+                  ? 'bg-primary/10 dark:bg-primary/20 border-2 border-primary'
+                  : 'bg-gray-50 dark:bg-gray-800 border-2 border-transparent hover:bg-gray-100 dark:hover:bg-gray-700'
               }`}
             >
-              <div className="text-2xl mb-1">{type.icon}</div>
-              <div className="text-sm font-medium">{type.label}</div>
+              <type.icon className={`w-8 h-8 mx-auto mb-2 ${problemType === type.value ? 'text-primary' : 'text-gray-500'}`} />
+              <div className="text-sm font-medium text-gray-700 dark:text-gray-300">{type.label}</div>
             </button>
           ))}
         </div>
@@ -102,14 +103,14 @@ export default function ReportForm({ onSubmit, loading = false }: ReportFormProp
 
       {/* বিবরণ */}
       <div>
-        <label className="block text-gray-700 font-semibold mb-2">
+        <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
           বিস্তারিত বিবরণ <span className="text-red-500">*</span>
         </label>
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           rows={5}
-          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
           placeholder="যতটা সম্ভব বিস্তারিত জানান..."
           required
         />
@@ -117,10 +118,10 @@ export default function ReportForm({ onSubmit, loading = false }: ReportFormProp
 
       {/* ছবি আপলোড */}
       <div>
-        <label className="block text-gray-700 font-semibold mb-2">
+        <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
           ছবি (ঐচ্ছিক)
         </label>
-        <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+        <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center">
           {imagePreview ? (
             <div className="relative">
               <img src={imagePreview} alt="Preview" className="max-h-48 mx-auto rounded" />
@@ -145,27 +146,30 @@ export default function ReportForm({ onSubmit, loading = false }: ReportFormProp
                 id="image-upload"
               />
               <label htmlFor="image-upload" className="cursor-pointer inline-flex flex-col items-center">
-                <span className="text-4xl mb-2">📸</span>
+                <ImagePlus className="w-10 h-10 mb-2 text-gray-400" />
                 <span className="text-primary">ছবি আপলোড করুন</span>
-                <span className="text-xs text-gray-500 mt-1">JPG, PNG (max 5MB)</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">JPG, PNG (max 5MB)</span>
               </label>
             </>
           )}
         </div>
       </div>
 
-      {/* লোকেশন */}
+{/* লোকেশন */}
       <div>
-        <label className="block text-gray-700 font-semibold mb-2">লোকেশন</label>
+        <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">লোকেশন</label>
         {location ? (
-          <div className="bg-green-50 border border-green-300 rounded-lg p-3 flex justify-between items-center">
+          <div className="bg-green-50 dark:bg-green-900/20 border border-green-300 dark:border-green-700 rounded-lg p-3 flex justify-between items-center">
             <div>
-              <span className="text-green-700">✓ লোকেশন ডিটেক্ট করা হয়েছে</span>
-              <p className="text-xs text-gray-500 mt-1">
+              <span className="text-green-700 dark:text-green-400 flex items-center gap-2">
+                <CheckCircle className="w-4 h-4" />
+                লোকেশন ডিটেক্ট করা হয়েছে
+              </span>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                 ল্যাট: {location.lat.toFixed(4)}, লং: {location.lng.toFixed(4)}
               </p>
             </div>
-            <button type="button" onClick={() => setLocation(null)} className="text-red-500 text-sm">
+            <button type="button" onClick={() => setLocation(null)} className="text-red-500 text-sm hover:underline">
               পরিবর্তন
             </button>
           </div>
@@ -174,15 +178,18 @@ export default function ReportForm({ onSubmit, loading = false }: ReportFormProp
             type="button"
             onClick={getLocation}
             disabled={gettingLocation}
-            className="w-full py-3 bg-gray-100 rounded-lg text-center hover:bg-gray-200 transition disabled:opacity-50"
+            className="w-full py-3 bg-gray-100 dark:bg-gray-700 rounded-lg text-center hover:bg-gray-200 dark:hover:bg-gray-600 transition disabled:opacity-50"
           >
             {gettingLocation ? (
               <span className="inline-flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary"></div>
+                <Loader2 className="w-4 h-4 animate-spin" />
                 লোকেশন ডিটেক্ট করা হচ্ছে...
               </span>
             ) : (
-              <span className="inline-flex items-center gap-2">📍 আমার বর্তমান লোকেশন ব্যবহার করুন</span>
+              <span className="inline-flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                <Navigation className="w-4 h-4" />
+                আমার বর্তমান লোকেশন ব্যবহার করুন
+              </span>
             )}
           </button>
         )}
@@ -194,7 +201,14 @@ export default function ReportForm({ onSubmit, loading = false }: ReportFormProp
         disabled={loading}
         className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary-dark transition disabled:opacity-50"
       >
-        {loading ? 'জমা হচ্ছে...' : 'রিপোর্ট জমা দিন'}
+        {loading ? (
+          <span className="inline-flex items-center gap-2">
+            <Loader2 className="w-4 h-4 animate-spin" />
+            জমা হচ্ছে...
+          </span>
+        ) : (
+          'রিপোর্ট জমা দিন'
+        )}
       </button>
     </form>
   );

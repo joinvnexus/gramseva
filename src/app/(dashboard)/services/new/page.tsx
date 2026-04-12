@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { Zap, Wrench, Hammer, Stethoscope, GraduationCap, Package, AlertTriangle } from 'lucide-react';
 
 export default function NewServicePage() {
   const [formData, setFormData] = useState({
@@ -117,40 +118,78 @@ export default function NewServicePage() {
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          {/* প্রোভাইডার টাইপ দেখানো হচ্ছে (এডিট করা যাবে না) */}
-          <div className="bg-gray-50 rounded-lg p-4">
-            <label className="block text-gray-700 font-semibold mb-2">
+{/* প্রোভাইডার টাইপ দেখানো হচ্ছে (এডিট করা যাবে না) */}
+          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+            <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
               আপনার সার্ভিসের ধরন
             </label>
             <div className="flex items-center gap-3">
-              <span className="text-3xl">
-                {user.providerType === 'ELECTRICIAN' && '⚡'}
-                {user.providerType === 'PLUMBER' && '🔧'}
-                {user.providerType === 'MECHANIC' && '🔨'}
-                {user.providerType === 'DOCTOR' && '👨‍⚕️'}
-                {user.providerType === 'TUTOR' && '📚'}
-                {user.providerType === 'OTHER' && '📦'}
-              </span>
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                {user.providerType === 'ELECTRICIAN' && <Zap className="w-6 h-6 text-yellow-600" />}
+                {user.providerType === 'PLUMBER' && <Wrench className="w-6 h-6 text-blue-600" />}
+                {user.providerType === 'MECHANIC' && <Hammer className="w-6 h-6 text-orange-600" />}
+                {user.providerType === 'DOCTOR' && <Stethoscope className="w-6 h-6 text-red-600" />}
+                {user.providerType === 'TUTOR' && <GraduationCap className="w-6 h-6 text-purple-600" />}
+                {user.providerType === 'OTHER' && <Package className="w-6 h-6 text-gray-600" />}
+              </div>
               <div>
                 <div className="font-semibold text-primary">{categoryName}</div>
-                <div className="text-xs text-gray-500">
-                  {user.providerType === 'ELECTRICIAN' && 'বৈদ্যুতিক কাজ, ওয়্যারিং, ফ্যান রিপেয়ার'}
-                  {user.providerType === 'PLUMBER' && 'পাইপ লাইন, ট্যাপ, টয়লেট রিপেয়ার'}
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                  {user.providerType === 'ELECTRICIAN' && 'বৈদ্যুতিক কাজ, ওয়্যারিং, ফ্যান রিপেয়ার'}
+                  {user.providerType === 'PLUMBER' && 'পাইপ লাইন, ট্যাপ, টয়লেট রিপেয়ার'}
                   {user.providerType === 'MECHANIC' && 'মোটরসাইকেল, ইঞ্জিন, যন্ত্রপাতি মেরামত'}
                   {user.providerType === 'DOCTOR' && 'স্বাস্থ্য সেবা, চিকিৎসা পরামর্শ'}
-                  {user.providerType === 'TUTOR' && 'পড়াশোনা, ক্লাস, প্রাইভেট টিউটর'}
+                  {user.providerType === 'TUTOR' && 'পড়াশোনা, ক্লাস, প্রাইভেট টিউটর'}
                   {user.providerType === 'OTHER' && 'অন্যান্য সার্ভিস'}
                 </div>
               </div>
             </div>
-            <p className="text-xs text-amber-600 mt-2">
-              ⚠️ সার্ভিসের ধরন পরিবর্তন করা যাবে না। পরিবর্তন করতে চাইলে অ্যাডমিনের সাথে যোগাযোগ করুন।
+            <p className="text-xs text-amber-600 dark:text-amber-400 mt-2 flex items-center gap-1">
+              <AlertTriangle className="w-3 h-3" />
+              সার্ভিসের ধরন পরিবর্তন করা যাবে না। পরিবর্তন করতে চাইলে অ্যাডমিনের সাথে যোগাযোগ করুন।
             </p>
           </div>
 
           {/* সার্ভিসের বিবরণ */}
           <div>
-            <label className="block text-gray-700 font-semibold mb-2">
+            <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
+              সার্ভিসের বিবরণ <span className="text-red-500">*</span>
+            </label>
+            <textarea
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              rows={5}
+              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
+              placeholder={`আপনার দক্ষতা ও অভিজ্ঞতা বিস্তারিত জানান...`}
+              required
+            />
+          </div>
+
+          {/* ঘন্টাপ্রতি মূল্য */}
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
+              ঘন্টাপ্রতি মূল্য (টাকা) <span className="text-red-500">*</span>
+            </label>
+            <div className="relative">
+              <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">
+                ৳
+              </span>
+              <input
+                type="number"
+                value={formData.hourlyRate}
+                onChange={(e) => setFormData({ ...formData, hourlyRate: e.target.value })}
+                className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
+                placeholder="যেমন: 300"
+                min="50"
+                step="50"
+                required
+              />
+            </div>
+          </div>
+
+          {/* সার্ভিসের বিবরণ */}
+          <div>
+            <label className="block text-gray-700 dark:text-gray-300 font-semibold mb-2">
               সার্ভিসের বিবরণ <span className="text-red-500">*</span>
             </label>
             <textarea

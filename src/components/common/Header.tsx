@@ -145,16 +145,16 @@ export default function Header() {
                 </svg>
               </button>
               
-              {isSearchOpen && (
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl overflow-hidden">
+{isSearchOpen && (
+                <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-xl dark:shadow-gray-900/50 overflow-hidden">
                   <form onSubmit={handleSearch} className="p-2">
                     <div className="flex items-center gap-2">
                       <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        placeholder="সার্ভিস বা নাম দিয়ে খুঁজুন..."
-                        className="flex-1 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                        placeholder="সার্ভিস বা নাম দিয়ে খুঁজুন..."
+                        className="flex-1 px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
                         autoFocus
                       />
                       <button type="submit" className="bg-primary text-white p-2 rounded-lg">
@@ -199,14 +199,14 @@ export default function Header() {
                 </button>
 
                 {isProfileOpen && (
-                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl overflow-hidden">
-                    <div className="p-3 border-b bg-gray-50">
-                      <p className="font-semibold text-gray-800">{user?.name}</p>
-                      <p className="text-sm text-gray-500">{user?.phone}</p>
+                  <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-lg shadow-xl dark:shadow-gray-900/50 overflow-hidden">
+                    <div className="p-3 border-b bg-gray-50 dark:bg-gray-700">
+                      <p className="font-semibold text-gray-800 dark:text-gray-100">{user?.name}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{user?.phone}</p>
                       <span className={`inline-block mt-1 px-2 py-0.5 rounded text-xs ${
-                        user?.role === 'ADMIN' ? 'bg-purple-100 text-purple-700' :
-                        user?.role === 'PROVIDER' ? 'bg-green-100 text-green-700' :
-                        'bg-gray-100 text-gray-700'
+                        user?.role === 'ADMIN' ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300' :
+                        user?.role === 'PROVIDER' ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300' :
+                        'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                       }`}>
                         {user?.role === 'ADMIN' ? 'অ্যাডমিন' :
                          user?.role === 'PROVIDER' ? 'প্রোভাইডার' : 'ইউজার'}
@@ -215,7 +215,7 @@ export default function Header() {
                     <div className="py-2">
                       <Link
                         href={getDashboardLink()}
-                        className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
+                        className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                         onClick={() => setIsProfileOpen(false)}
                       >
                         <LayoutDashboard className="w-5 h-5" />
@@ -223,7 +223,7 @@ export default function Header() {
                       </Link>
                       <Link
                         href={getProfileLink()}
-                        className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
+                        className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                         onClick={() => setIsProfileOpen(false)}
                       >
                         <User className="w-5 h-5" />
@@ -232,7 +232,7 @@ export default function Header() {
                       {user?.role === 'PROVIDER' && (
                         <Link
                           href="/services/new"
-                          className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
+                          className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                           onClick={() => setIsProfileOpen(false)}
                         >
                           <Plus className="w-5 h-5" />
@@ -243,7 +243,7 @@ export default function Header() {
                         <>
                           <Link
                             href="/admin/users"
-                            className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
+                            className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                             onClick={() => setIsProfileOpen(false)}
                           >
                             <Users className="w-5 h-5" />
@@ -251,7 +251,7 @@ export default function Header() {
                           </Link>
                           <Link
                             href="/admin/services"
-                            className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
+                            className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                             onClick={() => setIsProfileOpen(false)}
                           >
                             <Wrench className="w-5 h-5" />
@@ -259,7 +259,7 @@ export default function Header() {
                           </Link>
                           <Link
                             href="/admin/reports"
-                            className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
+                            className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                             onClick={() => setIsProfileOpen(false)}
                           >
                             <FileText className="w-5 h-5" />
@@ -267,7 +267,7 @@ export default function Header() {
                           </Link>
                           <Link
                             href="/admin/markets"
-                            className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
+                            className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
                             onClick={() => setIsProfileOpen(false)}
                           >
                             <Store className="w-5 h-5" />
@@ -275,14 +275,14 @@ export default function Header() {
                           </Link>
                         </>
                       )}
-                      <hr className="my-2" />
+                      <hr className="my-2 border-gray-200 dark:border-gray-700" />
                       <button
                         onClick={() => {
                           logout();
                           setIsProfileOpen(false);
                           router.push('/');
                         }}
-                        className="flex items-center gap-3 w-full px-4 py-2 text-red-600 hover:bg-red-50 transition text-left"
+                        className="flex items-center gap-3 w-full px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition text-left"
                       >
                         <LogOut className="w-5 h-5" />
                         <span>লগআউট</span>
@@ -447,7 +447,7 @@ export default function Header() {
       </div>
 
       {/* মোবাইল নিচের বার */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg z-50">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t dark:border-gray-700 shadow-lg z-50">
         <div className="flex justify-around items-center py-2">
           {navItems.map((item) => (
             <Link
@@ -456,7 +456,7 @@ export default function Header() {
               className={`flex flex-col items-center py-1 px-3 rounded-lg transition ${
                 item.active
                   ? 'text-primary'
-                  : 'text-gray-500 hover:text-primary'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-primary'
               }`}
             >
               <item.icon className="w-5 h-5" />
@@ -469,7 +469,7 @@ export default function Header() {
               className={`flex flex-col items-center py-1 px-3 rounded-lg transition ${
                 pathname === getDashboardLink()
                   ? 'text-primary'
-                  : 'text-gray-500 hover:text-primary'
+                  : 'text-gray-500 dark:text-gray-400 hover:text-primary'
               }`}
             >
               <LayoutDashboard className="w-5 h-5" />
@@ -481,7 +481,7 @@ export default function Header() {
             className={`flex flex-col items-center py-1 px-3 rounded-lg transition ${
               pathname === getProfileLink()
                 ? 'text-primary'
-                : 'text-gray-500 hover:text-primary'
+                : 'text-gray-500 dark:text-gray-400 hover:text-primary'
             }`}
           >
             <User className="w-5 h-5" />

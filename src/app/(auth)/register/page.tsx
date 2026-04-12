@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { User, Phone, MapPin, Hash, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -45,10 +46,10 @@ export default function RegisterPage() {
   if (success) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center">
-        <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center">
-          <div className="text-5xl mb-4">✅</div>
-          <h2 className="text-2xl font-bold text-green-600 mb-2">রেজিস্ট্রেশন সফল!</h2>
-          <p className="text-gray-600">লগইন পেজে রিডাইরেক্ট করা হচ্ছে...</p>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-900/50 p-8 max-w-md w-full text-center">
+          <CheckCircle className="w-16 h-16 mx-auto mb-4 text-green-500" />
+          <h2 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2">রেজিস্ট্রেশন সফল!</h2>
+          <p className="text-gray-600 dark:text-gray-400">লগইন পেজে রিডাইরেক্ট করা হচ্ছে...</p>
         </div>
       </div>
     );
@@ -56,78 +57,93 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-[80vh] flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg p-8 max-w-md w-full">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg dark:shadow-gray-900/50 p-8 max-w-md w-full">
         <div className="text-center mb-8">
-          <div className="text-4xl mb-2">📝</div>
-          <h1 className="text-2xl font-bold text-primary">রেজিস্ট্রেশন</h1>
-          <p className="text-gray-600 mt-2">আপনার তথ্য দিন</p>
+          <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
+            <User className="w-8 h-8 text-primary" />
+          </div>
+          <h1 className="text-2xl font-bold text-primary dark:text-primary-light">রেজিস্ট্রেশন</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">আপনার তথ্য দিন</p>
         </div>
 
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-4">
+          <div className="bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-400 px-4 py-2 rounded mb-4 flex items-center gap-2">
+            <AlertCircle className="w-4 h-4" />
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">আপনার নাম</label>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="input-field"
-              required
-            />
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">আপনার নাম</label>
+            <div className="relative">
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="w-full h-12 pl-11 pr-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
+                required
+              />
+            </div>
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">মোবাইল নম্বর</label>
-            <input
-              type="tel"
-              value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              placeholder="01XXXXXXXXX"
-              className="input-field"
-              required
-            />
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">মোবাইল নম্বর</label>
+            <div className="relative">
+              <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder="01XXXXXXXXX"
+                className="w-full h-12 pl-11 pr-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
+                required
+              />
+            </div>
           </div>
 
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">গ্রামের নাম</label>
-            <input
-              type="text"
-              value={formData.village}
-              onChange={(e) => setFormData({ ...formData, village: e.target.value })}
-              className="input-field"
-              required
-            />
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">গ্রামের নাম</label>
+            <div className="relative">
+              <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="text"
+                value={formData.village}
+                onChange={(e) => setFormData({ ...formData, village: e.target.value })}
+                className="w-full h-12 pl-11 pr-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
+                required
+              />
+            </div>
           </div>
 
           <div className="mb-6">
-            <label className="block text-gray-700 mb-2">ওয়ার্ড নম্বর</label>
-            <input
-              type="number"
-              value={formData.ward}
-              onChange={(e) => setFormData({ ...formData, ward: e.target.value })}
-              className="input-field"
-              required
-            />
+            <label className="block text-gray-700 dark:text-gray-300 mb-2">ওয়ার্ড নম্বর</label>
+            <div className="relative">
+              <Hash className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+              <input
+                type="number"
+                value={formData.ward}
+                onChange={(e) => setFormData({ ...formData, ward: e.target.value })}
+                className="w-full h-12 pl-11 pr-4 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30"
+                required
+              />
+            </div>
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="btn-primary w-full disabled:opacity-50"
+            className="w-full h-11 bg-primary text-white font-semibold rounded-lg hover:bg-primary-dark disabled:opacity-50 transition"
           >
             {loading ? 'রেজিস্ট্রেশন হচ্ছে...' : 'রেজিস্ট্রেশন করুন'}
           </button>
         </form>
 
         <div className="text-center mt-6">
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-400">
             ইতিমধ্যে একাউন্ট আছে?{' '}
-            <Link href="/login" className="text-primary font-semibold hover:underline">
+            <Link href="/login" className="text-primary dark:text-primary-light font-semibold hover:underline">
               লগইন করুন
             </Link>
           </p>

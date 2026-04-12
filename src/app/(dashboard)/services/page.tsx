@@ -7,14 +7,15 @@ import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 import Loader from '@/components/common/Loader';
 import ServiceFilter from '@/components/services/ServiceFilter';
+import { List, Zap, Wrench, Hammer, Stethoscope, GraduationCap, SearchX } from 'lucide-react';
 
 const categories = [
-  { value: "ALL", label: "সব", icon: "📋" },
-  { value: "ELECTRICIAN", label: "ইলেকট্রিশিয়ান", icon: "⚡" },
-  { value: "PLUMBER", label: "মিস্ত্রি", icon: "🔧" },
-  { value: "MECHANIC", label: "মেকানিক", icon: "🔨" },
-  { value: "DOCTOR", label: "ডাক্তার", icon: "👨‍⚕️" },
-  { value: "TUTOR", label: "টিউটর", icon: "📚" },
+  { value: "ALL", label: "সব", icon: List },
+  { value: "ELECTRICIAN", label: "ইলেকট্রিশিয়ান", icon: Zap },
+  { value: "PLUMBER", label: "মিস্ত্রি", icon: Wrench },
+  { value: "MECHANIC", label: "মেকানিক", icon: Hammer },
+  { value: "DOCTOR", label: "ডাক্তার", icon: Stethoscope },
+  { value: "TUTOR", label: "টিউটর", icon: GraduationCap },
 ];
 
 export default function ServicesPage() {
@@ -53,8 +54,8 @@ export default function ServicesPage() {
       {/* হেডার */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-primary">সার্ভিস সমূহ</h1>
-          <p className="text-gray-600 mt-1">
+          <h1 className="text-2xl font-bold text-primary dark:text-primary-light">সার্ভিস সমূহ</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
             আপনার এলাকার সার্ভিস প্রোভাইডারদের তালিকা
           </p>
         </div>
@@ -85,13 +86,13 @@ export default function ServicesPage() {
           <Loader />
 
       ) : services.length === 0 ? (
-        <div className="text-center py-12 bg-white rounded-lg">
+<div className="text-center py-12 bg-white dark:bg-gray-800 rounded-lg">
           <div className="text-6xl mb-4">🔍</div>
-          <h3 className="text-xl font-semibold text-gray-700">
-            কোন সার্ভিস পাওয়া যায়নি
+          <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-200">
+            কোন সার্ভিস পাওয়া যায়নি
           </h3>
-          <p className="text-gray-500 mt-2">
-            অন্য ক্যাটাগরি বা কীওয়ার্ড দিয়ে চেষ্টা করুন
+          <p className="text-gray-500 dark:text-gray-400 mt-2">
+            অন্য ক্যাটাগরি বা কীওয়ার্ড দিয়ে চেষ্টা করুন
           </p>
         </div>
       ) : (

@@ -26,18 +26,18 @@ export default function ServiceFilter({
   searchTerm,
   onSearchChange,
 }: ServiceFilterProps) {
-  return (
-    <div className="bg-white rounded-lg shadow p-4">
+return (
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
       <div className="flex flex-col md:flex-row gap-4">
         {/* সার্চ বার */}
         <div className="flex-1">
           <div className="relative">
             <input
               type="text"
-              placeholder="সার্ভিস বা নাম দিয়ে খুঁজুন..."
+              placeholder="সার্চ বা নাম দিয়ে খুঁজুন..."
               value={searchTerm}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="w-full pl-4 pr-20 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              className="w-full pl-4 pr-20 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
             />
             <VoiceButton
               onResult={(text) => onSearchChange(text)}
@@ -56,7 +56,7 @@ export default function ServiceFilter({
               className={`px-4 py-2 rounded-lg whitespace-nowrap transition flex items-center gap-1 ${
                 selectedCategory === cat.value
                   ? 'bg-primary text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
               <cat.icon className="w-4 h-4" />

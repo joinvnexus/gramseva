@@ -28,8 +28,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             className={cn(
               'w-full h-12 px-4 text-base',
               'border rounded-lg',
-              'bg-white text-gray-800',
-              'placeholder:text-gray-400',
+              'bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100',
+              'border-gray-300 dark:border-gray-600',
+              'placeholder:text-gray-400 dark:placeholder:text-gray-500',
               'focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30',
               'transition-all duration-200',
               icon && iconPosition === 'left' && 'pl-11',

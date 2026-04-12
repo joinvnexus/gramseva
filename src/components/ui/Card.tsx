@@ -9,8 +9,8 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant = 'default', hover = true, children, ...props }, ref) => {
     const variantClasses = {
-      default: 'bg-white rounded-xl shadow-card border border-gray-100',
-      flat: 'bg-white rounded-xl border border-gray-100',
+      default: 'bg-white dark:bg-gray-800 rounded-xl shadow-card border border-gray-100 dark:border-gray-700',
+      flat: 'bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700',
       ghost: 'bg-transparent',
     };
 
@@ -35,7 +35,7 @@ Card.displayName = 'Card';
 
 const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('p-4 border-b border-gray-100', className)} {...props} />
+    <div ref={ref} className={cn('p-4 border-b border-gray-100 dark:border-gray-700', className)} {...props} />
   )
 );
 
@@ -51,7 +51,7 @@ CardContent.displayName = 'CardContent';
 
 const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('p-4 border-t border-gray-100', className)} {...props} />
+    <div ref={ref} className={cn('p-4 border-t border-gray-100 dark:border-gray-700', className)} {...props} />
   )
 );
 
