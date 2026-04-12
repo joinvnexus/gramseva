@@ -1,6 +1,6 @@
-# 📋 Project Setup Guide (প্রোজেক্ট সেটআপ গাইড)
+# 📋 Project Setup Guide
 
-## Prerequisites (পূর্বশর্ত)
+## Prerequisites
 
 | Tool | Minimum Version |
 |-----|-----------------|
@@ -10,7 +10,7 @@
 
 ---
 
-## Step 1: Clone Repository (রেপো ক্লোন)
+## Step 1: Clone Repository
 
 ```bash
 git clone https://github.com/gramseva/gramseva.git
@@ -19,7 +19,7 @@ cd gramseva
 
 ---
 
-## Step 2: Install Dependencies (ডিপেন্ডেন্সি ইনস্টল)
+## Step 2: Install Dependencies
 
 ```bash
 npm install
@@ -27,9 +27,9 @@ npm install
 
 ---
 
-## Step 3: Environment Configuration (এনভায়রনমেন্ট সেটআপ)
+## Step 3: Environment Configuration
 
-`.env` ফাইল তৈরি করুন project root এ:
+Create a `.env` file in the project root:
 
 ```env
 # Database Connection
@@ -49,13 +49,13 @@ CLOUDINARY_API_SECRET="your-api-secret"
 
 ---
 
-## Step 4: Database Setup (ডাটাবেজ সেটআপ)
+## Step 4: Database Setup
 
 ```bash
-# Prisma client generate করুন
+# Generate Prisma client
 npx prisma generate
 
-# Migration চালান (প্রথমবার)
+# Run migration (first time)
 npx prisma migrate dev --name init
 ```
 
@@ -67,23 +67,23 @@ npx prisma migrate dev --name init
 npm run dev
 ```
 
-Browser এ open করুন: **http://localhost:3000**
+Open in browser: **http://localhost:3000**
 
 ---
 
-## Production Build (প্রোডাকশন বিল্ড)
+## Production Build
 
 ```bash
-# Build তৈরি করুন
+# Build the project
 npm run build
 
-# Production এ চালান
+# Run in production mode
 npm start
 ```
 
 ---
 
-## Common Issues (সাধারণ সমস্যা)
+## Common Issues
 
 ### ❌ "Cannot find module" error
 
@@ -95,8 +95,8 @@ npm run dev
 
 ### ❌ Database Connection Error
 
-- PostgreSQL server চলছে কিনা চেক করুন
-- `.env` এ DATABASE_URL সঠিক কিনা দেখুন
+- Check if PostgreSQL server is running
+- Verify DATABASE_URL in `.env` is correct
 
 ### ❌ Prisma Error
 
@@ -106,7 +106,7 @@ npx prisma studio
 
 ---
 
-## Useful Commands (উপকারী কমান্ড)
+## Useful Commands
 
 ```bash
 # Database visualizer
@@ -124,8 +124,8 @@ npm run lint
 
 ---
 
-## Next Steps (পরবর্তী পদক্ষেপ)
+## Next Steps
 
-- [ ] Vercel account বানান
-- [ ] PostgreSQL host করুন (Railway / Supabase / Neon)
-- [ ] Deploy করুন
+- [ ] Create a Vercel account
+- [ ] Set up PostgreSQL hosting (Railway / Supabase / Neon)
+- [ ] Deploy the application

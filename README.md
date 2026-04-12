@@ -1,6 +1,6 @@
-# 🌾 GramSevá - গ্রামসেবা
+# 🌾 GramSevá
 
-এটা একটা সম্পূর্ণ ফুল-স্ট্যাক কৃষি সেবা প্ল্যাটফর্ম। এখানে farmersরা সহজে service নিতে পারবে, market price চেক করতে পারবে আর booking করতে পারবে।
+A full-stack agricultural service platform where farmers can easily book services, check market prices, and manage their agricultural needs.
 
 [![Next.js](https://img.shields.io/badge/Next.js-14-black)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org)
@@ -11,21 +11,21 @@
 ## 🚀 Quick Start
 
 ```bash
-# Clone করুন
+# Clone the repository
 git clone https://github.com/gramseva/gramseva.git
 cd gramseva
 
-# Install করুন
+# Install dependencies
 npm install
 
-# Environment সেটআপ (.env ফাইল)
-# DATABASE_URL, JWT_SECRET সেট করুন
+# Set up environment variables (.env file)
+# DATABASE_URL, JWT_SECRET
 
-# Run করুন
+# Run development server
 npm run dev
 ```
 
-Open করুন: [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
@@ -39,21 +39,21 @@ Open করুন: [http://localhost:3000](http://localhost:3000)
 | ORM | Prisma |
 | Auth | JWT |
 | Styling | Tailwind CSS |
-| UI | shadcn/ui Components |
+| UI Components | shadcn/ui |
 | Icons | Lucide React |
 
 ---
 
 ## 🏆 Features
 
-- 📱 **Mobile Friendly** - responsive design
+- 📱 **Mobile Friendly** - Responsive design
 - 🔒 **Secure** - JWT authentication
-- 🚀 **Fast** - SSR + caching
+- 🚀 **Fast** - SSR with caching
 - 🗣️ **Voice Search** - Web Speech API
-- 💰 **Market Price** - agricultural product prices
-- 📊 **Dashboard** - stats, reports
-- 🛒 **Booking** - service booking system
-- 👤 **Role-based** - admin, farmer, user profiles
+- 💰 **Market Price** - Agricultural product prices
+- 📊 **Dashboard** - Statistics and reports
+- 🛒 **Booking** - Service booking system
+- 👤 **Role-based** - Admin, farmer, and user profiles
 
 ---
 
@@ -66,31 +66,31 @@ gramseva/
 │   └── migrations/       # Migration files
 ├── public/
 │   ├── manifest.json    # PWA manifest
-│   └── sw.js         # Service Worker
+│   └── sw.js           # Service Worker
 └── src/
     ├── app/            # Next.js App Router
     │   ├── (dashboard)/ # Dashboard pages
     │   └── api/        # API routes
     ├── components/     # React components
-    │   ├── ui/       # Reusable UI components
+    │   ├── ui/        # Reusable UI components
     │   ├── common/    # Common components
     │   └── forms/     # Form components
-    ├── contexts/      # Context API
-    ├── hooks/        # Custom hooks
-    ├── lib/          # Libraries & utils
-    └── types/        # TypeScript types
+    ├── contexts/       # Context API
+    ├── hooks/         # Custom hooks
+    ├── lib/           # Libraries and utilities
+    └── types/         # TypeScript types
 ```
 
 ---
 
 ## 📜 License
 
-MIT License - দেখুন [LICENSE](LICENSE) file
+MIT License - See [LICENSE](LICENSE) file
 
 ---
 
 ## 🙌 Contributing
 
-এখানে contribute করতে চাইলে PR পাঠান অথবা issue খুলু!
+Contributions are welcome! Open a PR or create an issue.
 
-⭐ যদি প্রজেক্টটি ভালো লাগে, star দিন!
+If you find this project useful, please give it a ⭐️
