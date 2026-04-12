@@ -17,6 +17,13 @@ export default function PWASetup() {
         .register('/sw.js')
         .then((registration) => {
           console.log('Service Worker registered:', registration);
+          
+          // Request Background Sync permission
+          if ('sync' in registration) {
+            console.log('Background Sync supported');
+          } else {
+            console.log('Background Sync not supported');
+          }
         })
         .catch((error) => {
           console.error('Service Worker registration failed:', error);

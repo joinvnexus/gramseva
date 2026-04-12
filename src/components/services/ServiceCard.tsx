@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import { Service } from '@/types';
 import { formatCurrency } from '@/utils/bengaliHelper';
-import { Zap, Wrench, Hammer, GraduationCap, Package, Star, MapPin } from 'lucide-react';
+import { Zap, Wrench, Hammer, GraduationCap, Package, Star, MapPin, Volume2 } from 'lucide-react';
+import SpeakButton from '@/components/common/SpeakButton';
 
 interface ServiceCardProps {
   service: Service;
+  onSpeak?: (text: string) => void;
 }
 
 const categoryIcon: Record<string, React.ReactNode> = {
@@ -27,7 +29,15 @@ const categoryName = {
   OTHER: 'অন্যান্য',
 };
 
-export default function ServiceCard({ service }: ServiceCardProps) {
+export default function ServiceCard({ service, onSpeak }: ServiceCardProps) {
+  const speakText = `${service.user?.name}, ${categoryName[service.category]}, ${service.description}, rate ${formatCurrency(service.hourlyRate)} per hour`;
+
+  const handleSpeak = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onSpeak?.(speakText);
+  };
+
   return (
     <Link href={`/services/${service.id}`}>
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-900/50 overflow-hidden hover:shadow-lg transition-all duration-300 border-l-4 border-primary cursor-pointer">
@@ -41,11 +51,20 @@ export default function ServiceCard({ service }: ServiceCardProps) {
                 {service.user?.name}
               </h3>
             </div>
-            <div className="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/30 px-2 py-1 rounded">
-              <span className="text-yellow-500">★</span>
-              <span className="text-sm font-semibold">
-                {service.rating.toFixed(1)}
-              </span>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={handleSpeak}
+                className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white transition"
+                title="শুনুন"
+              >
+                <Volume2 className="w-4 h-4" />
+              </button>
+              <div className="flex items-center gap-1 bg-yellow-50 dark:bg-yellow-900/30 px-2 py-1 rounded">
+                <span className="text-yellow-500">★</span>
+                <span className="text-sm font-semibold">
+                  {service.rating.toFixed(1)}
+                </span>
+              </div>
             </div>
           </div>
 

@@ -31,6 +31,7 @@ model User {
   notifications Notification[]
   fcmTokens     FCMToken[]
   bookings      Booking[]
+  feedback      Feedback[]
 }
 
 // সার্ভিস মডেল
@@ -194,5 +195,18 @@ enum BookingStatus {
   PENDING
   CONFIRMED
   COMPLETED
-  CANCELLED  // ✅ CANCELLED যোগ করা হয়েছে
+  CANCELLED  // ✅ CANCELLED যোগ করা হয়েছে
+}
+
+// ফিডব্যাক মডেল
+model Feedback {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  type      String   @default("TEXT") // TEXT or VOICE
+  content   String?
+  audioUrl  String?
+  rating    Int?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
 }

@@ -1,11 +1,14 @@
 import './globals.css';
 import type { Metadata, Viewport } from 'next';
 import { Hind_Siliguri } from 'next/font/google';
+import dynamic from 'next/dynamic';
 import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import PWASetup from '@/components/common/PWASetup';
+
+const SocketProvider = dynamic(() => import('@/contexts/SocketContext').then(mod => mod.SocketProvider));
 
 const hindSiliguri = Hind_Siliguri({
   weight: ['300', '400', '500', '600', '700'],
@@ -37,16 +40,18 @@ export default function RootLayout({
       <body className={`${hindSiliguri.className} bg-[#FFF8E7] dark:bg-gray-900 text-gray-800 dark:text-gray-100 antialiased`}>
         <ThemeProvider>
           <AuthProvider>
-            <div className="flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-1 w-full">
-                <div className="container mx-auto px-3 sm:px-4 py-4 md:py-6">
-                  {children}
-                </div>
-              </main>
-              <Footer />
-              <PWASetup />
-            </div>
+            <SocketProvider>
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-1 w-full">
+                  <div className="container mx-auto px-3 sm:px-4 py-4 md:py-6">
+                    {children}
+                  </div>
+                </main>
+                <Footer />
+                <PWASetup />
+              </div>
+            </SocketProvider>
           </AuthProvider>
         </ThemeProvider>
       </body>

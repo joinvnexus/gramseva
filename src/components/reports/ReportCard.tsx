@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { Report } from '@/types';
 import ReportStatus from './ReportStatus';
 import { toBanglaDate } from '@/utils/bengaliHelper';
-import { MapPin, Droplets, Zap, FileText, ThumbsUp, User, MapPinned } from 'lucide-react';
+import { MapPin, Droplets, Zap, FileText, ThumbsUp, User, MapPinned, Volume2 } from 'lucide-react';
 import Image from 'next/image';
 
 interface ReportCardProps {
   report: Report;
   onVote?: (id: string) => void;
+  onSpeak?: (text: string) => void;
 }
 
 const statusColors = {
@@ -31,7 +32,7 @@ const problemTypeIcons: Record<string, React.ElementType> = {
   OTHER: FileText,
 };
 
-export default function ReportCard({ report, onVote }: ReportCardProps) {
+export default function ReportCard({ report, onVote, onSpeak }: ReportCardProps) {
   const [voting, setVoting] = useState(false);
 
   const handleVote = async () => {
@@ -42,6 +43,13 @@ export default function ReportCard({ report, onVote }: ReportCardProps) {
   };
 
   const ProblemIcon = problemTypeIcons[report.problemType] || FileText;
+
+  const speakText = `${statusText[report.status]} ${report.description}, submitted by ${report.user?.name}, location ${report.user?.village}, ${report.upVotes ?? (report as any).upvoteCount ?? 0} votes`;
+
+  const handleSpeak = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onSpeak?.(speakText);
+  };
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md dark:shadow-gray-900/50 p-4 hover:shadow-lg transition">
@@ -56,6 +64,13 @@ export default function ReportCard({ report, onVote }: ReportCardProps) {
             <span className="text-xs text-gray-500 dark:text-gray-400">
               {toBanglaDate(report.createdAt)}
             </span>
+            <button
+              onClick={handleSpeak}
+              className="p-1.5 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-primary hover:text-white transition ml-auto"
+              title="শুনুন"
+            >
+              <Volume2 className="w-4 h-4" />
+            </button>
           </div>
 
           {/* বিবরণ */}

@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNotification } from '@/hooks/useNotification';
-import { Bell, Store, FileText, Wrench, MessageCircle, Check, CheckCheck } from 'lucide-react';
+import { useTextToSpeech } from '@/hooks/useTextToSpeech';
+import { Bell, Store, FileText, Wrench, MessageCircle, Check, CheckCheck, Volume2 } from 'lucide-react';
 
 export default function NotificationBell() {
   const [isOpen, setIsOpen] = useState(false);
@@ -11,6 +12,7 @@ export default function NotificationBell() {
   const { notifications, unreadCount, markAsRead } = useNotification({
     enabled: isAuthenticated,
   });
+  const { speak, stop, isSpeaking } = useTextToSpeech();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -39,6 +41,11 @@ export default function NotificationBell() {
       case 'SERVICE': return <Wrench className="w-5 h-5" />;
       default: return <Bell className="w-5 h-5" />;
     }
+  };
+
+  const handleSpeakNotification = (title: string, message: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    speak(`${title}. ${message}`);
   };
 
   return (
@@ -89,9 +96,18 @@ export default function NotificationBell() {
                   <div className="flex items-start gap-3">
                     <span className="text-xl">{getTypeIcon(notif.type)}</span>
                     <div className="flex-1">
-                      <p className="font-semibold text-gray-800 text-sm">
-                        {notif.title}
-                      </p>
+                      <div className="flex items-center justify-between">
+                        <p className="font-semibold text-gray-800 text-sm">
+                          {notif.title}
+                        </p>
+                        <button
+                          onClick={(e) => handleSpeakNotification(notif.title, notif.message, e)}
+                          className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700"
+                          title="শুনুন"
+                        >
+                          <Volume2 className="w-4 h-4" />
+                        </button>
+                      </div>
                       <p className="text-gray-600 text-xs mt-1">
                         {notif.message}
                       </p>
