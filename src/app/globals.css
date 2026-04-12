@@ -32,3 +32,71 @@
     @apply w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent;
   }
 }
+/* অ্যানিমেশন */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.2s ease-out;
+}
+
+/* স্ক্রলবার কাস্টমাইজ */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8B5A2B;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6B3E1A;
+}
+
+/* মোবাইলে বটম নেভিগেশনের জন্য প্যাডিং */
+body {
+  padding-bottom: 60px;
+}
+
+@media (min-width: 1024px) {
+  body {
+    padding-bottom: 0;
+  }
+}
+
+/* হোভার এফেক্ট */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* স্মুথ স্ক্রল */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ফোকাস রিং */
+*:focus {
+  outline: none;
+  ring: 2px solid #8B5A2B;
+  ring-offset: 2px;
+}
