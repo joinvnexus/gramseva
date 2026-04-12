@@ -52,3 +52,5 @@ Thumbs.db
 Desktop.ini
 
 /src/generated/prisma
+
+.vercel

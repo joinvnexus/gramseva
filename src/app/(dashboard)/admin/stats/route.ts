@@ -61,8 +61,8 @@ export async function GET(request: NextRequest) {
     });
     
     const thisMonthRevenue = completedBookings
-      .filter(b => b.createdAt.getMonth() === new Date().getMonth())
-      .reduce((sum, b) => sum + (b.service?.hourlyRate || 0), 0);
+      .filter((b: { createdAt: Date }) => b.createdAt.getMonth() === new Date().getMonth())
+      .reduce((sum: number, b: { service: { hourlyRate: number } | null }) => sum + (b.service?.hourlyRate || 0), 0);
 
     // সাম্প্রতিক কার্যকলাপ
     const recentUsers = await prisma.user.findMany({
