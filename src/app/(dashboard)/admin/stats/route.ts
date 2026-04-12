@@ -84,7 +84,7 @@ export async function GET(request: NextRequest) {
 
     // কার্যকলাপ একত্রিত করা
     const recentActivities = [
-      ...recentUsers.map(u => ({
+      ...recentUsers.map((u) => ({
         id: u.id,
         type: 'user',
         title: `নতুন ইউজার রেজিস্ট্রেশন: ${u.name}`,
@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
         status: 'ACTIVE',
         createdAt: u.createdAt.toISOString(),
       })),
-      ...recentReports.map(r => ({
+      ...recentReports.map((r) => ({
         id: r.id,
         type: 'report',
         title: `নতুন রিপোর্ট: ${r.description.substring(0, 50)}`,
@@ -100,7 +100,7 @@ export async function GET(request: NextRequest) {
         status: r.status,
         createdAt: r.createdAt.toISOString(),
       })),
-      ...recentBookings.map(b => ({
+      ...recentBookings.map((b) => ({
         id: b.id,
         type: 'booking',
         title: `${b.user?.name} একটি সার্ভিস বুক করেছেন`,
