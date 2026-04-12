@@ -100,8 +100,8 @@ export default function AdminProfilePage() {
       <div className="bg-gradient-to-r from-purple-600 to-purple-800 rounded-lg overflow-hidden">
         <div className="relative h-32 bg-black/20">
           <div className="absolute -bottom-12 left-6">
-            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
-              <Crown className="w-12 h-12 text-purple-600" />
+            <div className="w-24 h-24 bg-white dark:bg-gray-800 rounded-full flex items-center justify-center shadow-lg border-4 border-white dark:border-gray-700">
+              <Crown className="w-12 h-12 text-purple-600 dark:text-purple-400" />
             </div>
           </div>
         </div>
@@ -136,75 +136,75 @@ export default function AdminProfilePage() {
 
       {/* স্ট্যাটস কার্ড */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg shadow p-4 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center">
           <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
-          <div className="text-2xl font-bold text-primary">{stats?.totalUsers || 0}</div>
-          <div className="text-sm text-gray-600">মোট ইউজার</div>
+          <div className="text-2xl font-bold text-primary dark:text-primary-light">{stats?.totalUsers || 0}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">মোট ইউজার</div>
         </div>
-        <div className="bg-white rounded-lg shadow p-4 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center">
           <Wrench className="w-8 h-8 mx-auto mb-2 text-primary" />
-          <div className="text-2xl font-bold text-primary">{stats?.totalProviders || 0}</div>
-          <div className="text-sm text-gray-600">প্রোভাইডার</div>
+          <div className="text-2xl font-bold text-primary dark:text-primary-light">{stats?.totalProviders || 0}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">প্রোভাইডার</div>
         </div>
-        <div className="bg-white rounded-lg shadow p-4 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center">
           <FileText className="w-8 h-8 mx-auto mb-2 text-primary" />
-          <div className="text-2xl font-bold text-primary">{stats?.totalReports || 0}</div>
-          <div className="text-sm text-gray-600">রিপোর্ট</div>
+          <div className="text-2xl font-bold text-primary dark:text-primary-light">{stats?.totalReports || 0}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">রিপোর্ট</div>
         </div>
-        <div className="bg-white rounded-lg shadow p-4 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center">
           <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
-          <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
-          <div className="text-sm text-gray-600">বুকিং</div>
+          <div className="text-2xl font-bold text-primary dark:text-primary-light">{stats?.totalBookings || 0}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">বুকিং</div>
         </div>
       </div>
 
       {/* প্রোফাইল তথ্য */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="p-4 border-b">
-          <h2 className="font-bold text-lg">প্রোফাইল তথ্য</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="font-bold text-lg text-gray-800 dark:text-white">প্রোফাইল তথ্য</h2>
         </div>
         <div className="p-6">
           {isEditing ? (
             <form onSubmit={handleUpdateProfile} className="space-y-4">
               <div>
-                <label className="block text-gray-700 mb-1">পূর্ণ নাম</label>
+                <label className="block text-gray-700 dark:text-gray-300 mb-1">পূর্ণ নাম</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-primary"
                   required
                 />
               </div>
               <div>
-                <label className="block text-gray-700 mb-1">গ্রামের নাম</label>
+                <label className="block text-gray-700 dark:text-gray-300 mb-1">গ্রামের নাম</label>
                 <input
                   type="text"
                   value={formData.village}
                   onChange={(e) => setFormData({ ...formData, village: e.target.value })}
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-primary"
                   required
                 />
               </div>
               <div>
-                <label className="block text-gray-700 mb-1">ওয়ার্ড নম্বর</label>
+                <label className="block text-gray-700 dark:text-gray-300 mb-1">ওয়ার্ড নম্বর</label>
                 <input
                   type="number"
                   value={formData.ward}
                   onChange={(e) => setFormData({ ...formData, ward: e.target.value })}
-                  className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-primary"
                   required
                 />
               </div>
               <div className="flex gap-3">
-                <button type="submit" className="bg-primary text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                <button type="submit" className="bg-primary text-white px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-primary-dark transition">
                   <Save className="w-4 h-4" />
                   সংরক্ষণ করুন
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsEditing(false)}
-                  className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center gap-2"
+                  className="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-gray-300 dark:hover:bg-gray-500 transition"
                 >
                   <X className="w-4 h-4" />
                   বাতিল
@@ -213,29 +213,29 @@ export default function AdminProfilePage() {
             </form>
           ) : (
             <div className="space-y-3">
-              <div className="flex justify-between py-2 border-b">
-                <span className="text-gray-600">পূর্ণ নাম</span>
-                <span className="font-medium">{user?.name}</span>
+              <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                <span className="text-gray-600 dark:text-gray-400">পূর্ণ নাম</span>
+                <span className="font-medium text-gray-800 dark:text-gray-200">{user?.name}</span>
               </div>
-              <div className="flex justify-between py-2 border-b">
-                <span className="text-gray-600">মোবাইল নম্বর</span>
-                <span className="font-medium">{user?.phone}</span>
+              <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                <span className="text-gray-600 dark:text-gray-400">মোবাইল নম্বর</span>
+                <span className="font-medium text-gray-800 dark:text-gray-200">{user?.phone}</span>
               </div>
-              <div className="flex justify-between py-2 border-b">
-                <span className="text-gray-600">গ্রামের নাম</span>
-                <span className="font-medium">{user?.village}</span>
+              <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                <span className="text-gray-600 dark:text-gray-400">গ্রামের নাম</span>
+                <span className="font-medium text-gray-800 dark:text-gray-200">{user?.village}</span>
               </div>
-              <div className="flex justify-between py-2 border-b">
-                <span className="text-gray-600">ওয়ার্ড নম্বর</span>
-                <span className="font-medium">{user?.ward}</span>
+              <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                <span className="text-gray-600 dark:text-gray-400">ওয়ার্ড নম্বর</span>
+                <span className="font-medium text-gray-800 dark:text-gray-200">{user?.ward}</span>
               </div>
-              <div className="flex justify-between py-2 border-b">
-                <span className="text-gray-600">রোল</span>
-                <span className="font-medium text-purple-600">অ্যাডমিন</span>
+              <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                <span className="text-gray-600 dark:text-gray-400">রোল</span>
+                <span className="font-medium text-purple-600 dark:text-purple-400">অ্যাডমিন</span>
               </div>
-              <div className="flex justify-between py-2 border-b">
-                <span className="text-gray-600">জয়েন তারিখ</span>
-                <span className="font-medium">
+              <div className="flex justify-between py-2 border-b border-gray-200 dark:border-gray-700">
+                <span className="text-gray-600 dark:text-gray-400">জয়েন তারিখ</span>
+                <span className="font-medium text-gray-800 dark:text-gray-200">
                   {new Date(user?.createdAt || '').toLocaleDateString('bn-BD')}
                 </span>
               </div>
@@ -248,7 +248,7 @@ export default function AdminProfilePage() {
       <div className="flex gap-4">
         <Link
           href="/admin/dashboard"
-          className="flex-1 bg-primary text-white py-3 rounded-lg text-center font-semibold hover:bg-primary-dark transition"
+          className="flex-1 bg-primary dark:bg-primary-dark text-white py-3 rounded-lg text-center font-semibold hover:bg-primary-dark dark:hover:bg-primary transition"
         >
           ড্যাশবোর্ডে যান
         </Link>

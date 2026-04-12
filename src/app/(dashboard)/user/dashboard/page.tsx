@@ -5,7 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import Loader from '@/components/common/Loader';
 import { toBanglaDate } from '@/utils/bengaliHelper';
-import { FileText, Calendar, Store, Plus, Search, CheckCircle, Clock } from 'lucide-react';
+import { FileText, Calendar, Store, Plus, Search, CheckCircle, Clock, ThumbsUp } from 'lucide-react';
 
 interface UserStats {
   totalReports: number;
@@ -57,8 +57,8 @@ export default function UserDashboard() {
   if (!isAuthenticated) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">ড্যাশবোর্ড দেখতে লগইন করুন</p>
-        <Link href="/login" className="text-primary mt-2 inline-block">
+        <p className="text-gray-500 dark:text-gray-400">ড্যাশবোর্ড দেখতে লগইন করুন</p>
+        <Link href="/login" className="text-primary dark:text-primary-light mt-2 inline-block">
           লগইন করুন →
         </Link>
       </div>
@@ -68,7 +68,7 @@ export default function UserDashboard() {
   if (user?.role !== 'USER') {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">এই পেজ শুধুমাত্র সাধারণ ইউজারদের জন্য</p>
+        <p className="text-gray-500 dark:text-gray-400">এই পেজ শুধুমাত্র সাধারণ ইউজারদের জন্য</p>
       </div>
     );
   }
@@ -87,25 +87,25 @@ export default function UserDashboard() {
 
       {/* স্ট্যাটস কার্ড */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-lg shadow p-4 text-center">
-          <FileText className="w-8 h-8 mx-auto mb-2 text-primary" />
-          <div className="text-2xl font-bold text-primary">{stats?.totalReports || 0}</div>
-          <div className="text-sm text-gray-600">মোট রিপোর্ট</div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center">
+          <FileText className="w-8 h-8 mx-auto mb-2 text-primary dark:text-primary-light" />
+          <div className="text-2xl font-bold text-primary dark:text-primary-light">{stats?.totalReports || 0}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">মোট রিপোর্ট</div>
         </div>
-        <div className="bg-white rounded-lg shadow p-4 text-center">
-          <CheckCircle className="w-8 h-8 mx-auto mb-2 text-green-600" />
-          <div className="text-2xl font-bold text-green-600">{stats?.resolvedReports || 0}</div>
-          <div className="text-sm text-gray-600">সমাধান হয়েছে</div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center">
+          <CheckCircle className="w-8 h-8 mx-auto mb-2 text-green-600 dark:text-green-400" />
+          <div className="text-2xl font-bold text-green-600 dark:text-green-400">{stats?.resolvedReports || 0}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">সমাধান হয়েছে</div>
         </div>
-        <div className="bg-white rounded-lg shadow p-4 text-center">
-          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
-          <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
-          <div className="text-sm text-gray-600">বুকিং</div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center">
+          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary dark:text-primary-light" />
+          <div className="text-2xl font-bold text-primary dark:text-primary-light">{stats?.totalBookings || 0}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">বুকিং</div>
         </div>
-        <div className="bg-white rounded-lg shadow p-4 text-center">
-          <Clock className="w-8 h-8 mx-auto mb-2 text-accent" />
-          <div className="text-2xl font-bold text-accent">{stats?.upvotedReports || 0}</div>
-          <div className="text-sm text-gray-600">ভোট দেওয়া</div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center">
+          <ThumbsUp className="w-8 h-8 mx-auto mb-2 text-accent dark:text-accent-light" />
+          <div className="text-2xl font-bold text-accent dark:text-accent-light">{stats?.upvotedReports || 0}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">ভোট দেওয়া</div>
         </div>
       </div>
 
@@ -113,43 +113,43 @@ export default function UserDashboard() {
       <div className="grid grid-cols-2 gap-4">
         <Link
           href="/reports/new"
-          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+          className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center hover:shadow-lg transition"
         >
-          <Plus className="w-8 h-8 mx-auto mb-2 text-primary" />
-          <p className="font-medium">নতুন রিপোর্ট</p>
+          <Plus className="w-8 h-8 mx-auto mb-2 text-primary dark:text-primary-light" />
+          <p className="font-medium text-gray-800 dark:text-gray-200">নতুন রিপোর্ট</p>
         </Link>
         <Link
           href="/services"
-          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+          className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center hover:shadow-lg transition"
         >
-          <Search className="w-8 h-8 mx-auto mb-2 text-primary" />
-          <p className="font-medium">সার্ভিস খুঁজুন</p>
+          <Search className="w-8 h-8 mx-auto mb-2 text-primary dark:text-primary-light" />
+          <p className="font-medium text-gray-800 dark:text-gray-200">সার্ভিস খুঁজুন</p>
         </Link>
         <Link
           href="/bookings"
-          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+          className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center hover:shadow-lg transition"
         >
-          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
-          <p className="font-medium">আমার বুকিং</p>
+          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary dark:text-primary-light" />
+          <p className="font-medium text-gray-800 dark:text-gray-200">আমার বুকিং</p>
         </Link>
         <Link
           href="/market"
-          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+          className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50 p-4 text-center hover:shadow-lg transition"
         >
-          <Store className="w-8 h-8 mx-auto mb-2 text-primary" />
-          <p className="font-medium">হাট বাজার</p>
+          <Store className="w-8 h-8 mx-auto mb-2 text-primary dark:text-primary-light" />
+          <p className="font-medium text-gray-800 dark:text-gray-200">হাট বাজার</p>
         </Link>
       </div>
 
       {/* সাম্প্রতিক কার্যকলাপ */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="p-4 border-b">
-          <h2 className="font-bold text-lg">সাম্প্রতিক কার্যকলাপ</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="font-bold text-lg text-gray-800 dark:text-white">সাম্প্রতিক কার্যকলাপ</h2>
         </div>
-        <div className="divide-y">
+        <div className="divide-y divide-gray-200 dark:divide-gray-700">
           {recentActivities.length === 0 ? (
-            <div className="p-8 text-center text-gray-500">
-              <FileText className="w-12 h-12 mx-auto mb-2 text-gray-300" />
+            <div className="p-8 text-center text-gray-500 dark:text-gray-400">
+              <FileText className="w-12 h-12 mx-auto mb-2 text-gray-300 dark:text-gray-600" />
               <p>কোনো কার্যকলাপ নেই</p>
             </div>
           ) : (
@@ -157,23 +157,23 @@ export default function UserDashboard() {
               <div key={activity.id} className="p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   {activity.type === 'report' ? (
-                    <FileText className="w-6 h-6 text-primary" />
+                    <FileText className="w-6 h-6 text-primary dark:text-primary-light" />
                   ) : (
-                    <Calendar className="w-6 h-6 text-primary" />
+                    <Calendar className="w-6 h-6 text-primary dark:text-primary-light" />
                   )}
                   <div>
-                    <p className="font-medium">{activity.title}</p>
-                    <p className="text-sm text-gray-500">{toBanglaDate(activity.date)}</p>
+                    <p className="font-medium text-gray-800 dark:text-gray-200">{activity.title}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">{toBanglaDate(activity.date)}</p>
                   </div>
                 </div>
                 <span className={`px-2 py-1 rounded text-xs ${
-                  activity.status === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
-                  activity.status === 'RESOLVED' || activity.status === 'COMPLETED' ? 'bg-green-100 text-green-800' :
-                  'bg-blue-100 text-blue-800'
+                  activity.status === 'PENDING' ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200' :
+                  activity.status === 'RESOLVED' || activity.status === 'COMPLETED' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200' :
+                  'bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200'
                 }`}>
                   {activity.status === 'PENDING' ? 'বিচারাধীন' :
-                   activity.status === 'RESOLVED' ? 'সমাধান済み' :
-                   activity.status === 'COMPLETED' ? 'সম্পন্ন' : 'প্রক্রিয়াধীন'}
+                   activity.status === 'RESOLVED' ? 'সমাধান হয়েছে' :
+                   activity.status === 'COMPLETED' ? 'সম্পন্ন' : 'প্রক্রিয়াধীন'}
                 </span>
               </div>
             ))
