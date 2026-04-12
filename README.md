@@ -8,6 +8,47 @@ A full-stack agricultural service platform where farmers can easily book service
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38BDF8)](https://tailwindcss.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 
+## 📖 Why This Project?
+
+This project was created to solve real problems faced by farmers in Bangladesh:
+
+- **Service Access** - Farmers often struggle to find reliable agricultural services (pesticides, equipment, experts)
+- **Market Prices** - No centralized platform to check current market prices for crops
+- **Communication Gap** - No easy way to book services or connect with experts
+- **Language Barrier** - Most agricultural platforms are in English, not accessible to local farmers
+
+GramSevá bridges this gap by providing a bilingual (Bengali + English), mobile-friendly platform where farmers can:
+- Book agricultural services
+- Check real-time market prices
+- Access expert advice
+- Manage their farming activities
+
+---
+
+## 🎓 What I Learned
+
+Building this project helped me learn:
+
+### Backend
+- **Next.js 14 App Router** - File-based routing, layouts, middleware
+- **Prisma ORM** - Database modeling, migrations, CRUD operations
+- **PostgreSQL** - Relational database design, indexes, queries
+- **RESTful API** - API route handlers, request/response handling
+- **JWT Authentication** - Token-based auth, protected routes
+
+### Frontend
+- **React** - Components, hooks, context
+- **TypeScript** - Interfaces, types, generics
+- **Tailwind CSS** - Responsive design, custom theme
+- **shadcn/ui** - Reusable UI components
+- **Web Speech API** - Voice recognition for search
+
+### Tools & Deployment
+- **Git** - Version control, branching
+- **Vercel** - Production deployment
+
+---
+
 ## 🚀 Quick Start
 
 ```bash
@@ -75,7 +116,7 @@ gramseva/
     │   ├── ui/        # Reusable UI components
     │   ├── common/    # Common components
     │   └── forms/     # Form components
-    ├── contexts/       # Context API
+    ├── contexts/      # Context API
     ├── hooks/         # Custom hooks
     ├── lib/           # Libraries and utilities
     └── types/         # TypeScript types
