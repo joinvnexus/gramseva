@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Report } from '@/types';
 import ReportStatus from './ReportStatus';
 import { toBanglaDate } from '@/utils/bengaliHelper';
+import { MapPin, Droplets, Zap, FileText, ThumbsUp, MessageCircle } from 'lucide-react';
 
 interface ReportCardProps {
   report: Report;
@@ -14,6 +15,19 @@ const statusColors = {
   PENDING: 'bg-yellow-100 text-yellow-800',
   PROCESSING: 'bg-blue-100 text-blue-800',
   RESOLVED: 'bg-green-100 text-green-800',
+};
+
+const statusText = {
+  PENDING: 'বিচারাধীন',
+  PROCESSING: 'প্রক্রিয়াধীন',
+  RESOLVED: 'সমাধান済み',
+};
+
+const problemTypeIcons: Record<string, React.ReactNode> = {
+  ROAD: <MapPin className="w-5 h-5" />,
+  WATER: <Droplets className="w-5 h-5" />,
+  ELECTRICITY: <Zap className="w-5 h-5" />,
+  OTHER: <FileText className="w-5 h-5" />,
 };
 
 const statusText = {

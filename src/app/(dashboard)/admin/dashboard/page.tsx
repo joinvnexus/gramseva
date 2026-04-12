@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Loader from '@/components/common/Loader';
+import { Users, Wrench, FileText, Store, Calendar, TrendingUp, Clock, CheckCircle, AlertCircle } from 'lucide-react';
 
 interface AdminStats {
   totalUsers: number;
@@ -89,32 +90,32 @@ export default function AdminDashboard() {
       {/* মেইন স্ট্যাটস */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
         <div className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition">
-          <div className="text-3xl mb-2">👥</div>
+          <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalUsers || 0}</div>
           <div className="text-sm text-gray-600">মোট ইউজার</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition">
-          <div className="text-3xl mb-2">🔧</div>
+          <Wrench className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalProviders || 0}</div>
           <div className="text-sm text-gray-600">প্রোভাইডার</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition">
-          <div className="text-3xl mb-2">📝</div>
+          <FileText className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalReports || 0}</div>
           <div className="text-sm text-gray-600">রিপোর্ট</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition">
-          <div className="text-3xl mb-2">🔨</div>
+          <TrendingUp className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalServices || 0}</div>
           <div className="text-sm text-gray-600">সার্ভিস</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition">
-          <div className="text-3xl mb-2">📅</div>
+          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
           <div className="text-sm text-gray-600">বুকিং</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition">
-          <div className="text-3xl mb-2">🏪</div>
+          <Store className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalMarkets || 0}</div>
           <div className="text-sm text-gray-600">হাট বাজার</div>
         </div>
@@ -128,6 +129,37 @@ export default function AdminDashboard() {
               <p className="text-yellow-600 text-sm">বিচারাধীন রিপোর্ট</p>
               <p className="text-2xl font-bold text-yellow-700">{stats?.pendingReports || 0}</p>
             </div>
+            <Clock className="w-8 h-8 text-yellow-500" />
+          </div>
+          <Link href="/admin/reports?status=PENDING" className="text-yellow-600 text-sm mt-2 inline-block">
+            দেখুন →
+          </Link>
+        </div>
+        <div className="bg-blue-50 rounded-lg shadow p-4 border-l-4 border-blue-500">
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-blue-600 text-sm">প্রক্রিয়াধীন রিপোর্ট</p>
+              <p className="text-2xl font-bold text-blue-700">{stats?.processingReports || 0}</p>
+            </div>
+            <AlertCircle className="w-8 h-8 text-blue-500" />
+          </div>
+          <Link href="/admin/reports?status=PROCESSING" className="text-blue-600 text-sm mt-2 inline-block">
+            দেখুন →
+          </Link>
+        </div>
+        <div className="bg-green-50 rounded-lg shadow p-4 border-l-4 border-green-500">
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-green-600 text-sm">সমাধান হয়েছে</p>
+              <p className="text-2xl font-bold text-green-700">{stats?.resolvedReports || 0}</p>
+            </div>
+            <CheckCircle className="w-8 h-8 text-green-500" />
+          </div>
+          <Link href="/admin/reports?status=RESOLVED" className="text-green-600 text-sm mt-2 inline-block">
+            দেখুন →
+          </Link>
+        </div>
+      </div>
             <div className="text-3xl">⏳</div>
           </div>
           <Link href="/admin/reports?status=PENDING" className="text-yellow-600 text-sm mt-2 inline-block">
@@ -163,22 +195,22 @@ export default function AdminDashboard() {
       {/* কুইক অ্যাকশন */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Link href="/admin/users" className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition group">
-          <div className="text-3xl mb-2 group-hover:scale-110 transition">👥</div>
+          <Users className="w-8 h-8 mx-auto mb-2 text-primary group-hover:scale-110 transition" />
           <p className="font-medium">ইউজার ম্যানেজ</p>
           <p className="text-xs text-gray-500">সকল ইউজার দেখুন ও পরিচালনা করুন</p>
         </Link>
         <Link href="/admin/services" className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition group">
-          <div className="text-3xl mb-2 group-hover:scale-110 transition">🔧</div>
+          <Wrench className="w-8 h-8 mx-auto mb-2 text-primary group-hover:scale-110 transition" />
           <p className="font-medium">সার্ভিস ম্যানেজ</p>
           <p className="text-xs text-gray-500">সকল সার্ভিস দেখুন ও পরিচালনা করুন</p>
         </Link>
         <Link href="/admin/reports" className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition group">
-          <div className="text-3xl mb-2 group-hover:scale-110 transition">📝</div>
+          <FileText className="w-8 h-8 mx-auto mb-2 text-primary group-hover:scale-110 transition" />
           <p className="font-medium">রিপোর্ট ম্যানেজ</p>
           <p className="text-xs text-gray-500">রিপোর্ট স্ট্যাটাস আপডেট করুন</p>
         </Link>
         <Link href="/admin/markets" className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition group">
-          <div className="text-3xl mb-2 group-hover:scale-110 transition">🏪</div>
+          <Store className="w-8 h-8 mx-auto mb-2 text-primary group-hover:scale-110 transition" />
           <p className="font-medium">হাট বাজার</p>
           <p className="text-xs text-gray-500">হাট বাজার ও দর আপডেট করুন</p>
         </Link>
@@ -193,19 +225,17 @@ export default function AdminDashboard() {
         <div className="divide-y">
           {recentActivities.length === 0 ? (
             <div className="p-8 text-center text-gray-500">
-              <div className="text-4xl mb-2">📭</div>
+              <FileText className="w-12 h-12 mx-auto mb-2 text-gray-300" />
               <p>কোনো কার্যকলাপ নেই</p>
             </div>
           ) : (
             recentActivities.map((activity) => (
               <div key={activity.id} className="p-4 flex items-center justify-between hover:bg-gray-50">
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">
-                    {activity.type === 'user' && '👤'}
-                    {activity.type === 'service' && '🔧'}
-                    {activity.type === 'report' && '📝'}
-                    {activity.type === 'booking' && '📅'}
-                  </span>
+                  {activity.type === 'user' && <Users className="w-6 h-6 text-primary" />}
+                  {activity.type === 'service' && <Wrench className="w-6 h-6 text-primary" />}
+                  {activity.type === 'report' && <FileText className="w-6 h-6 text-primary" />}
+                  {activity.type === 'booking' && <Calendar className="w-6 h-6 text-primary" />}
                   <div>
                     <p className="font-medium">{activity.title}</p>
                     <p className="text-sm text-gray-500">

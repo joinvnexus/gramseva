@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import Loader from '@/components/common/Loader';
 import { toBanglaDate } from '@/utils/bengaliHelper';
+import { FileText, Calendar, Store, Plus, Search, CheckCircle, Clock } from 'lucide-react';
 
 interface UserStats {
   totalReports: number;
@@ -87,15 +88,114 @@ export default function UserDashboard() {
       {/* স্ট্যাটস কার্ড */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">📝</div>
+          <FileText className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalReports || 0}</div>
           <div className="text-sm text-gray-600">মোট রিপোর্ট</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">✅</div>
+          <CheckCircle className="w-8 h-8 mx-auto mb-2 text-green-600" />
           <div className="text-2xl font-bold text-green-600">{stats?.resolvedReports || 0}</div>
-          <div className="text-sm text-gray-600">সমাধান済み</div>
+          <div className="text-sm text-gray-600">সমাধান হয়েছে</div>
         </div>
+        <div className="bg-white rounded-lg shadow p-4 text-center">
+          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
+          <div className="text-sm text-gray-600">বুকিং</div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-4 text-center">
+          <Clock className="w-8 h-8 mx-auto mb-2 text-accent" />
+          <div className="text-2xl font-bold text-accent">{stats?.upvotedReports || 0}</div>
+          <div className="text-sm text-gray-600">ভোট দেওয়া</div>
+        </div>
+      </div>
+
+      {/* দ্রুত লিংক */}
+      <div className="grid grid-cols-2 gap-4">
+        <Link
+          href="/reports/new"
+          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+        >
+          <Plus className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <p className="font-medium">নতুন রিপোর্ট</p>
+        </Link>
+        <Link
+          href="/services"
+          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+        >
+          <Search className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <p className="font-medium">সার্ভিস খুঁজুন</p>
+        </Link>
+        <Link
+          href="/bookings"
+          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+        >
+          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <p className="font-medium">আমার বুকিং</p>
+        </Link>
+        <Link
+          href="/market"
+          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+        >
+          <Store className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <p className="font-medium">হাট বাজার</p>
+        </Link>
+      </div>
+
+      {/* স্ট্যাটস কার্ড */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="bg-white rounded-lg shadow p-4 text-center">
+          <FileText className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <div className="text-2xl font-bold text-primary">{stats?.totalReports || 0}</div>
+          <div className="text-sm text-gray-600">মোট রিপোর্ট</div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-4 text-center">
+          <CheckCircle className="w-8 h-8 mx-auto mb-2 text-green-600" />
+          <div className="text-2xl font-bold text-green-600">{stats?.resolvedReports || 0}</div>
+          <div className="text-sm text-gray-600">সমাধান হয়েছে</div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-4 text-center">
+          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
+          <div className="text-sm text-gray-600">বুকিং</div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-4 text-center">
+          <Clock className="w-8 h-8 mx-auto mb-2 text-accent" />
+          <div className="text-2xl font-bold text-accent">{stats?.upvotedReports || 0}</div>
+          <div className="text-sm text-gray-600">ভোট দেওয়া</div>
+        </div>
+      </div>
+
+      {/* দ্রুত লিংক */}
+      <div className="grid grid-cols-2 gap-4">
+        <Link
+          href="/reports/new"
+          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+        >
+          <Plus className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <p className="font-medium">নতুন রিপোর্ট</p>
+        </Link>
+        <Link
+          href="/services"
+          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+        >
+          <Search className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <p className="font-medium">সার্ভিস খুঁজুন</p>
+        </Link>
+        <Link
+          href="/bookings"
+          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+        >
+          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <p className="font-medium">আমার বুকিং</p>
+        </Link>
+        <Link
+          href="/market"
+          className="bg-white rounded-lg shadow p-4 text-center hover:shadow-lg transition"
+        >
+          <Store className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <p className="font-medium">হাট বাজার</p>
+        </Link>
+      </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
           <div className="text-3xl mb-2">📅</div>
           <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
@@ -148,16 +248,18 @@ export default function UserDashboard() {
         <div className="divide-y">
           {recentActivities.length === 0 ? (
             <div className="p-8 text-center text-gray-500">
-              <div className="text-4xl mb-2">📭</div>
+              <FileText className="w-12 h-12 mx-auto mb-2 text-gray-300" />
               <p>কোনো কার্যকলাপ নেই</p>
             </div>
           ) : (
             recentActivities.map((activity) => (
               <div key={activity.id} className="p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <span className="text-2xl">
-                    {activity.type === 'report' ? '📝' : '📅'}
-                  </span>
+                  {activity.type === 'report' ? (
+                    <FileText className="w-6 h-6 text-primary" />
+                  ) : (
+                    <Calendar className="w-6 h-6 text-primary" />
+                  )}
                   <div>
                     <p className="font-medium">{activity.title}</p>
                     <p className="text-sm text-gray-500">{toBanglaDate(activity.date)}</p>

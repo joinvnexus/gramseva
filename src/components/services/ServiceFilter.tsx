@@ -1,6 +1,7 @@
 'use client';
 
 import VoiceButton from '@/components/common/VoiceButton';
+import { List, Zap, Wrench, Hammer, GraduationCap, Package, Search } from 'lucide-react';
 
 interface ServiceFilterProps {
   selectedCategory: string;
@@ -10,13 +11,13 @@ interface ServiceFilterProps {
 }
 
 const categories = [
-  { value: 'ALL', label: 'সব', icon: '📋' },
-  { value: 'ELECTRICIAN', label: 'ইলেকট্রিশিয়ান', icon: '⚡' },
-  { value: 'PLUMBER', label: 'মিস্ত্রি', icon: '🔧' },
-  { value: 'MECHANIC', label: 'মেকানিক', icon: '🔨' },
-  { value: 'DOCTOR', label: 'ডাক্তার', icon: '👨‍⚕️' },
-  { value: 'TUTOR', label: 'টিউটর', icon: '📚' },
-  { value: 'OTHER', label: 'অন্যান্য', icon: '📦' },
+  { value: 'ALL', label: 'সব', icon: List },
+  { value: 'ELECTRICIAN', label: 'ইলেকট্রিশিয়ান', icon: Zap },
+  { value: 'PLUMBER', label: 'মিস্ত্রি', icon: Wrench },
+  { value: 'MECHANIC', label: 'মেকানিক', icon: Hammer },
+  { value: 'DOCTOR', label: 'ডাক্তার', icon: GraduationCap },
+  { value: 'TUTOR', label: 'টিউটর', icon: GraduationCap },
+  { value: 'OTHER', label: 'অন্যান্য', icon: Package },
 ];
 
 export default function ServiceFilter({
@@ -52,13 +53,13 @@ export default function ServiceFilter({
             <button
               key={cat.value}
               onClick={() => onCategoryChange(cat.value)}
-              className={`px-4 py-2 rounded-lg whitespace-nowrap transition ${
+              className={`px-4 py-2 rounded-lg whitespace-nowrap transition flex items-center gap-1 ${
                 selectedCategory === cat.value
                   ? 'bg-primary text-white'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >
-              <span className="mr-1">{cat.icon}</span>
+              <cat.icon className="w-4 h-4" />
               {cat.label}
             </button>
           ))}

@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import Loader from '@/components/common/Loader';
 import Link from 'next/link';
+import { User, FileText, CheckCircle, Calendar, ThumbsUp, MapPin, Edit, X, Save } from 'lucide-react';
 
 interface UserStats {
   totalReports: number;
@@ -99,8 +100,8 @@ export default function UserProfilePage() {
       <div className="bg-gradient-to-r from-primary to-primary-dark rounded-lg overflow-hidden">
         <div className="relative h-32 bg-black/20">
           <div className="absolute -bottom-12 left-6">
-            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-4xl shadow-lg">
-              {user?.name?.charAt(0) || '👤'}
+            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
+              <User className="w-12 h-12 text-primary" />
             </div>
           </div>
         </div>
@@ -124,8 +125,9 @@ export default function UserProfilePage() {
             </div>
             <button
               onClick={() => setIsEditing(!isEditing)}
-              className="bg-white/20 text-white px-4 py-2 rounded-lg hover:bg-white/30 transition"
+              className="bg-white/20 text-white px-4 py-2 rounded-lg hover:bg-white/30 transition flex items-center gap-2"
             >
+              {isEditing ? <X className="w-4 h-4" /> : <Edit className="w-4 h-4" />}
               {isEditing ? 'বাতিল করুন' : 'প্রোফাইল এডিট'}
             </button>
           </div>
@@ -135,13 +137,26 @@ export default function UserProfilePage() {
       {/* স্ট্যাটস কার্ড */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">📝</div>
+          <FileText className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalReports || 0}</div>
           <div className="text-sm text-gray-600">মোট রিপোর্ট</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">✅</div>
+          <CheckCircle className="w-8 h-8 mx-auto mb-2 text-green-600" />
           <div className="text-2xl font-bold text-green-600">{stats?.resolvedReports || 0}</div>
+          <div className="text-sm text-gray-600">সমাধান হয়েছে</div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-4 text-center">
+          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
+          <div className="text-sm text-gray-600">মোট বুকিং</div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-4 text-center">
+          <ThumbsUp className="w-8 h-8 mx-auto mb-2 text-blue-600" />
+          <div className="text-2xl font-bold text-blue-600">{stats?.upvotedReports || 0}</div>
+          <div className="text-sm text-gray-600">আপভোট</div>
+        </div>
+      </div>
           <div className="text-sm text-gray-600">সমাধান済み</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">

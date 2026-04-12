@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react';
 import { useOffline } from '@/hooks/useOffline';
+import { Smartphone, Download, X } from 'lucide-react';
 
 export default function PWASetup() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
@@ -54,7 +55,7 @@ export default function PWASetup() {
       {showInstall && (
         <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 bg-white rounded-lg shadow-xl z-50 p-4 border-l-4 border-primary">
           <div className="flex items-start gap-3">
-            <div className="text-3xl">📱</div>
+            <Smartphone className="w-8 h-8 text-primary" />
             <div className="flex-1">
               <h3 className="font-semibold text-gray-800">
                 অ্যাপ ইন্সটল করুন

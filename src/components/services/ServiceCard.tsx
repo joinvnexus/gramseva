@@ -3,18 +3,19 @@
 import Link from 'next/link';
 import { Service } from '@/types';
 import { formatCurrency } from '@/utils/bengaliHelper';
+import { Zap, Wrench, Hammer, GraduationCap, Package, Star, MapPin, Clock } from 'lucide-react';
 
 interface ServiceCardProps {
   service: Service;
 }
 
-const categoryIcon = {
-  ELECTRICIAN: '⚡',
-  PLUMBER: '🔧',
-  MECHANIC: '🔨',
-  DOCTOR: '👨‍⚕️',
-  TUTOR: '📚',
-  OTHER: '📦',
+const categoryIcon: Record<string, React.ReactNode> = {
+  ELECTRICIAN: <Zap className="w-5 h-5" />,
+  PLUMBER: <Wrench className="w-5 h-5" />,
+  MECHANIC: <Hammer className="w-5 h-5" />,
+  DOCTOR: <GraduationCap className="w-5 h-5" />,
+  TUTOR: <GraduationCap className="w-5 h-5" />,
+  OTHER: <Package className="w-5 h-5" />,
 };
 
 const categoryName = {

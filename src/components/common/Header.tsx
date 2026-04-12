@@ -7,6 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import NotificationBell from './NotificationBell';
 import VoiceSearch from './VoiceSearch';
+import { Wrench, FileText, Store, LayoutDashboard, User, Plus, Users, LogOut, Search, Moon, Sun, Menu, X, Wheat, Bell, WifiOff } from 'lucide-react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -90,9 +91,9 @@ export default function Header() {
 
   // নেভিগেশন আইটেম
   const navItems = [
-    { href: '/services', label: 'সার্ভিসেস', icon: '🔧', active: pathname === '/services' || pathname?.startsWith('/services/') },
-    { href: '/reports', label: 'রিপোর্ট', icon: '📝', active: pathname === '/reports' || pathname?.startsWith('/reports/') },
-    { href: '/market', label: 'হাট বাজার', icon: '🏪', active: pathname === '/market' },
+    { href: '/services', label: 'সার্ভিসেস', icon: Wrench, active: pathname === '/services' || pathname?.startsWith('/services/') },
+    { href: '/reports', label: 'রিপোর্ট', icon: FileText, active: pathname === '/reports' || pathname?.startsWith('/reports/') },
+    { href: '/market', label: 'হাট বাজার', icon: Store, active: pathname === '/market' },
   ];
 
   return (
@@ -105,10 +106,7 @@ export default function Header() {
           {/* লোগো */}
           <Link href="/" className="flex items-center gap-2 group">
             <div className="relative">
-              <span className="text-3xl transition-transform group-hover:scale-110 inline-block">
-                🌾
-              </span>
-              <span className="absolute -top-1 -right-2 text-xs animate-ping opacity-0 group-hover:opacity-100">✨</span>
+              <Wheat className="w-8 h-8 text-white transition-transform group-hover:scale-110" />
             </div>
             <div>
               <span className="text-white font-bold text-xl md:text-2xl">GramSeva</span>
@@ -128,11 +126,8 @@ export default function Header() {
                     : 'text-white/80 hover:bg-white/10 hover:text-white'
                 }`}
               >
-                <span className="text-lg">{item.icon}</span>
+                <item.icon className="w-5 h-5" />
                 <span className="font-medium">{item.label}</span>
-                {item.active && (
-                  <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-6 h-0.5 bg-accent rounded-full"></span>
-                )}
               </Link>
             ))}
           </nav>
@@ -162,8 +157,8 @@ export default function Header() {
                         className="flex-1 px-3 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                         autoFocus
                       />
-                      <button type="submit" className="bg-primary text-white px-3 py-2 rounded-lg">
-                        🔍
+                      <button type="submit" className="bg-primary text-white p-2 rounded-lg">
+                        <Search className="w-5 h-5" />
                       </button>
                     </div>
                   </form>
@@ -179,7 +174,7 @@ export default function Header() {
               onClick={toggleTheme}
               className="p-2 text-white hover:bg-white/10 rounded-full transition"
             >
-              {theme === 'light' ? '🌙' : '☀️'}
+              {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
             </button>
 
             {/* নোটিফিকেশন */}
@@ -192,8 +187,8 @@ export default function Header() {
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
                   className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-white/10 transition group"
                 >
-                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white font-semibold">
-                    {user?.name?.charAt(0) || '👤'}
+                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                    <User className="w-5 h-5 text-white" />
                   </div>
                   <span className="text-white text-sm max-w-[100px] truncate">
                     {user?.name}
@@ -223,7 +218,7 @@ export default function Header() {
                         className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
                         onClick={() => setIsProfileOpen(false)}
                       >
-                        <span className="text-xl">📊</span>
+                        <LayoutDashboard className="w-5 h-5" />
                         <span>ড্যাশবোর্ড</span>
                       </Link>
                       <Link
@@ -231,7 +226,7 @@ export default function Header() {
                         className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
                         onClick={() => setIsProfileOpen(false)}
                       >
-                        <span className="text-xl">👤</span>
+                        <User className="w-5 h-5" />
                         <span>প্রোফাইল</span>
                       </Link>
                       {user?.role === 'PROVIDER' && (
@@ -240,7 +235,7 @@ export default function Header() {
                           className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
                           onClick={() => setIsProfileOpen(false)}
                         >
-                          <span className="text-xl">➕</span>
+                          <Plus className="w-5 h-5" />
                           <span>সার্ভিস আপডেট</span>
                         </Link>
                       )}
@@ -251,7 +246,7 @@ export default function Header() {
                             className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
                             onClick={() => setIsProfileOpen(false)}
                           >
-                            <span className="text-xl">👥</span>
+                            <Users className="w-5 h-5" />
                             <span>ইউজার ম্যানেজ</span>
                           </Link>
                           <Link
@@ -259,7 +254,7 @@ export default function Header() {
                             className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
                             onClick={() => setIsProfileOpen(false)}
                           >
-                            <span className="text-xl">🔧</span>
+                            <Wrench className="w-5 h-5" />
                             <span>সার্ভিস ম্যানেজ</span>
                           </Link>
                           <Link
@@ -267,7 +262,7 @@ export default function Header() {
                             className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
                             onClick={() => setIsProfileOpen(false)}
                           >
-                            <span className="text-xl">📝</span>
+                            <FileText className="w-5 h-5" />
                             <span>রিপোর্ট ম্যানেজ</span>
                           </Link>
                           <Link
@@ -275,7 +270,7 @@ export default function Header() {
                             className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50 transition"
                             onClick={() => setIsProfileOpen(false)}
                           >
-                            <span className="text-xl">🏪</span>
+                            <Store className="w-5 h-5" />
                             <span>হাট বাজার</span>
                           </Link>
                         </>
@@ -289,7 +284,7 @@ export default function Header() {
                         }}
                         className="flex items-center gap-3 w-full px-4 py-2 text-red-600 hover:bg-red-50 transition text-left"
                       >
-                        <span className="text-xl">🚪</span>
+                        <LogOut className="w-5 h-5" />
                         <span>লগআউট</span>
                       </button>
                     </div>
@@ -349,8 +344,8 @@ export default function Header() {
                   placeholder="সার্চ করুন..."
                   className="flex-1 px-4 py-2 rounded-lg bg-white/10 text-white placeholder-white/50 border border-white/20 focus:outline-none focus:border-accent"
                 />
-                <button type="submit" className="px-4 py-2 bg-accent text-primary rounded-lg">
-                  🔍
+                <button type="submit" className="p-2 bg-accent text-primary rounded-lg">
+                  <Search className="w-5 h-5" />
                 </button>
               </form>
             </div>
@@ -368,7 +363,7 @@ export default function Header() {
                       : 'text-white/80 hover:bg-white/10 hover:text-white'
                   }`}
                 >
-                  <span className="text-xl">{item.icon}</span>
+                  <item.icon className="w-5 h-5" />
                   <span className="font-medium">{item.label}</span>
                   {item.active && (
                     <span className="ml-auto w-1.5 h-1.5 bg-accent rounded-full"></span>
@@ -385,7 +380,7 @@ export default function Header() {
                     onClick={() => setIsMenuOpen(false)}
                     className="flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 rounded-lg transition"
                   >
-                    <span className="text-xl">📊</span>
+                    <LayoutDashboard className="w-5 h-5" />
                     <span>ড্যাশবোর্ড</span>
                   </Link>
                   <Link
@@ -393,7 +388,7 @@ export default function Header() {
                     onClick={() => setIsMenuOpen(false)}
                     className="flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 rounded-lg transition"
                   >
-                    <span className="text-xl">👤</span>
+                    <User className="w-5 h-5" />
                     <span>প্রোফাইল</span>
                   </Link>
                   {user?.role === 'PROVIDER' && (
@@ -402,7 +397,7 @@ export default function Header() {
                       onClick={() => setIsMenuOpen(false)}
                       className="flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 rounded-lg transition"
                     >
-                      <span className="text-xl">➕</span>
+                      <Plus className="w-5 h-5" />
                       <span>সার্ভিস আপডেট</span>
                     </Link>
                   )}
@@ -414,7 +409,7 @@ export default function Header() {
                     }}
                     className="flex items-center gap-3 px-4 py-3 text-red-300 hover:bg-white/10 rounded-lg transition w-full text-left"
                   >
-                    <span className="text-xl">🚪</span>
+                    <LogOut className="w-5 h-5" />
                     <span>লগআউট</span>
                   </button>
                 </>
@@ -443,7 +438,7 @@ export default function Header() {
                 onClick={toggleTheme}
                 className="flex items-center gap-3 px-4 py-3 text-white/80 hover:bg-white/10 rounded-lg transition"
               >
-                <span className="text-xl">{theme === 'light' ? '🌙' : '☀️'}</span>
+                {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
                 <span>{theme === 'light' ? 'ডার্ক মোড' : 'লাইট মোড'}</span>
               </button>
             </nav>
@@ -464,7 +459,7 @@ export default function Header() {
                   : 'text-gray-500 hover:text-primary'
               }`}
             >
-              <span className="text-xl">{item.icon}</span>
+              <item.icon className="w-5 h-5" />
               <span className="text-xs mt-1">{item.label}</span>
             </Link>
           ))}
@@ -477,7 +472,7 @@ export default function Header() {
                   : 'text-gray-500 hover:text-primary'
               }`}
             >
-              <span className="text-xl">📊</span>
+              <LayoutDashboard className="w-5 h-5" />
               <span className="text-xs mt-1">ড্যাশ</span>
             </Link>
           )}
@@ -489,7 +484,7 @@ export default function Header() {
                 : 'text-gray-500 hover:text-primary'
             }`}
           >
-            <span className="text-xl">👤</span>
+            <User className="w-5 h-5" />
             <span className="text-xs mt-1">{isAuthenticated ? 'প্রোফাইল' : 'লগইন'}</span>
           </Link>
         </div>
@@ -497,8 +492,9 @@ export default function Header() {
 
       {/* অফলাইন ইন্ডিকেটর */}
       {typeof window !== 'undefined' && !navigator.onLine && (
-        <div className="bg-yellow-500 text-white text-center py-1 text-sm">
-          📡 আপনি অফলাইনে আছেন। কিছু ফিচার সীমিত থাকতে পারে।
+        <div className="bg-yellow-500 text-white text-center py-1 text-sm flex items-center justify-center gap-2">
+          <WifiOff className="w-4 h-4" />
+          <span>আপনি অফলাইনে আছেন। কিছু ফিচার সীমিত থাকতে পারে।</span>
         </div>
       )}
     </header>

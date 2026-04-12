@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import Link from 'next/link';
 import Loader from '@/components/common/Loader';
 import { toBanglaDate, formatCurrency } from '@/utils/bengaliHelper';
+import { Wrench, Calendar, Star, DollarSign, Clock, CheckCircle, MapPin, Phone, User, TrendingUp } from 'lucide-react';
 
 interface ProviderStats {
   totalServices: number;
@@ -130,24 +131,24 @@ export default function ProviderDashboard() {
       {/* স্ট্যাটস কার্ড */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">🔧</div>
+          <Wrench className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalServices || 0}</div>
           <div className="text-sm text-gray-600">আমার সার্ভিস</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">📅</div>
+          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
           <div className="text-sm text-gray-600">মোট বুকিং</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">⏳</div>
+          <Clock className="w-8 h-8 mx-auto mb-2 text-yellow-600" />
           <div className="text-2xl font-bold text-yellow-600">{stats?.pendingBookings || 0}</div>
           <div className="text-sm text-gray-600">বিচারাধীন</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">💰</div>
+          <DollarSign className="w-8 h-8 mx-auto mb-2 text-green-600" />
           <div className="text-2xl font-bold text-green-600">{formatCurrency(stats?.totalEarnings || 0)}</div>
-          <div className="text-sm text-gray-600">মোট আয়</div>
+          <div className="text-sm text-gray-600">মোট আয়</div>
         </div>
       </div>
 
@@ -156,13 +157,13 @@ export default function ProviderDashboard() {
         <div className="bg-white rounded-lg shadow p-4">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-gray-500 text-sm">গড় রেটিং</p>
+              <p className="text-gray-500 text-sm">গড় রেটিং</p>
               <div className="flex items-center gap-1 mt-1">
                 <span className="text-2xl font-bold text-primary">{stats?.averageRating?.toFixed(1) || 0}</span>
-                <span className="text-yellow-500">★</span>
+                <Star className="w-5 h-5 text-yellow-500" />
               </div>
             </div>
-            <div className="text-4xl">⭐</div>
+            <Star className="w-10 h-10 text-yellow-500" />
           </div>
         </div>
         <div className="bg-white rounded-lg shadow p-4">
@@ -171,7 +172,7 @@ export default function ProviderDashboard() {
               <p className="text-gray-500 text-sm">সম্পন্ন বুকিং</p>
               <p className="text-2xl font-bold text-green-600">{stats?.completedBookings || 0}</p>
             </div>
-            <div className="text-4xl">✅</div>
+            <CheckCircle className="w-10 h-10 text-green-500" />
           </div>
         </div>
       </div>
@@ -184,7 +185,7 @@ export default function ProviderDashboard() {
         <div className="divide-y">
           {recentBookings.length === 0 ? (
             <div className="p-8 text-center text-gray-500">
-              <div className="text-4xl mb-2">📭</div>
+              <Calendar className="w-12 h-12 mx-auto mb-2 text-gray-300" />
               <p>কোনো বুকিং নেই</p>
             </div>
           ) : (
@@ -194,11 +195,11 @@ export default function ProviderDashboard() {
                   <div>
                     <p className="font-semibold">{booking.user.name}</p>
                     <p className="text-sm text-gray-500">{booking.user.phone}</p>
-                    <p className="text-sm text-gray-500 mt-1">
-                      📅 {toBanglaDate(booking.date)}
+                    <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
+                      <Calendar className="w-4 h-4" /> {toBanglaDate(booking.date)}
                     </p>
-                    <p className="text-sm text-primary mt-1">
-                      💰 {formatCurrency(booking.service.hourlyRate)}/ঘন্টা
+                    <p className="text-sm text-primary mt-1 flex items-center gap-1">
+                      <DollarSign className="w-4 h-4" /> {formatCurrency(booking.service.hourlyRate)}/ঘন্টা
                     </p>
                   </div>
                   <div className="text-right">

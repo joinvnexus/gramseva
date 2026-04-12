@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import Loader from '@/components/common/Loader';
 import Link from 'next/link';
+import { Crown, Users, Wrench, FileText, Calendar, MapPin, LogOut, Edit, Save, X } from 'lucide-react';
 
 interface AdminStats {
   totalUsers: number;
@@ -99,8 +100,8 @@ export default function AdminProfilePage() {
       <div className="bg-gradient-to-r from-purple-600 to-purple-800 rounded-lg overflow-hidden">
         <div className="relative h-32 bg-black/20">
           <div className="absolute -bottom-12 left-6">
-            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-4xl shadow-lg">
-              👑
+            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
+              <Crown className="w-12 h-12 text-purple-600" />
             </div>
           </div>
         </div>
@@ -117,15 +118,16 @@ export default function AdminProfilePage() {
                 {user?.phone} • সিস্টেম অ্যাডমিনিস্ট্রেটর
               </p>
               <div className="flex items-center gap-2 mt-2">
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">
-                  📍 {user?.village}, ওয়ার্ড {user?.ward}
+                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs flex items-center gap-1">
+                  <MapPin className="w-3 h-3" /> {user?.village}, ওয়ার্ড {user?.ward}
                 </span>
               </div>
             </div>
             <button
               onClick={() => setIsEditing(!isEditing)}
-              className="bg-white/20 text-white px-4 py-2 rounded-lg hover:bg-white/30 transition"
+              className="bg-white/20 text-white px-4 py-2 rounded-lg hover:bg-white/30 transition flex items-center gap-2"
             >
+              {isEditing ? <X className="w-4 h-4" /> : <Edit className="w-4 h-4" />}
               {isEditing ? 'বাতিল করুন' : 'প্রোফাইল এডিট'}
             </button>
           </div>
@@ -135,22 +137,22 @@ export default function AdminProfilePage() {
       {/* স্ট্যাটস কার্ড */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">👥</div>
+          <Users className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalUsers || 0}</div>
           <div className="text-sm text-gray-600">মোট ইউজার</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">🔧</div>
+          <Wrench className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalProviders || 0}</div>
           <div className="text-sm text-gray-600">প্রোভাইডার</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">📝</div>
+          <FileText className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalReports || 0}</div>
           <div className="text-sm text-gray-600">রিপোর্ট</div>
         </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">📅</div>
+          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
           <div className="text-sm text-gray-600">বুকিং</div>
         </div>
@@ -195,14 +197,16 @@ export default function AdminProfilePage() {
                 />
               </div>
               <div className="flex gap-3">
-                <button type="submit" className="bg-primary text-white px-4 py-2 rounded-lg">
+                <button type="submit" className="bg-primary text-white px-4 py-2 rounded-lg flex items-center gap-2">
+                  <Save className="w-4 h-4" />
                   সংরক্ষণ করুন
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsEditing(false)}
-                  className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg"
+                  className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg flex items-center gap-2"
                 >
+                  <X className="w-4 h-4" />
                   বাতিল
                 </button>
               </div>

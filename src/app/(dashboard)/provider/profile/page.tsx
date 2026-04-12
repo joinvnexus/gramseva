@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Loader from '@/components/common/Loader';
+import { Zap, Wrench, Hammer, GraduationCap, Package, Star, Calendar, MapPin, DollarSign, Clock, User, CheckCircle, Edit, Save, X, AlertCircle } from 'lucide-react';
 
 interface ProviderStats {
   totalServices: number;
@@ -35,13 +36,13 @@ const categoryNames: Record<string, string> = {
   OTHER: 'অন্যান্য',
 };
 
-const categoryIcons: Record<string, string> = {
-  ELECTRICIAN: '⚡',
-  PLUMBER: '🔧',
-  MECHANIC: '🔨',
-  DOCTOR: '👨‍⚕️',
-  TUTOR: '📚',
-  OTHER: '📦',
+const categoryIcons: Record<string, React.ReactNode> = {
+  ELECTRICIAN: <Zap className="w-6 h-6" />,
+  PLUMBER: <Wrench className="w-6 h-6" />,
+  MECHANIC: <Hammer className="w-6 h-6" />,
+  DOCTOR: <GraduationCap className="w-6 h-6" />,
+  TUTOR: <GraduationCap className="w-6 h-6" />,
+  OTHER: <Package className="w-6 h-6" />,
 };
 
 export default function ProviderProfilePage() {
@@ -185,8 +186,8 @@ export default function ProviderProfilePage() {
       <div className="bg-gradient-to-r from-primary to-primary-dark rounded-lg overflow-hidden">
         <div className="relative h-32 bg-black/20">
           <div className="absolute -bottom-12 left-6">
-            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center text-4xl shadow-lg">
-              {user?.name?.charAt(0) || '🔧'}
+            <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg">
+              <User className="w-12 h-12 text-primary" />
             </div>
           </div>
         </div>
@@ -203,12 +204,12 @@ export default function ProviderProfilePage() {
                 {user?.phone} • {providerTypeName}
               </p>
               <div className="flex items-center gap-2 mt-2">
-                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs">
-                  📍 {user?.village}, ওয়ার্ড {user?.ward}
+                <span className="bg-white/20 text-white px-2 py-1 rounded text-xs flex items-center gap-1">
+                  <MapPin className="w-3 h-3" /> {user?.village}, ওয়ার্ড {user?.ward}
                 </span>
                 {user?.verified && (
-                  <span className="bg-green-500/20 text-green-200 px-2 py-1 rounded text-xs">
-                    ✓ ভেরিফাইড প্রোভাইডার
+                  <span className="bg-green-500/20 text-green-200 px-2 py-1 rounded text-xs flex items-center gap-1">
+                    <CheckCircle className="w-3 h-3" /> ভেরিফাইড
                   </span>
                 )}
               </div>
@@ -228,10 +229,26 @@ export default function ProviderProfilePage() {
       {/* স্ট্যাটস কার্ড */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">⭐</div>
+          <Star className="w-8 h-8 mx-auto mb-2 text-yellow-500" />
           <div className="text-2xl font-bold text-primary">{stats?.averageRating?.toFixed(1) || 0}</div>
-          <div className="text-sm text-gray-600">গড় রেটিং</div>
+          <div className="text-sm text-gray-600">গড় রেটিং</div>
         </div>
+        <div className="bg-white rounded-lg shadow p-4 text-center">
+          <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
+          <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
+          <div className="text-sm text-gray-600">মোট বুকিং</div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-4 text-center">
+          <DollarSign className="w-8 h-8 mx-auto mb-2 text-green-600" />
+          <div className="text-2xl font-bold text-green-600">৳{stats?.totalEarnings || 0}</div>
+          <div className="text-sm text-gray-600">মোট আয়</div>
+        </div>
+        <div className="bg-white rounded-lg shadow p-4 text-center">
+          <Clock className="w-8 h-8 mx-auto mb-2 text-yellow-600" />
+          <div className="text-2xl font-bold text-yellow-600">{stats?.pendingBookings || 0}</div>
+          <div className="text-sm text-gray-600">বিচারাধীন</div>
+        </div>
+      </div>
         <div className="bg-white rounded-lg shadow p-4 text-center">
           <div className="text-3xl mb-2">📅</div>
           <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
@@ -349,7 +366,7 @@ export default function ProviderProfilePage() {
             )
           ) : (
             <div className="text-center py-8">
-              <div className="text-5xl mb-3">🔧</div>
+              <Wrench className="w-12 h-12 mx-auto mb-3 text-gray-400" />
               <p className="text-gray-500">আপনার কোন সার্ভিস নেই</p>
               <Link
                 href="/services/new"
