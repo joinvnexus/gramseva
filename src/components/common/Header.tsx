@@ -7,7 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import NotificationBell from './NotificationBell';
 import VoiceSearch from './VoiceSearch';
-import { Wrench, FileText, Store, LayoutDashboard, User, Plus, Users, LogOut, Search, Moon, Sun, Menu, X, Wheat, Bell, WifiOff } from 'lucide-react';
+import { Wrench, FileText, Store, LayoutDashboard, User, Plus, Users, LogOut, Search, Moon, Sun, Menu, X, Wheat, Bell, WifiOff, MessageSquare, Activity } from 'lucide-react';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -92,6 +92,7 @@ export default function Header() {
   // নেভিগেশন আইটেম
   const navItems = [
     { href: '/services', label: 'সার্ভিসেস', icon: Wrench, active: pathname === '/services' || pathname?.startsWith('/services/') },
+    { href: '/weather', label: 'আবহাওয়া', icon: Wheat, active: pathname === '/weather' },
     { href: '/reports', label: 'রিপোর্ট', icon: FileText, active: pathname === '/reports' || pathname?.startsWith('/reports/') },
     { href: '/market', label: 'হাট বাজার', icon: Store, active: pathname === '/market' },
   ];
@@ -229,6 +230,14 @@ export default function Header() {
                         <User className="w-5 h-5" />
                         <span>প্রোফাইল</span>
                       </Link>
+                      <Link
+                        href="/feedback"
+                        className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                        onClick={() => setIsProfileOpen(false)}
+                      >
+                        <MessageSquare className="w-5 h-5" />
+                        <span>ফিডব্যাক</span>
+                      </Link>
                       {user?.role === 'PROVIDER' && (
                         <Link
                           href="/services/new"
@@ -272,6 +281,22 @@ export default function Header() {
                           >
                             <Store className="w-5 h-5" />
                             <span>হাট বাজার</span>
+                          </Link>
+                          <Link
+                            href="/admin/feedback"
+                            className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                            onClick={() => setIsProfileOpen(false)}
+                          >
+                            <MessageSquare className="w-5 h-5" />
+                            <span>ফিডব্যাক ম্যানেজ</span>
+                          </Link>
+                          <Link
+                            href="/admin/activities"
+                            className="flex items-center gap-3 px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+                            onClick={() => setIsProfileOpen(false)}
+                          >
+                            <Activity className="w-5 h-5" />
+                            <span>অ্যাক্টিভিটি লগ</span>
                           </Link>
                         </>
                       )}
