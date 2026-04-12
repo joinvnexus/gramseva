@@ -7,6 +7,7 @@ export interface User {
   village: string;
   ward: number;
   role: 'USER' | 'PROVIDER' | 'ADMIN';
+  providerType?: 'ELECTRICIAN' | 'PLUMBER' | 'MECHANIC' | 'DOCTOR' | 'TUTOR' | 'OTHER';
   verified: boolean;
   rating: number;
   createdAt: Date;

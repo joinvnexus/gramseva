@@ -249,22 +249,6 @@ export default function ProviderProfilePage() {
           <div className="text-sm text-gray-600">বিচারাধীন</div>
         </div>
       </div>
-        <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">📅</div>
-          <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
-          <div className="text-sm text-gray-600">মোট বুকিং</div>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">💰</div>
-          <div className="text-2xl font-bold text-green-600">৳{stats?.totalEarnings || 0}</div>
-          <div className="text-sm text-gray-600">মোট আয়</div>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">⏳</div>
-          <div className="text-2xl font-bold text-yellow-600">{stats?.pendingBookings || 0}</div>
-          <div className="text-sm text-gray-600">বিচারাধীন</div>
-        </div>
-      </div>
 
       {/* আমার সার্ভিস */}
       <div className="bg-white rounded-lg shadow">

@@ -5,8 +5,9 @@ import { verifyToken } from '@/lib/auth';
 // সার্ভিস আপডেট (স্ট্যাটাস টগল)
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const token = request.headers.get('authorization')?.split(' ')[1];
     if (!token) {
@@ -29,19 +30,19 @@ export async function PATCH(
     const { isAvailable } = body;
 
     const updatedService = await prisma.service.update({
-      where: { id: params.id },
+      where: { id },
       data: { isAvailable },
     });
 
     return NextResponse.json({
       success: true,
-      message: `সার্ভিস ${isAvailable ? 'চালু' : 'বন্ধ'} করা হয়েছে`,
+      message: `সার্ভিস ${isAvailable ? 'চালু' : 'বন্ধ'} করা হয়েছে`,
       data: updatedService,
     });
   } catch (error) {
     console.error('Update Service Error:', error);
     return NextResponse.json(
-      { success: false, error: 'সার্ভিস আপডেট করতে সমস্যা হয়েছে' },
+      { success: false, error: 'সার্ভিস আপডেট করতে সমস্যা হয়েছে' },
       { status: 500 }
     );
   }
@@ -50,8 +51,9 @@ export async function PATCH(
 // সার্ভিস ডিলিট
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const token = request.headers.get('authorization')?.split(' ')[1];
     if (!token) {
@@ -71,17 +73,17 @@ export async function DELETE(
     }
 
     await prisma.service.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({
       success: true,
-      message: 'সার্ভিস ডিলিট করা হয়েছে',
+      message: 'সার্ভিস ডিলিট করা হয়েছে',
     });
   } catch (error) {
     console.error('Delete Service Error:', error);
     return NextResponse.json(
-      { success: false, error: 'সার্ভিস ডিলিট করতে সমস্যা হয়েছে' },
+      { success: false, error: 'সার্ভিস ডিলিট করতে সমস্যা হয়েছে' },
       { status: 500 }
     );
   }

@@ -157,19 +157,6 @@ export default function UserProfilePage() {
           <div className="text-sm text-gray-600">আপভোট</div>
         </div>
       </div>
-          <div className="text-sm text-gray-600">সমাধান済み</div>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">📅</div>
-          <div className="text-2xl font-bold text-primary">{stats?.totalBookings || 0}</div>
-          <div className="text-sm text-gray-600">বুকিং</div>
-        </div>
-        <div className="bg-white rounded-lg shadow p-4 text-center">
-          <div className="text-3xl mb-2">👍</div>
-          <div className="text-2xl font-bold text-accent">{stats?.upvotedReports || 0}</div>
-          <div className="text-sm text-gray-600">ভোট দেওয়া</div>
-        </div>
-      </div>
 
       {/* প্রোফাইল তথ্য */}
       <div className="bg-white rounded-lg shadow">

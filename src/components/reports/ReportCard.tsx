@@ -5,7 +5,7 @@ import { Report } from '@/types';
 import ReportStatus from './ReportStatus';
 import { toBanglaDate } from '@/utils/bengaliHelper';
 import { MapPin, Droplets, Zap, FileText, ThumbsUp, MessageCircle } from 'lucide-react';
-
+import Image from 'next/image';
 interface ReportCardProps {
   report: Report;
   onVote?: (id: string) => void;
@@ -28,19 +28,6 @@ const problemTypeIcons: Record<string, React.ReactNode> = {
   WATER: <Droplets className="w-5 h-5" />,
   ELECTRICITY: <Zap className="w-5 h-5" />,
   OTHER: <FileText className="w-5 h-5" />,
-};
-
-const statusText = {
-  PENDING: 'বিচারাধীন',
-  PROCESSING: 'প্রক্রিয়াধীন',
-  RESOLVED: 'সমাধান済み',
-};
-
-const problemTypeIcons = {
-  ROAD: '🛣️',
-  WATER: '💧',
-  ELECTRICITY: '⚡',
-  OTHER: '📝',
 };
 
 export default function ReportCard({ report, onVote }: ReportCardProps) {
@@ -82,9 +69,11 @@ export default function ReportCard({ report, onVote }: ReportCardProps) {
           {/* ছবি (যদি থাকে) */}
           {report.imageUrl && (
             <div className="mt-3">
-              <img
+              <Image
                 src={report.imageUrl}
                 alt="Report"
+                width={300}
+                height={128}
                 className="h-32 w-auto rounded object-cover"
               />
             </div>

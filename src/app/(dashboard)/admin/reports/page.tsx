@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Loader from '@/components/common/Loader';
@@ -48,6 +48,14 @@ const statusNames: Record<string, string> = {
 };
 
 export default function AdminReportsPage() {
+  return (
+    <Suspense fallback={<Loader />}>
+      <AdminReportsContent />
+    </Suspense>
+  );
+}
+
+function AdminReportsContent() {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();

@@ -160,37 +160,6 @@ export default function AdminDashboard() {
           </Link>
         </div>
       </div>
-            <div className="text-3xl">⏳</div>
-          </div>
-          <Link href="/admin/reports?status=PENDING" className="text-yellow-600 text-sm mt-2 inline-block">
-            দেখুন →
-          </Link>
-        </div>
-        <div className="bg-blue-50 rounded-lg shadow p-4 border-l-4 border-blue-500">
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-blue-600 text-sm">প্রক্রিয়াধীন রিপোর্ট</p>
-              <p className="text-2xl font-bold text-blue-700">{stats?.processingReports || 0}</p>
-            </div>
-            <div className="text-3xl">🔄</div>
-          </div>
-          <Link href="/admin/reports?status=PROCESSING" className="text-blue-600 text-sm mt-2 inline-block">
-            দেখুন →
-          </Link>
-        </div>
-        <div className="bg-green-50 rounded-lg shadow p-4 border-l-4 border-green-500">
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-green-600 text-sm">সমাধান済み রিপোর্ট</p>
-              <p className="text-2xl font-bold text-green-700">{stats?.resolvedReports || 0}</p>
-            </div>
-            <div className="text-3xl">✅</div>
-          </div>
-          <Link href="/admin/reports?status=RESOLVED" className="text-green-600 text-sm mt-2 inline-block">
-            দেখুন →
-          </Link>
-        </div>
-      </div>
 
       {/* কুইক অ্যাকশন */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

@@ -5,8 +5,10 @@ import { verifyToken } from '@/lib/auth';
 // রিপোর্ট স্ট্যাটাস আপডেট
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
+  
   try {
     const token = request.headers.get('authorization')?.split(' ')[1];
     if (!token) {
@@ -29,7 +31,7 @@ export async function PATCH(
     const { status } = body;
 
     const updatedReport = await prisma.report.update({
-      where: { id: params.id },
+      where: { id },
       data: { status },
     });
 
@@ -38,9 +40,9 @@ export async function PATCH(
       data: {
         userId: updatedReport.userId,
         title: 'রিপোর্ট স্ট্যাটাস আপডেট',
-        message: `আপনার রিপোর্ট স্ট্যাটাস পরিবর্তন হয়েছে: ${status}`,
+        message: `আপনার রিপোর্ট স্ট্যাটাস পরিবর্তন হয়েছে: ${status}`,
         type: 'REPORT',
-        data: { reportId: params.id, status },
+        data: { reportId: id, status },
       },
     });
 
@@ -61,8 +63,9 @@ export async function PATCH(
 // রিপোর্ট ডিলিট
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const token = request.headers.get('authorization')?.split(' ')[1];
     if (!token) {
@@ -82,7 +85,7 @@ export async function DELETE(
     }
 
     await prisma.report.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({

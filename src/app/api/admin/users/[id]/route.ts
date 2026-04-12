@@ -4,8 +4,9 @@ import { verifyToken } from '@/lib/auth';
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const token = request.headers.get('authorization')?.split(' ')[1];
     if (!token) {
@@ -25,7 +26,7 @@ export async function DELETE(
     }
 
     // নিজেকে ডিলিট করা যাবে না
-    if (params.id === payload.id) {
+    if (id === payload.id) {
       return NextResponse.json(
         { success: false, error: 'আপনি নিজেকে ডিলিট করতে পারবেন না' },
         { status: 400 }
@@ -34,7 +35,7 @@ export async function DELETE(
 
     // ইউজার ডিলিট (Cascade automatically handles related records)
     await prisma.user.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({

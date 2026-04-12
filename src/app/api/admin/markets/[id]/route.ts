@@ -5,8 +5,9 @@ import { verifyToken } from '@/lib/auth';
 // মার্কেট স্ট্যাটাস আপডেট
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const token = request.headers.get('authorization')?.split(' ')[1];
     if (!token) {
@@ -29,7 +30,7 @@ export async function PATCH(
     const { isActive } = body;
 
     const updatedMarket = await prisma.market.update({
-      where: { id: params.id },
+      where: { id },
       data: { isActive },
     });
 
@@ -50,8 +51,9 @@ export async function PATCH(
 // মার্কেট ডিলিট
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const token = request.headers.get('authorization')?.split(' ')[1];
     if (!token) {
@@ -71,7 +73,7 @@ export async function DELETE(
     }
 
     await prisma.market.delete({
-      where: { id: params.id },
+      where: { id },
     });
 
     return NextResponse.json({
