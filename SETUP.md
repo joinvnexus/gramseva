@@ -13,7 +13,7 @@
 ## Step 1: Clone Repository (রেপো ক্লোন)
 
 ```bash
-git clone https://github.com/yourusername/gramseva.git
+git clone https://github.com/gramseva/gramseva.git
 cd gramseva
 ```
 
@@ -52,11 +52,11 @@ CLOUDINARY_API_SECRET="your-api-secret"
 ## Step 4: Database Setup (ডাটাবেজ সেটআপ)
 
 ```bash
-# First migration তৈরি করুন
-npx prisma migrate dev --name init
-
-# অথবা শুধু prisma client generate করুন
+# Prisma client generate করুন
 npx prisma generate
+
+# Migration চালান (প্রথমবার)
+npx prisma migrate dev --name init
 ```
 
 ---
@@ -109,13 +109,13 @@ npx prisma studio
 ## Useful Commands (উপকারী কমান্ড)
 
 ```bash
-# Prisma Studio (database visualizer)
+# Database visualizer
 npx prisma studio
 
-# Prisma Reset
+# Database reset
 npx prisma migrate reset
 
-# Type Check
+# Type checking
 npx tsc --noEmit
 
 # Linting

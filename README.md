@@ -8,58 +8,28 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38BDF8)](https://tailwindcss.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](https://opensource.org/licenses/MIT)
 
-## 🚀 Project Setup (প্রোজেক্ট সেটআপ)
-
-### Prerequisites (পূর্বশর্ত)
-
-- Node.js (v18+)
-- PostgreSQL database
-- npm / yarn / pnpm
-
-### Installation (ইনস্টলেশন)
+## 🚀 Quick Start
 
 ```bash
 # Clone করুন
-git clone https://github.com/yourusername/gramseva.git
+git clone https://github.com/gramseva/gramseva.git
 cd gramseva
 
-# Dependencies ইনস্টল করুন
+# Install করুন
 npm install
 
-# .env ফাইল বানান
-cp .env.example .env
-# এগুলো সেট করুন:
-# DATABASE_URL="postgresql://user:password@localhost:5432/gramseva"
-# JWT_SECRET="your-secret-key"
-# NEXT_PUBLIC_API_URL="http://localhost:3000"
+# Environment সেটআপ (.env ফাইল)
+# DATABASE_URL, JWT_SECRET সেট করুন
 
-# Prisma migration চালান
-npx prisma migrate deploy
-# অথবা:
-# npx prisma migrate dev --name init
-
-# Dev server চালান
+# Run করুন
 npm run dev
 ```
 
 Open করুন: [http://localhost:3000](http://localhost:3000)
 
-### Build & Deploy
-
-```bash
-# Production build
-npm run build
-
-# Production mode তে চালান
-npm start
-
-# Vercel এ deploy করুন
-vercel deploy
-```
-
 ---
 
-## 💻 Tech Stack (প্রযুক্তি স্ট্যাক)
+## 💻 Tech Stack
 
 | Category | Technology |
 |----------|------------|
@@ -69,47 +39,21 @@ vercel deploy
 | ORM | Prisma |
 | Auth | JWT |
 | Styling | Tailwind CSS |
-| State | React Context |
-| API | RESTful API |
+| UI | shadcn/ui Components |
+| Icons | Lucide React |
 
 ---
 
-## 📚 এই প্রোজেক্ট থেকে যা শিখলাম
-
-এই প্রোজেক্ট বানাতে গিয়ে আমি শিখে থাকি:
-
-### 🎯 Core Concepts
-
-- **Next.js 14 App Router** - routing, page structure, layouts
-- **TypeScript** - interfaces, types, generics
-- **Prisma ORM** - model design, migration, CRUD operations
-- **PostgreSQL** - relational database design, relations
-- **JWT Authentication** - token based login system
-- **RESTful API** - API routes, request/response
-
-### 🎨 Frontend
-
-- **Tailwind CSS** - responsive design
-- **PWA** - Service Worker, Manifest, offline support
-- **Web Speech API** - voice recognition
-
-### 🛠 Tools
-
-- **Git & GitHub** - version control
-- **Vercel** - production deployment
-
----
-
-## 🏆 Features (বৈশিষ্ট্য)
+## 🏆 Features
 
 - 📱 **Mobile Friendly** - responsive design
 - 🔒 **Secure** - JWT authentication
 - 🚀 **Fast** - SSR + caching
-- 🌐 **Offline Support** - PWA feature
-- 🎤 **Voice Controlled** - voice search
-- 💰 **Market Price Tracker** - agricultural product prices
+- 🗣️ **Voice Search** - Web Speech API
+- 💰 **Market Price** - agricultural product prices
 - 📊 **Dashboard** - stats, reports
-- 🛒 **Booking System** - service booking
+- 🛒 **Booking** - service booking system
+- 👤 **Role-based** - admin, farmer, user profiles
 
 ---
 
@@ -122,16 +66,19 @@ gramseva/
 │   └── migrations/       # Migration files
 ├── public/
 │   ├── manifest.json    # PWA manifest
-│   └── sw.js           # Service Worker
+│   └── sw.js         # Service Worker
 └── src/
     ├── app/            # Next.js App Router
     │   ├── (dashboard)/ # Dashboard pages
-    │   └── api/         # API routes
+    │   └── api/        # API routes
     ├── components/     # React components
-    ├── contexts/       # Context API
-    ├── hooks/          # Custom hooks
-    ├── lib/            # Libraries
-    └── utils/          # Utility functions
+    │   ├── ui/       # Reusable UI components
+    │   ├── common/    # Common components
+    │   └── forms/     # Form components
+    ├── contexts/      # Context API
+    ├── hooks/        # Custom hooks
+    ├── lib/          # Libraries & utils
+    └── types/        # TypeScript types
 ```
 
 ---
@@ -147,11 +94,3 @@ MIT License - দেখুন [LICENSE](LICENSE) file
 এখানে contribute করতে চাইলে PR পাঠান অথবা issue খুলু!
 
 ⭐ যদি প্রজেক্টটি ভালো লাগে, star দিন!
-
----
-
-### 💪 আমার কৃতিত্ব
-
-এই প্রোজেক্ট বানিয়ে আমি একটি পূর্ণাঙ্গ ফুল-স্ট্যাক ওয়েব অ্যাপ্লিকেশন তৈরি করেছি যা:
-
-📱 মোবাইল-ফ্রেন্ডলি | 🔒 সিকিউর | 🚀 ফাস্ট | 🌐 অফলাইন-সাপোর্টেড | 🎤 ভয়েস-কন্ট্রোলড | 🏆 প্রোডাকশন-রেডি
