@@ -82,33 +82,35 @@ export async function GET(request: NextRequest) {
       include: { user: true, service: true },
     });
 
-    // কার্যকলাপ একত্রিত করা
-    const recentActivities = [
-      ...recentUsers.map((u) => ({
-        id: u.id,
-        type: 'user',
-        title: `নতুন ইউজার রেজিস্ট্রেশন: ${u.name}`,
-        user: u.name,
-        status: 'ACTIVE',
-        createdAt: u.createdAt.toISOString(),
-      })),
-      ...recentReports.map((r) => ({
-        id: r.id,
-        type: 'report',
-        title: `নতুন রিপোর্ট: ${r.description.substring(0, 50)}`,
-        user: r.user?.name || 'অজানা',
-        status: r.status,
-        createdAt: r.createdAt.toISOString(),
-      })),
-      ...recentBookings.map((b) => ({
-        id: b.id,
-        type: 'booking',
-        title: `${b.user?.name} একটি সার্ভিস বুক করেছেন`,
-        user: b.user?.name || 'অজানা',
-        status: b.status,
-        createdAt: b.createdAt.toISOString(),
-      })),
-    ].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    const userActivities = recentUsers.map((u: typeof recentUsers[number]) => ({
+      id: u.id,
+      type: 'user' as const,
+      title: `নতুন ইউজার রেজিস্ট্রেশন: ${u.name}`,
+      user: u.name,
+      status: 'ACTIVE',
+      createdAt: u.createdAt.toISOString(),
+    }));
+
+    const reportActivities = recentReports.map((r: typeof recentReports[number]) => ({
+      id: r.id,
+      type: 'report' as const,
+      title: `নতুন রিপোর্ট: ${r.description.substring(0, 50)}`,
+      user: r.user?.name || 'অজানা',
+      status: r.status,
+      createdAt: r.createdAt.toISOString(),
+    }));
+
+    const bookingActivities = recentBookings.map((b: typeof recentBookings[number]) => ({
+      id: b.id,
+      type: 'booking' as const,
+      title: `${b.user?.name} একটি সার্ভিস বুক করেছেন`,
+      user: b.user?.name || 'অজানা',
+      status: b.status,
+      createdAt: b.createdAt.toISOString(),
+    }));
+
+    const recentActivities = [...userActivities, ...reportActivities, ...bookingActivities]
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
      .slice(0, 10);
 
     return NextResponse.json({
