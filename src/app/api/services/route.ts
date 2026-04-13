@@ -8,6 +8,8 @@ export async function GET(request: NextRequest) {
     const category = searchParams.get('category');
     const village = searchParams.get('village');
     const search = searchParams.get('search');
+    const limit = searchParams.get('limit');
+    const excludeId = searchParams.get('excludeId');
 
     const where: any = {
       isAvailable: true,
@@ -28,8 +30,15 @@ export async function GET(request: NextRequest) {
       ];
     }
 
+    if (excludeId) {
+      where.id = { not: excludeId };
+    }
+
+    const take = limit ? parseInt(limit) : undefined;
+
     const services = await prisma.service.findMany({
       where,
+      take,
       include: {
         user: {
           select: {
