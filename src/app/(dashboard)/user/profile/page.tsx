@@ -94,9 +94,30 @@ export default function UserProfilePage() {
     }
   };
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <div className="max-w-4xl mx-auto space-y-6 p-6">
+        <div className="bg-gradient-to-r from-primary to-primary-dark rounded-lg overflow-hidden">
+          <div className="relative h-32 bg-black/20">
+            <div className="absolute -bottom-12 left-6">
+              <div className="w-24 h-24 bg-white/30 rounded-full animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+              <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-2 animate-pulse"></div>
+              <div className="h-8 w-12 bg-gray-200 dark:bg-gray-700 rounded mx-auto mb-2 animate-pulse"></div>
+              <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded mx-auto animate-pulse"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
-return (
+  return (
     <div className="max-w-4xl mx-auto space-y-6">
       {/* প্রোফাইল হেডার */}
       <div className="bg-gradient-to-r from-primary to-primary-dark rounded-lg overflow-hidden">
@@ -160,6 +181,47 @@ return (
         </div>
       </div>
 
+      {/* দ্রুত লিংক */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="font-bold text-lg text-gray-800 dark:text-white">দ্রুত লিংক</h2>
+        </div>
+        <div className="p-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <Link
+            href="/user/reports"
+            className="flex flex-col items-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+          >
+            <FileText className="w-8 h-8 text-primary mb-2" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">আমার রিপোর্ট</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{stats?.totalReports || 0} টি</span>
+          </Link>
+          <Link
+            href="/user/bookings"
+            className="flex flex-col items-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+          >
+            <Calendar className="w-8 h-8 text-secondary mb-2" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">আমার বুকিং</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{stats?.totalBookings || 0} টি</span>
+          </Link>
+          <Link
+            href="/user/saved"
+            className="flex flex-col items-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+          >
+            <ThumbsUp className="w-8 h-8 text-blue-600 mb-2" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">সংরক্ষিত</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{stats?.upvotedReports || 0} টি</span>
+          </Link>
+          <Link
+            href="/services"
+            className="flex flex-col items-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+          >
+            <Calendar className="w-8 h-8 text-green-600 mb-2" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">সার্ভিস খুঁজুন</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">সব সার্ভিস</span>
+          </Link>
+        </div>
+      </div>
+
       {/* প্রোফাইল তথ্য */}
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50">
         <div className="p-4 border-b border-gray-200 dark:border-gray-700">
@@ -168,25 +230,27 @@ return (
         <div className="p-6">
           {isEditing ? (
             <form onSubmit={handleUpdateProfile} className="space-y-4">
-              <div>
-                <label className="block text-gray-700 dark:text-gray-300 mb-1">পূর্ণ নাম</label>
-                <input
-                  type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
-              <div>
-                <label className="block text-gray-700 dark:text-gray-300 mb-1">গ্রামের নাম</label>
-                <input
-                  type="text"
-                  value={formData.village}
-                  onChange={(e) => setFormData({ ...formData, village: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-primary"
-                  required
-                />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-gray-700 dark:text-gray-300 mb-1">পূর্ণ নাম</label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-primary"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-gray-700 dark:text-gray-300 mb-1">গ্রামের নাম</label>
+                  <input
+                    type="text"
+                    value={formData.village}
+                    onChange={(e) => setFormData({ ...formData, village: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-primary"
+                    required
+                  />
+                </div>
               </div>
               <div>
                 <label className="block text-gray-700 dark:text-gray-300 mb-1">ওয়ার্ড নম্বর</label>
@@ -194,20 +258,20 @@ return (
                   type="number"
                   value={formData.ward}
                   onChange={(e) => setFormData({ ...formData, ward: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-primary"
+                  className="w-full md:w-1/2 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:ring-2 focus:ring-primary"
                   required
                 />
               </div>
-              <div className="flex gap-3">
-                <button type="submit" className="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition">
-                  সংরক্ষণ করুন
+              <div className="flex gap-3 pt-2">
+                <button type="submit" className="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-dark transition flex items-center gap-2">
+                  <Save className="w-4 h-4" /> সংরক্ষণ করুন
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsEditing(false)}
-                  className="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition"
+                  className="bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-200 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-500 transition flex items-center gap-2"
                 >
-                  বাতিল
+                  <X className="w-4 h-4" /> বাতিল
                 </button>
               </div>
             </form>

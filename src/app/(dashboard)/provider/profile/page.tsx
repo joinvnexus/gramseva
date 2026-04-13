@@ -175,7 +175,28 @@ export default function ProviderProfilePage() {
     }
   };
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <div className="max-w-4xl mx-auto space-y-6 p-6">
+        <div className="bg-gradient-to-r from-primary to-primary-dark rounded-lg overflow-hidden">
+          <div className="relative h-32 bg-black/20">
+            <div className="absolute -bottom-12 left-6">
+              <div className="w-24 h-24 bg-white/30 rounded-full animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+              <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-2 animate-pulse"></div>
+              <div className="h-8 w-12 bg-gray-200 dark:bg-gray-700 rounded mx-auto mb-2 animate-pulse"></div>
+              <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded mx-auto animate-pulse"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   const mainService = services[0];
   const providerTypeName = user?.providerType 
@@ -249,6 +270,121 @@ export default function ProviderProfilePage() {
           <Clock className="w-8 h-8 mx-auto mb-2 text-yellow-600 dark:text-yellow-400" />
           <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{stats?.pendingBookings || 0}</div>
           <div className="text-sm text-gray-600 dark:text-gray-400">বিচারাধীন</div>
+        </div>
+      </div>
+
+      {/* আয়ের বিস্তারিত */}
+      {stats && stats.totalEarnings > 0 && (
+        <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-lg p-6 text-white">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div>
+              <h3 className="text-xl font-bold">মোট আয়</h3>
+              <p className="text-3xl font-bold mt-1">৳{stats.totalEarnings.toLocaleString('bn-BD')}</p>
+              <p className="opacity-80 text-sm mt-1">
+                {stats.completedBookings} টি সম্পন্ন বুকিং থেকে
+              </p>
+            </div>
+            <div className="text-right">
+              <p className="text-sm opacity-80">নিশ্চিত</p>
+              <p className="text-xl font-semibold">{stats.confirmedBookings}</p>
+              <p className="text-sm opacity-80 mt-2">সম্পন্ন</p>
+              <p className="text-xl font-semibold">{stats.completedBookings}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* সার্ভিস স্ট্যাটাস এবং দ্রুত লিংক */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* সার্ভিস স্ট্যাটাস */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50">
+          <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="font-bold text-lg text-gray-800 dark:text-white">সার্ভিস স্ট্যাটাস</h2>
+          </div>
+          <div className="p-6">
+            {mainService ? (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                    mainService.isAvailable 
+                      ? 'bg-green-100 dark:bg-green-900/30' 
+                      : 'bg-red-100 dark:bg-red-900/30'
+                  }`}>
+                    {mainService.isAvailable ? (
+                      <CheckCircle className="w-6 h-6 text-green-600" />
+                    ) : (
+                      <AlertCircle className="w-6 h-6 text-red-600" />
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-800 dark:text-gray-200">
+                      {mainService.isAvailable ? 'সার্ভিস চালু আছে' : 'সার্ভিস বন্ধ আছে'}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {categoryNames[mainService.category]} • ৳{mainService.hourlyRate}/ঘন্টা
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={toggleServiceStatus}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium ${
+                    mainService.isAvailable 
+                      ? 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 hover:bg-red-200 dark:hover:bg-red-900/50' 
+                      : 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200 dark:hover:bg-green-900/50'
+                  } transition`}
+                >
+                  {mainService.isAvailable ? 'বন্ধ করুন' : 'চালু করুন'}
+                </button>
+              </div>
+            ) : (
+              <div className="text-center py-4">
+                <AlertCircle className="w-10 h-10 mx-auto mb-2 text-gray-400" />
+                <p className="text-gray-500 dark:text-gray-400">কোন সার্ভিস নেই</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* দ্রুত লিংক */}
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50">
+          <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="font-bold text-lg text-gray-800 dark:text-white">দ্রুত লিংক</h2>
+          </div>
+          <div className="p-4 grid grid-cols-2 gap-3">
+            <Link
+              href="/provider/dashboard"
+              className="flex flex-col items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+            >
+              <Calendar className="w-6 h-6 text-primary mb-1" />
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">বুকিং</span>
+            </Link>
+            <Link
+              href="/provider/services"
+              className="flex flex-col items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+            >
+              <Zap className="w-6 h-6 text-secondary mb-1" />
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">সার্ভিস</span>
+            </Link>
+            <Link
+              href="/provider/bookings?status=pending"
+              className="flex flex-col items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+            >
+              <Clock className="w-6 h-6 text-yellow-600 mb-1" />
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">বিচারাধীন</span>
+              {stats?.pendingBookings ? (
+                <span className="text-xs bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 px-1.5 py-0.5 rounded-full mt-1">
+                  {stats.pendingBookings}
+                </span>
+              ) : null}
+            </Link>
+            <Link
+              href="/provider/earnings"
+              className="flex flex-col items-center p-3 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+            >
+              <DollarSign className="w-6 h-6 text-green-600 mb-1" />
+              <span className="text-xs font-medium text-gray-700 dark:text-gray-300">আয়</span>
+            </Link>
+          </div>
         </div>
       </div>
 

@@ -94,7 +94,28 @@ export default function AdminProfilePage() {
     }
   };
 
-  if (loading) return <Loader />;
+  if (loading) {
+    return (
+      <div className="max-w-4xl mx-auto space-y-6 p-6">
+        <div className="bg-gradient-to-r from-purple-600 to-purple-800 rounded-lg overflow-hidden">
+          <div className="relative h-32 bg-black/20">
+            <div className="absolute -bottom-12 left-6">
+              <div className="w-24 h-24 bg-white/30 rounded-full animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+              <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded-full mx-auto mb-2 animate-pulse"></div>
+              <div className="h-8 w-12 bg-gray-200 dark:bg-gray-700 rounded mx-auto mb-2 animate-pulse"></div>
+              <div className="h-4 w-16 bg-gray-200 dark:bg-gray-700 rounded mx-auto animate-pulse"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
@@ -157,6 +178,65 @@ export default function AdminProfilePage() {
           <Calendar className="w-8 h-8 mx-auto mb-2 text-primary" />
           <div className="text-2xl font-bold text-primary dark:text-primary-light">{stats?.totalBookings || 0}</div>
           <div className="text-sm text-gray-600 dark:text-gray-400">বুকিং</div>
+        </div>
+      </div>
+
+      {/* অ্যাডমিন স্ট্যাটাস সামগ্রী */}
+      <div className="bg-gradient-to-r from-purple-600 to-purple-800 rounded-lg p-6 text-white">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h3 className="text-xl font-bold">সিস্টেম সারসংক্ষেপ</h3>
+            <p className="opacity-80 text-sm mt-1">
+              {stats?.totalUsers || 0} ইউজার • {stats?.totalProviders || 0} প্রোভাইডার • {stats?.totalServices || 0} সার্ভিস
+            </p>
+          </div>
+          <Link
+            href="/admin/dashboard"
+            className="bg-white text-purple-700 px-6 py-2 rounded-lg font-semibold hover:bg-purple-50 transition"
+          >
+            অ্যাডমিন ড্যাশবোর্ড
+          </Link>
+        </div>
+      </div>
+
+      {/* দ্রুত লিংক */}
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow dark:shadow-gray-900/50">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+          <h2 className="font-bold text-lg text-gray-800 dark:text-white">অ্যাডমিন ফাংশন</h2>
+        </div>
+        <div className="p-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+          <Link
+            href="/admin/users"
+            className="flex flex-col items-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+          >
+            <Users className="w-8 h-8 text-primary mb-2" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">ইউজার ম্যানেজ</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{stats?.totalUsers || 0}</span>
+          </Link>
+          <Link
+            href="/admin/providers"
+            className="flex flex-col items-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+          >
+            <Wrench className="w-8 h-8 text-secondary mb-2" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">প্রোভাইডার</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{stats?.totalProviders || 0}</span>
+          </Link>
+          <Link
+            href="/admin/reports"
+            className="flex flex-col items-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+          >
+            <FileText className="w-8 h-8 text-red-600 mb-2" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">রিপোর্ট</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{stats?.totalReports || 0}</span>
+          </Link>
+          <Link
+            href="/admin/bookings"
+            className="flex flex-col items-center p-4 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+          >
+            <Calendar className="w-8 h-8 text-green-600 mb-2" />
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">বুকিং</span>
+            <span className="text-xs text-gray-500 dark:text-gray-400">{stats?.totalBookings || 0}</span>
+          </Link>
         </div>
       </div>
 
