@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import ReportForm from '@/components/reports/ReportForm';
 import { useOfflineReport, OfflineStatusBanner, QueueStatus, OnlineStatusIndicator } from '@/hooks/useOfflineReport';
+import { useToast } from '@/hooks/useToast';
 
 export default function NewReportPage() {
   const [loading, setLoading] = useState(false);
@@ -19,10 +20,11 @@ export default function NewReportPage() {
     clearFailedItems,
     isProcessing 
   } = useOfflineReport();
+  const { success, error, warning, info } = useToast();
 
   const handleSubmit = async (formData: FormData) => {
     if (!isAuthenticated) {
-      alert('রিপোর্ট জমা করতে হলে লগইন করুন');
+      warning('রিপোর্ট জমা করতে হলে লগইন করুন');
       router.push('/login');
       return;
     }
@@ -33,17 +35,17 @@ export default function NewReportPage() {
       
       if (result.success) {
         if (result.offline) {
-          alert(result.message || 'রিপোর্ট অফলাইনে সংরক্ষিত হয়েছে');
+          info('রিপোর্ট অফলাইনে সংরক্ষিত হয়েছে। অনলাইন হলে সিঙ্ক হবে।');
         } else {
-          alert(result.message || 'রিপোর্ট সফলভাবে জমা হয়েছে!');
+          success('রিপোর্ট সফলভাবে জমা হয়েছে!');
         }
         router.push('/reports');
       } else {
-        alert(result.message || 'রিপোর্ট জমা করতে সমস্যা হয়েছে');
+        error('রিপোর্ট জমা করতে সমস্যা হয়েছে');
       }
-    } catch (error) {
-      console.error('Submit error:', error);
-      alert('রিপোর্ট জমা করতে সমস্যা হয়েছে');
+    } catch (err) {
+      console.error('Submit error:', err);
+      error('রিপোর্ট জমা করতে সমস্যা হয়েছে');
     } finally {
       setLoading(false);
     }

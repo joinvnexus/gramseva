@@ -6,9 +6,11 @@ import Header from '@/components/common/Header';
 import Footer from '@/components/common/Footer';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
+import { ToastProvider } from '@/contexts/ToastContext';
 import PWASetup from '@/components/common/PWASetup';
 
 const SocketProvider = dynamic(() => import('@/contexts/SocketContext').then(mod => mod.SocketProvider));
+const ToastContainer = dynamic(() => import('@/components/common/ToastContainer').then(mod => mod.default));
 
 const hindSiliguri = Hind_Siliguri({
   weight: ['300', '400', '500', '600', '700'],
@@ -41,16 +43,19 @@ export default function RootLayout({
         <ThemeProvider>
           <AuthProvider>
             <SocketProvider>
-              <div className="flex flex-col min-h-screen">
-                <Header />
-                <main className="flex-1 w-full">
-                  <div className="container mx-auto px-3 sm:px-4 py-4 md:py-6">
-                    {children}
-                  </div>
-                </main>
-                <Footer />
-                <PWASetup />
-              </div>
+              <ToastProvider>
+                <div className="flex flex-col min-h-screen">
+                  <Header />
+                  <main className="flex-1 w-full">
+                    <div className="container mx-auto px-3 sm:px-4 py-4 md:py-6">
+                      {children}
+                    </div>
+                  </main>
+                  <Footer />
+                  <PWASetup />
+                  <ToastContainer />
+                </div>
+              </ToastProvider>
             </SocketProvider>
           </AuthProvider>
         </ThemeProvider>
