@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
 import Loader from '@/components/common/Loader';
 import { AlertCircle, Clock, CheckCircle, FileText, MapPin, Phone, User, ThumbsUp, Trash2, PlayCircle, CheckCheck } from 'lucide-react';
 
@@ -60,6 +61,7 @@ function AdminReportsContent() {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { success, error } = useToast();
   const [reports, setReports] = useState<Report[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState(searchParams.get('status') || 'ALL');
@@ -89,7 +91,7 @@ function AdminReportsContent() {
       if (data.success) {
         setReports(data.data);
       }
-    } catch (error) {
+    } catch (err) {
       console.error('Error:', error);
     } finally {
       setLoading(false);
@@ -109,13 +111,13 @@ function AdminReportsContent() {
       });
       const data = await response.json();
       if (data.success) {
-        alert('রিপোর্ট স্ট্যাটাস আপডেট করা হয়েছে');
+        success('রিপোর্ট স্ট্যাটাস আপডেট করা হয়েছে');
         fetchReports();
       } else {
-        alert(data.error);
+        error(data.error);
       }
-    } catch (error) {
-      alert('স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে');
+    } catch (err) {
+      error('স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে');
     }
   };
 
@@ -130,13 +132,13 @@ function AdminReportsContent() {
       });
       const data = await response.json();
       if (data.success) {
-        alert('রিপোর্ট ডিলিট সফল!');
+        success('রিপোর্ট ডিলিট সফল!');
         fetchReports();
       } else {
-        alert(data.error);
+        error(data.error);
       }
-    } catch (error) {
-      alert('রিপোর্ট ডিলিট করতে সমস্যা হয়েছে');
+    } catch (err) {
+      error('রিপোর্ট ডিলিট করতে সমস্যা হয়েছে');
     }
   };
 

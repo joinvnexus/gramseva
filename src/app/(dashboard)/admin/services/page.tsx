@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
 import Loader from '@/components/common/Loader';
 import { Zap, Wrench, Hammer, Stethoscope, GraduationCap, Package, Trash2, ToggleLeft, ToggleRight, Star, Search } from 'lucide-react';
 
@@ -43,6 +44,7 @@ const categoryIcons: Record<string, React.ReactNode> = {
 export default function AdminServicesPage() {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
+  const { success, error } = useToast();
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -70,7 +72,7 @@ export default function AdminServicesPage() {
       if (data.success) {
         setServices(data.data);
       }
-    } catch (error) {
+    } catch (err) {
       console.error('Error:', error);
     } finally {
       setLoading(false);
@@ -90,13 +92,13 @@ export default function AdminServicesPage() {
       });
       const data = await response.json();
       if (data.success) {
-        alert('সার্ভিস স্ট্যাটাস আপডেট করা হয়েছে');
+        success('সার্ভিস স্ট্যাটাস আপডেট করা হয়েছে');
         fetchServices();
       } else {
-        alert(data.error);
+        error(data.error);
       }
-    } catch (error) {
-      alert('স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে');
+    } catch (err) {
+      error('স্ট্যাটাস আপডেট করতে সমস্যা হয়েছে');
     }
   };
 
@@ -111,13 +113,13 @@ export default function AdminServicesPage() {
       });
       const data = await response.json();
       if (data.success) {
-        alert('সার্ভিস ডিলিট সফল!');
+        success('সার্ভিস ডিলিট সফল!');
         fetchServices();
       } else {
-        alert(data.error);
+        error(data.error);
       }
-    } catch (error) {
-      alert('সার্ভিস ডিলিট করতে সমস্যা হয়েছে');
+    } catch (err) {
+      error('সার্ভিস ডিলিট করতে সমস্যা হয়েছে');
     }
   };
 

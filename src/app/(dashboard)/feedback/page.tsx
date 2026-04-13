@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
 import Loader from '@/components/common/Loader';
 import VoiceButton from '@/components/common/VoiceButton';
 import VoiceFeedback from '@/components/feedback/VoiceFeedback';
@@ -22,6 +23,7 @@ interface FeedbackItem {
 export default function FeedbackPage() {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
+  const { success, error, warning } = useToast();
   const [feedbackList, setFeedbackList] = useState<FeedbackItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [feedbackType, setFeedbackType] = useState<'TEXT' | 'VOICE'>('TEXT');
@@ -48,7 +50,7 @@ export default function FeedbackPage() {
       if (data.success) {
         setFeedbackList(data.data);
       }
-    } catch (error) {
+    } catch (err) {
       console.error('Error:', error);
     } finally {
       setLoading(false);
@@ -57,11 +59,11 @@ export default function FeedbackPage() {
 
   const submitFeedback = async () => {
     if (feedbackType === 'TEXT' && !content.trim()) {
-      alert('অনুগ্রহ করে ফিডব্যাক লিখুন');
+      warning('অনুগ্রহ করে ফিডব্যাক লিখুন');
       return;
     }
     if (feedbackType === 'VOICE' && !audioBlob) {
-      alert('অনুগ্রহ করে ভয়েস রেকর্ড করুন');
+      warning('অনুগ্রহ করে ভয়েস রেকর্ড করুন');
       return;
     }
 
@@ -73,9 +75,9 @@ export default function FeedbackPage() {
       if (audioBlob) {
         try {
           audioUrl = await uploadAudio(audioBlob);
-        } catch (error) {
+        } catch (err) {
           console.error('Audio upload failed:', error);
-          alert('অডিও আপলোড করতে সমস্যা হয়েছে');
+          error('অডিও আপলোড করতে সমস্যা হয়েছে');
           setSubmitting(false);
           return;
         }
@@ -97,17 +99,17 @@ export default function FeedbackPage() {
 
       const data = await response.json();
       if (data.success) {
-        alert('ফিডব্যাক পাঠানো হয়েছে! ধন্যবাদ।');
+        success('ফিডব্যাক পাঠানো হয়েছে! ধন্যবাদ।');
         setContent('');
         setRating(0);
         setAudioBlob(null);
         setFeedbackType('TEXT');
         fetchMyFeedback();
       } else {
-        alert(data.error);
+        error(data.error);
       }
-    } catch (error) {
-      alert('ফিডব্যাক পাঠাতে সমস্যা হয়েছে');
+    } catch (err) {
+      error('ফিডব্যাক পাঠাতে সমস্যা হয়েছে');
     } finally {
       setSubmitting(false);
     }

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
 import Loader from '@/components/common/Loader';
 import Link from 'next/link';
 import { Crown, Users, Wrench, FileText, Calendar, MapPin, LogOut, Edit, Save, X } from 'lucide-react';
@@ -18,6 +19,7 @@ interface AdminStats {
 export default function AdminProfilePage() {
   const { user, isAuthenticated, logout } = useAuth();
   const router = useRouter();
+  const { success, error } = useToast();
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -56,7 +58,7 @@ export default function AdminProfilePage() {
       if (data.success) {
         setStats(data.data.stats);
       }
-    } catch (error) {
+    } catch (err) {
       console.error('Error:', error);
     } finally {
       setLoading(false);
@@ -81,14 +83,14 @@ export default function AdminProfilePage() {
       });
       const data = await response.json();
       if (data.success) {
-        alert('প্রোফাইল আপডেট করা হয়েছে!');
+        success('প্রোফাইল আপডেট করা হয়েছে!');
         setIsEditing(false);
         window.location.reload();
       } else {
-        alert(data.error);
+        error(data.error);
       }
-    } catch (error) {
-      alert('প্রোফাইল আপডেট করতে সমস্যা হয়েছে');
+} catch (err) {
+      error('প্রোফাইল আপডেট করতে সমস্যা হয়েছে');
     }
   };
 

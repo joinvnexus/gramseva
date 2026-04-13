@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/useToast';
 import { Zap, Wrench, Hammer, Stethoscope, GraduationCap, Package, AlertTriangle } from 'lucide-react';
 
 export default function NewServicePage() {
@@ -16,6 +17,7 @@ export default function NewServicePage() {
   
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
+  const { success, error: showError } = useToast();
 
   useEffect(() => {
     if (user?.role === 'PROVIDER') {
@@ -68,10 +70,10 @@ export default function NewServicePage() {
       const data = await response.json();
       
       if (data.success) {
-        alert(existingService ? 'সার্ভিস আপডেট করা হয়েছে!' : 'সার্ভিস যোগ করা হয়েছে!');
+        success(existingService ? 'সার্ভিস আপডেট করা হয়েছে!' : 'সার্ভিস যোগ করা হয়েছে!');
         router.push('/services');
       } else {
-        setError(data.error || 'সার্ভিস যোগ করতে সমস্যা হয়েছে');
+        setError(data.error || 'সার্ভিস যোগ করতে সমস্যা হয়েছে');
       }
     } catch (error) {
       setError('সার্ভিস যোগ করতে সমস্যা হয়েছে');

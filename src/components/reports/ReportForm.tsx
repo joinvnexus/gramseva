@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { MapPin, Droplets, Zap, FileText, ImagePlus, Navigation, Loader2, CheckCircle } from 'lucide-react';
-
+import { useToast } from '@/hooks/useToast';
+import Image from 'next/image';
 interface ReportFormProps {
   onSubmit: (data: FormData) => Promise<void>;
   loading?: boolean;
@@ -22,6 +23,7 @@ export default function ReportForm({ onSubmit, loading = false }: ReportFormProp
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [gettingLocation, setGettingLocation] = useState(false);
+  const { error: showError, warning } = useToast();
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -48,12 +50,12 @@ export default function ReportForm({ onSubmit, loading = false }: ReportFormProp
         },
         (error) => {
           console.error('Location error:', error);
-          alert('লোকেশন ডিটেক্ট করতে পারেনি');
+          warning('লোকেশন ডিটেক্ট করতে পারেনি');
           setGettingLocation(false);
         }
       );
     } else {
-      alert('এই ব্রাউজার লোকেশন সাপোর্ট করে না');
+      warning('এই ব্রাউজার লোকেশন সাপোর্ট করে না');
       setGettingLocation(false);
     }
   };
@@ -124,7 +126,7 @@ export default function ReportForm({ onSubmit, loading = false }: ReportFormProp
         <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4 text-center">
           {imagePreview ? (
             <div className="relative">
-              <img src={imagePreview} alt="Preview" className="max-h-48 mx-auto rounded" />
+              <Image src={imagePreview} alt="Preview" className="max-h-48 mx-auto rounded" />
               <button
                 type="button"
                 onClick={() => {

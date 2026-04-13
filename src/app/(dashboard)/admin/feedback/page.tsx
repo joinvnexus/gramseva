@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
 import Loader from '@/components/common/Loader';
 import { MessageSquare, Mic, Star, Trash2, Check, X } from 'lucide-react';
 
@@ -25,6 +26,7 @@ interface FeedbackItem {
 export default function AdminFeedbackPage() {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
+  const { success, error } = useToast();
   const [feedbackList, setFeedbackList] = useState<FeedbackItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState<'ALL' | 'TEXT' | 'VOICE'>('ALL');
@@ -57,8 +59,8 @@ export default function AdminFeedbackPage() {
       if (data.success) {
         setFeedbackList(data.data);
       }
-    } catch (error) {
-      console.error('Error:', error);
+    } catch (err) {
+      console.error('Error:', err);
     } finally {
       setLoading(false);
     }
@@ -83,8 +85,8 @@ export default function AdminFeedbackPage() {
       if (data.success) {
         fetchFeedback();
       }
-    } catch (error) {
-      console.error('Error:', error);
+    } catch (err) {
+      console.error('Error:', err);
     }
   };
 
@@ -99,13 +101,13 @@ export default function AdminFeedbackPage() {
       });
       const data = await response.json();
       if (data.success) {
-        alert('ফিডব্যাক ডিলিট সফল!');
+        success('ফিডব্যাক ডিলিট সফল!');
         fetchFeedback();
       } else {
-        alert(data.error);
+        error(data.error);
       }
-    } catch (error) {
-      alert('ডিলিট করতে সমস্যা হয়েছে');
+    } catch (err) {
+      error('ডিলিট করতে সমস্যা হয়েছে');
     }
   };
 

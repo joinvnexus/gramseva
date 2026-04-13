@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
 import Loader from '@/components/common/Loader';
 import { User, Phone, MapPin, Trash2, CheckCircle, XCircle, Shield } from 'lucide-react';
 
@@ -19,6 +20,7 @@ interface User {
 export default function AdminUsersPage() {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
+  const { success, error } = useToast();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -46,7 +48,7 @@ export default function AdminUsersPage() {
       if (data.success) {
         setUsers(data.data);
       }
-    } catch (error) {
+    } catch (err) {
       console.error('Error:', error);
     } finally {
       setLoading(false);
@@ -68,13 +70,13 @@ export default function AdminUsersPage() {
       });
       const data = await response.json();
       if (data.success) {
-        alert('রোল পরিবর্তন সফল!');
+        success('রোল পরিবর্তন সফল!');
         fetchUsers();
       } else {
-        alert(data.error);
+        error(data.error);
       }
-    } catch (error) {
-      alert('রোল পরিবর্তন করতে সমস্যা হয়েছে');
+    } catch (err) {
+      error('রোল পরিবর্তন করতে সমস্যা হয়েছে');
     }
   };
 
@@ -89,13 +91,13 @@ export default function AdminUsersPage() {
       });
       const data = await response.json();
       if (data.success) {
-        alert('ইউজার ডিলিট সফল!');
+        success('ইউজার ডিলিট সফল!');
         fetchUsers();
       } else {
-        alert(data.error);
+        error(data.error);
       }
-    } catch (error) {
-      alert('ইউজার ডিলিট করতে সমস্যা হয়েছে');
+    } catch (err) {
+      error('ইউজার ডিলিট করতে সমস্যা হয়েছে');
     }
   };
 

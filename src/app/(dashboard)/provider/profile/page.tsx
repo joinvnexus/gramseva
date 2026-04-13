@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/hooks/useToast';
 import Link from 'next/link';
 import Loader from '@/components/common/Loader';
 import { Zap, Wrench, Hammer, GraduationCap, Package, Star, Calendar, MapPin, DollarSign, Clock, User, CheckCircle, Edit, Save, X, AlertCircle } from 'lucide-react';
@@ -48,6 +49,7 @@ const categoryIcons: Record<string, React.ReactNode> = {
 export default function ProviderProfilePage() {
   const { user, isAuthenticated, logout } = useAuth();
   const router = useRouter();
+  const { success, error } = useToast();
   const [stats, setStats] = useState<ProviderStats | null>(null);
   const [services, setServices] = useState<Service[]>([]);
   const [loading, setLoading] = useState(true);
@@ -109,7 +111,7 @@ export default function ProviderProfilePage() {
           hourlyRate: service.hourlyRate?.toString() || '',
         }));
       }
-    } catch (error) {
+    } catch (err) {
       console.error('Error:', error);
     } finally {
       setLoading(false);
@@ -135,14 +137,14 @@ export default function ProviderProfilePage() {
       });
       const data = await response.json();
       if (data.success) {
-        alert('সার্ভিস আপডেট করা হয়েছে!');
+        success('সার্ভিস আপডেট করা হয়েছে!');
         setIsEditing(false);
         fetchProviderData();
       } else {
-        alert(data.error);
+        error(data.error);
       }
-    } catch (error) {
-      alert('সার্ভিস আপডেট করতে সমস্যা হয়েছে');
+    } catch (err) {
+      error('সার্ভিস আপডেট করতে সমস্যা হয়েছে');
     }
   };
 
@@ -163,13 +165,13 @@ export default function ProviderProfilePage() {
       });
       const data = await response.json();
       if (data.success) {
-        alert(`সার্ভিস ${services[0].isAvailable ? 'বন্ধ' : 'চালু'} করা হয়েছে`);
+        success(`সার্ভিস ${services[0].isAvailable ? 'বন্ধ' : 'চালু'} করা হয়েছে`);
         fetchProviderData();
       } else {
-        alert(data.error);
+        error(data.error);
       }
-    } catch (error) {
-      alert('স্ট্যাটাস পরিবর্তন করতে সমস্যা হয়েছে');
+    } catch (err) {
+      error('স্ট্যাটাস পরিবর্তন করতে সমস্যা হয়েছে');
     }
   };
 
