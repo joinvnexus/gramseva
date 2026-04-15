@@ -7,6 +7,7 @@ import Footer from '@/components/common/Footer';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import { ToastProvider } from '@/contexts/ToastContext';
+import BottomNav from '@/components/common/BottomNav';
 import PWASetup from '@/components/common/PWASetup';
 
 const SocketProvider = dynamic(() => import('@/contexts/SocketContext').then(mod => mod.SocketProvider));
@@ -46,10 +47,11 @@ export default function RootLayout({
               <ToastProvider>
                 <div className="flex flex-col min-h-screen">
                   <Header />
-                  <main className="flex-1 w-full">
+                  <main className="flex-1 w-full pb-20 md:pb-0">
                     <div className="container mx-auto px-3 sm:px-4 py-4 md:py-6">
                       {children}
                     </div>
+                    <BottomNav />
                   </main>
                   <Footer />
                   <PWASetup />

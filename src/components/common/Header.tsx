@@ -471,49 +471,7 @@ export default function Header() {
         )}
       </div>
 
-      {/* মোবাইল নিচের বার */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t dark:border-gray-700 shadow-lg z-50">
-        <div className="flex justify-around items-center py-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`flex flex-col items-center py-1 px-3 rounded-lg transition ${
-                item.active
-                  ? 'text-primary'
-                  : 'text-gray-500 dark:text-gray-400 hover:text-primary'
-              }`}
-            >
-              <item.icon className="w-5 h-5" />
-              <span className="text-xs mt-1">{item.label}</span>
-            </Link>
-          ))}
-          {isAuthenticated && (
-            <Link
-              href={getDashboardLink()}
-              className={`flex flex-col items-center py-1 px-3 rounded-lg transition ${
-                pathname === getDashboardLink()
-                  ? 'text-primary'
-                  : 'text-gray-500 dark:text-gray-400 hover:text-primary'
-              }`}
-            >
-              <LayoutDashboard className="w-5 h-5" />
-              <span className="text-xs mt-1">ড্যাশ</span>
-            </Link>
-          )}
-          <Link
-            href={isAuthenticated ? getProfileLink() : '/login'}
-            className={`flex flex-col items-center py-1 px-3 rounded-lg transition ${
-              pathname === getProfileLink()
-                ? 'text-primary'
-                : 'text-gray-500 dark:text-gray-400 hover:text-primary'
-            }`}
-          >
-            <User className="w-5 h-5" />
-            <span className="text-xs mt-1">{isAuthenticated ? 'প্রোফাইল' : 'লগইন'}</span>
-          </Link>
-        </div>
-      </div>
+
 
       {/* অফলাইন ইন্ডিকেটর */}
       {typeof window !== 'undefined' && !navigator.onLine && (

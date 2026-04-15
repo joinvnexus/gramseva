@@ -2,20 +2,38 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Wrench, FileText, Store, Cloud, User, MessageSquare } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { Home, Wrench, FileText, Store, Wheat, LayoutDashboard, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const { user } = useAuth();
+
+  // Role-based dashboard link (same as Header)
+  const getDashboardLink = () => {
+    if (!user) return '/dashboard';
+    if (user.role === 'ADMIN') return '/admin/dashboard';
+    if (user.role === 'PROVIDER') return '/provider/dashboard';
+    return '/user/dashboard';
+  };
+
+  // Role-based profile link (same as Header)  
+  const getProfileLink = () => {
+    if (!user) return '/profile';
+    if (user.role === 'ADMIN') return '/admin/profile';
+    if (user.role === 'PROVIDER') return '/provider/profile';
+    return '/user/profile';
+  };
 
   const navItems = [
     { href: '/', label: 'হোম', icon: Home },
     { href: '/services', label: 'সার্ভিস', icon: Wrench },
-    { href: '/weather', label: 'আবহাওয়া', icon: Cloud },
+    { href: '/weather', label: 'আবহাওয়া', icon: Wheat },
     { href: '/reports', label: 'রিপোর্ট', icon: FileText },
     { href: '/market', label: 'বাজার', icon: Store },
-    { href: '/feedback', label: 'ফিডব্যাক', icon: MessageSquare },
-    { href: '/profile', label: 'প্রোফাইল', icon: User },
+    { href: getDashboardLink(), label: 'ড্যাশ', icon: LayoutDashboard },
+    { href: getProfileLink(), label: 'প্রোফাইল', icon: User },
   ];
 
   return (
