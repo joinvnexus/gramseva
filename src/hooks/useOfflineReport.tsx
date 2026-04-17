@@ -14,6 +14,7 @@ import { Wifi, WifiOff, RefreshCw, CheckCircle, AlertCircle, Clock } from 'lucid
 
 interface QueueItem extends PendingRequest {
   id: number;
+  status?: string;
 }
 
 interface UseOfflineReportReturn {

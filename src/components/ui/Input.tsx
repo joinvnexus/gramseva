@@ -9,8 +9,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, label, error, icon, iconPosition = 'left', id, ...props }, ref) => {
-    const inputId = id || props.id || `input-${Math.random().toString(36).substr(2, 9)}`;
+  ({ className, label, error, icon, iconPosition = 'left', ...props }, ref) => {
+    const inputId = props.id || `input-${Math.random().toString(36).substr(2, 9)}`;
     const errorId = `${inputId}-error`;
     
     return (
